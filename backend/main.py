@@ -2,8 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from database.db import engine
+from routes.allData import router as all_data_router
+from routes.fetchUserBased import router as fetch_user_based_data
 
 app = FastAPI()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -12,19 +15,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(all_data_router)
 
+app.include_router(fetch_user_based_data)
 
-@app.get("/data")
-def get_data():
-
-    with engine.connect() as connection:
-
-        result = connection.execute(
-            text("SELECT * FROM cars LIMIT 5")
-        )
-
-        rows = result.fetchall()
-
-        data = [dict(row._mapping) for row in rows]
-
-        return data

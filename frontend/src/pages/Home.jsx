@@ -17,11 +17,10 @@ const Home = () => {
       if (response.status == 200) {
         setMessage(response.data.message);
         setTimeout(() => {
-          navigate("/Dashboard");
+          navigate("/Analysis");
         }, 1000);
-      }
-      else{
-        navigate('/')
+      } else {
+        navigate("/");
       }
     } catch (error) {
       setMessage(error);

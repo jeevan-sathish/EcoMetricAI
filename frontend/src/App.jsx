@@ -1,7 +1,7 @@
 import Nav from "@/components/Nav";
 import { Route, Routes } from "react-router-dom";
 import Home from "@/pages/Home";
-import Dashboard from "@/pages/Dashboard";
+import Analysis from "@/pages/Analysis";
 import Footer from "@/components/Footer";
 import ErrorPage from "@/pages/ErrorPage";
 
@@ -13,7 +13,7 @@ const App = () => {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/Analysis" element={<Analysis />} />
           <Route path="/ErrorPage" element={<ErrorPage />} />
         </Routes>
       </main>

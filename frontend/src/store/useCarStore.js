@@ -1,11 +1,11 @@
 import { create } from "zustand";
 
 const useCarStore = create((set) => ({
-  car: {},
+  cars: [],
 
-  setCar: (newCar) => set({ car: newCar }),
+  setCars: (newCars) => set({ cars: newCars }),
 
-  clearCar: () => set({ car: {} }),
+  clearCars: () => set({ cars: [] }),
 }));
 
 export default useCarStore;

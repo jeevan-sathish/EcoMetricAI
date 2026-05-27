@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "@/pages/Home";
 import Dashboard from "@/pages/Dashboard";
 import Footer from "@/components/Footer";
-import Error404 from "@/pages/Error404";
+import ErrorPage from "@/pages/ErrorPage";
 
 const App = () => {
   return (
@@ -14,7 +14,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/Error404" element={<Error404 />} />
+          <Route path="/ErrorPage" element={<ErrorPage />} />
         </Routes>
       </main>
 

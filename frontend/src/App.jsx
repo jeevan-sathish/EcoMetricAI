@@ -2,16 +2,23 @@ import Nav from "@/components/Nav";
 import { Route, Routes } from "react-router-dom";
 import Home from "@/pages/Home";
 import Dashboard from "@/pages/Dashboard";
+import Footer from "@/components/Footer";
+import Error404 from "@/pages/Error404";
+
 const App = () => {
   return (
-    <div>
+    <div className="w-full h-full">
       <Nav />
-      <div>
+
+      <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/Error404" element={<Error404 />} />
         </Routes>
-      </div>
+      </main>
+
+      <Footer />
     </div>
   );
 };

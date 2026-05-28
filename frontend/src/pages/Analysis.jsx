@@ -19,7 +19,7 @@ const Analysis = () => {
         </div>
       </div>
 
-      <div className="w-full min-h-screen lg:w-[50%] flex flex-col gap-4 p-6 overflow-y-scroll">
+      <div className="w-full min-h-screen lg:w-[45%] flex flex-col gap-4 p-6 ">
         <div className="w-full h-14 bg-green-600 rounded-2xl text-white flex flex-row justify-center items-center">
           Dashboard
         </div>
@@ -30,7 +30,7 @@ const Analysis = () => {
         </div>
       </div>
 
-      <div className="w-full lg:w-[24%] bg-green-100 p-4 ">
+      <div className="w-full lg:w-[30%] bg-green-100 p-4 ">
         <h2 className="text-lg font-semibold mb-4">AI Suggestions</h2>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import useCarStore from "@/store/useCarStore";
 import useSingleDataStore from "@/store/useSingleDataStore";
 import { IoLogoModelS } from "react-icons/io";
+import { FaHandPointDown } from "react-icons/fa6";
 
 const ModelTemplates = () => {
   const { cars } = useCarStore();
@@ -9,7 +10,8 @@ const ModelTemplates = () => {
 
   return (
     <div className="h-screen bg-white">
-      <header className="w-full h-14 bg-green-100 flex flex-row items-center justify-between px-4 border-b border-green-700">
+      <header className="w-full h-14 bg-green-100 flex flex-row items-center justify-center gap-4 px-4 border-b border-green-700">
+        <FaHandPointDown />
         <h1 className="text-lg font-bold">Available Varients Models</h1>
         <p className="text-sm text-gray-600">
           Size:{" "}
@@ -23,7 +25,7 @@ const ModelTemplates = () => {
           cars.map((ele, i) => (
             <div
               key={i}
-              className="w-[90%] p-3 bg-green-100 m-3"
+              className="w-[90%] p-3 bg-green-100 m-3 hover:shadow-2xl shadow-green-300  cursor-pointer transition duration-200"
               onClick={() => setSingleData(ele)}
             >
               <div className="w-full p-2 bg-red-200 flex flex-row gap-2 items-center text-[12px]">

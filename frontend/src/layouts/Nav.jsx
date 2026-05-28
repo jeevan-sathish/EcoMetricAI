@@ -19,13 +19,14 @@ const Nav = () => {
         </h1>
       </div>
 
-      {/* Eco Friendly Car Info */}
-      <div className="hidden md:flex items-center gap-2 bg-white/20 px-4 py-2 rounded-xl">
+      <div className="hidden md:flex items-center gap-2 bg-white/20 px-4 py-2 rounded-xl ">
         <FaLeaf className="text-green-900 text-lg" />
 
         <p className="text-black font-medium text-sm">
-          Eco Friendly Model:
-          <span className="font-bold ml-1">{minCo2?.model || "N/A"}</span>
+          Eco Friendly Brand-Model:
+          <span className="font-bold ml-1">
+            {minCo2.brand}-{minCo2?.model || "N/A"}
+          </span>
         </p>
 
         <span className="text-black">|</span>
@@ -34,9 +35,14 @@ const Nav = () => {
           CO₂:
           <span className="font-bold ml-1">{minCo2?.co2emission || "0"}</span>
         </p>
+        <span className="text-black">|</span>
+
+        <p className="text-black text-sm">
+          Engine Size:
+          <span className="font-bold ml-1">{minCo2?.enginesize || "0"}</span>
+        </p>
       </div>
 
-      {/* Profile */}
       <div className="flex items-center gap-2">
         <CgProfile className="text-3xl text-black" />
         <p className="text-black font-semibold">{GreetName}</p>

@@ -17,16 +17,17 @@ const OneBrandco2 = () => {
   const { cars } = useCarStore();
 
   return (
-    <div className="w-full h-125 bg-white rounded-2xl shadow-lg p-5 mt-5">
+    <div className="w-full h-120 bg-white rounded-2xl shadow-lg p-2 mt-3">
       <h1 className="text-2xl font-bold text-center mb-2">
-        {cars[0]?.brand} Brand Models CO₂ Emission Analysis
+        <span className="font-bold text-pink-500">{cars[0]?.brand}</span> Brand
+        Models CO₂ Emission Analysis
       </h1>
 
       <p className="text-center text-gray-500 mb-5">
         CO₂ emission comparison between car models
       </p>
 
-      <ResponsiveContainer width="100%" height="85%">
+      <ResponsiveContainer width="100%" height="80%">
         <LineChart
           data={brandCo2}
           margin={{
@@ -38,7 +39,13 @@ const OneBrandco2 = () => {
         >
           <CartesianGrid strokeDasharray="3 3" />
 
-          <XAxis dataKey="model" tick={{ fontSize: 12 }} />
+          <XAxis
+            dataKey="model"
+            tick={{ fontSize: 12 }}
+            angle={-40}
+            textAnchor="end"
+            interval={0}
+          />
 
           <YAxis />
 

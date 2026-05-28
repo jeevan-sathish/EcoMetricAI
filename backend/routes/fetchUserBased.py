@@ -30,7 +30,7 @@ def filter_data(inp: UserInput):
             SELECT model, co2emission
             FROM cars
             WHERE brand = :brand
-            ORDER BY co2emission ASC
+            ORDER BY co2emission ASC limit 10
         """)
 
         result2 = connection.execute(query2, {

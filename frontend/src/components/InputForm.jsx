@@ -28,14 +28,13 @@ export default function InputForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    console.log(form);
-
     try {
       const response = await api.post("/filterData", form);
 
       setCars(response.data.data1);
+      console.log(response.data.data1);
       setBrandCo2(response.data.data2);
+      console.log(response.data.data2);
       setMinCo2(response.data.data3[0] || {});
       console.log(response.data.data3[0]);
     } catch (error) {

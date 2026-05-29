@@ -1,5 +1,4 @@
 import useGetBrandco2 from "@/store/useGetBrandco2";
-import useCarStore from "@/store/useCarStore";
 
 import {
   ResponsiveContainer,
@@ -13,13 +12,13 @@ import {
 } from "recharts";
 
 const OneBrandco2 = () => {
-  const { brandCo2 } = useGetBrandco2();
-  const { cars } = useCarStore();
+  const { brandCo2, minCo2 } = useGetBrandco2();
+  // const { cars } = useCarStore();
 
   return (
     <div className="w-full h-120 bg-white rounded-2xl shadow-lg p-2 mt-3">
       <h1 className="text-2xl font-bold text-center mb-2">
-        <span className="font-bold text-pink-500">{cars[0]?.brand}</span> Brand
+        <span className="font-bold text-pink-500">{minCo2.brand}</span> Brand
         Models CO₂ Emission Analysis
       </h1>
 

@@ -33,15 +33,16 @@ const OneBrandco2 = () => {
             top: 20,
             right: 30,
             left: 10,
-            bottom: 20,
+            bottom: 35,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
 
           <XAxis
+            height={50}
             dataKey="model"
             tick={{ fontSize: 12 }}
-            angle={-40}
+            angle={-25}
             textAnchor="end"
             interval={0}
           />
@@ -50,7 +51,10 @@ const OneBrandco2 = () => {
 
           <Tooltip />
 
-          <Legend />
+          <Legend
+            verticalAlign="top"
+            wrapperStyle={{ paddingBottom: "10px" }}
+          />
 
           <Line
             type="monotone"

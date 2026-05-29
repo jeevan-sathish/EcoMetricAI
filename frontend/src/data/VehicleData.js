@@ -100,6 +100,9 @@ export const makeModelMap = {
   ],
   Audi: [
     "A3",
+    "A3 Tdi (Modified)",
+    "A3 Cabriolet Quattro",
+    "A3 Quattro",
     "A4",
     "A5",
     "A6",

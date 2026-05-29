@@ -27,10 +27,20 @@ def get_lowest_emission_cars(brand):
 
         query = text("""
             SELECT model, co2emission
-            FROM cars
-            WHERE brand = :brand
-            ORDER BY co2emission ASC
-            LIMIT 10
+            FROM (
+                SELECT
+                    model,
+                    co2emission,
+                    ROW_NUMBER() OVER (
+                        PARTITION BY model
+                        ORDER BY co2emission ASC
+                    ) as rn
+                FROM cars
+                WHERE brand = :brand
+            ) ranked
+            WHERE rn <= 2
+            ORDER BY model ASC, co2emission ASC
+            LIMIT 6
         """)
 
         result = connection.execute(query, {

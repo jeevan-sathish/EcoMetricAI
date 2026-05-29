@@ -78,27 +78,65 @@ def get_best_car(brand):
         return [dict(row._mapping) for row in result.fetchall()]
     
 
-def get_AI_suggestions(brand,model):
+def get_AI_suggestions(brand, model):
+
+    if not brand or not model:
+        return "input is missing"
 
     with engine.connect() as connection:
-        
-        data =connection.execute(text("SELECT * FROM cars limit 20")).fetchall() 
-        result =[dict(row._mapping) for row in data]
-        user_prefered_brand = get_selected_car(brand,model)
-        prompt = get_vehicle_analysis_prompt(result, user_prefered_brand)
 
-        response =client.chat.completions.create(
+        data = connection.execute(
+            text("""
+                SELECT
+                    brand,
+                    model,
+                    fueltype,
+                    co2emission,
+                    combmpg,
+                    vehicleclass
+                FROM cars
+                ORDER BY co2emission ASC
+                LIMIT 20
+            """)
+        ).fetchall()
+
+        result = [
+            dict(row._mapping)
+            for row in data
+        ]
+
+        user_preferred_brand = get_selected_car(
+            brand,
+            model
+        )
+
+        prompt = get_vehicle_analysis_prompt(
+            result,
+            user_preferred_brand
+        )
+
+        response = client.chat.completions.create(
+
             model="llama-3.3-70b-versatile",
+
             messages=[
+
+               
+
                 {
-                    "role": "system",
-                    "content":prompt
-                },
-                
-            ]
+                    "role": "user",
+                    "content": prompt
+                }
+
+            ],
+
+            temperature=0.5,
+            max_tokens=700
         )
 
         return response.choices[0].message.content
+
+    
         
 
        

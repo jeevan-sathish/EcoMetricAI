@@ -6,7 +6,7 @@ import useCarStore from "@/store/useCarStore";
 
 export const AiSuggestion = () => {
   const { cars } = useCarStore();
-  const [suggestion, setSuggestion] = useState("");
+  const [suggestion, setSuggestion] = useState(" ");
 
   const data = {
     brand: cars[0]?.brand || "",
@@ -27,9 +27,9 @@ export const AiSuggestion = () => {
   }, [cars]);
 
   return (
-    <div className="w-full h-125 overflow-y-scroll bg-green-200 pt-4 flex flex-col  ">
-      {!suggestion ? (
-        <div className="w-70 h-70 flex flex-col items-center">
+    <div className="w-full h-125 overflow-y-scroll items-start bg-green-200 pt-4 flex flex-col  ">
+      {suggestion == "input is missing" ? (
+        <div className="w-full h-125 flex flex-col justify-center items-center">
           <Comment
             visible={true}
             height="40"

@@ -6,6 +6,7 @@ import { MdOutlineContentPasteSearch } from "react-icons/md";
 import Note from "@/components/Note";
 import { RiRobot2Fill } from "react-icons/ri";
 import HeaderTitles from "@/components/HeaderTitles";
+import { AiSuggestion } from "@/components/AiSuggestion";
 
 const Analysis = () => {
   return (
@@ -36,6 +37,9 @@ const Analysis = () => {
         <div className="w-full h-12 bg-green-300 text-black flex flex-row gap-3 items-center justify-start ">
           <RiRobot2Fill className="text-2xl ml-3" />
           <HeaderTitles title="AI Suggestions" />
+        </div>
+        <div className="w-full h-auto p-2 ">
+          <AiSuggestion />
         </div>
       </div>
     </div>

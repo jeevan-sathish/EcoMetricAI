@@ -37,6 +37,7 @@ export default function InputForm() {
       console.log(response.data.data2);
       setMinCo2(response.data.data3[0] || {});
       console.log(response.data.data3[0]);
+      console.log(response.data.suggestion);
     } catch (error) {
       console.log(error);
     }

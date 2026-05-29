@@ -1,6 +1,12 @@
 from sqlalchemy import text
 from database.db import engine
+from prompts.Vehicle_analysis_prompt import get_vehicle_analysis_prompt 
+from groq import Groq
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def get_selected_car(brand, model):
 
@@ -70,3 +76,29 @@ def get_best_car(brand):
         })
 
         return [dict(row._mapping) for row in result.fetchall()]
+    
+
+def get_AI_suggestions(brand,model):
+
+    with engine.connect() as connection:
+        
+        data =connection.execute(text("SELECT * FROM cars limit 20")).fetchall() 
+        result =[dict(row._mapping) for row in data]
+        user_prefered_brand = get_selected_car(brand,model)
+        prompt = get_vehicle_analysis_prompt(result, user_prefered_brand)
+
+        response =client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {
+                    "role": "system",
+                    "content":prompt
+                },
+                
+            ]
+        )
+
+        return response.choices[0].message.content
+        
+
+       

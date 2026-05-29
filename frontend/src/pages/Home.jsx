@@ -47,7 +47,7 @@ const Home = () => {
 
       <div className="mt-6 w-full max-w-md flex flex-row gap-3">
         <input
-          className="flex-1 h-[50px] border border-gray-300 pl-3 rounded-2xl outline-none focus:border-green-500"
+          className="flex-1 h-12.5 border border-gray-300 pl-3 rounded-2xl outline-none focus:border-green-500"
           type="text"
           placeholder="What should we call you?"
           value={name}

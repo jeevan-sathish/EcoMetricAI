@@ -13,7 +13,7 @@ const Analysis = () => {
           <MdOutlineContentPasteSearch className="text-2xl mr-2" />
           <h2 className="text-md font-semibold mb-0">Find Your Best Car</h2>
         </div>
-        <div className="flex flex-col gap-[10px]">
+        <div className="flex flex-col gap-2.5">
           <InputForm />
           <ModelTemplates />
         </div>

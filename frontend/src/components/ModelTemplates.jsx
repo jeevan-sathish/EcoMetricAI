@@ -12,12 +12,10 @@ const ModelTemplates = () => {
     <div className="h-screen bg-white">
       <header className="w-full h-14 bg-green-100 flex flex-row items-center justify-center gap-4 px-4 border-b border-green-700">
         <FaHandPointDown />
-        <h1 className="text-lg font-bold">Available Varients Models</h1>
+        <h1 className="text-md font-bold">Available Varients Models</h1>
         <p className="text-sm text-gray-600">
           Size:{" "}
-          <span className="font-bold text-2xl text-2xl text-green-600">
-            {size}
-          </span>
+          <span className="font-bold  text-2xl text-green-600">{size}</span>
         </p>
       </header>
       <div className="w-full h-[90vh] bg-green-200 flex flex-col border-2xl overflow-y-scroll">

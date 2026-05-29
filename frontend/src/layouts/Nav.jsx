@@ -11,7 +11,6 @@ const Nav = () => {
 
   return (
     <nav className="w-full h-16 bg-green-500 shadow-md px-6 flex items-center justify-between">
-      {/* Logo */}
       <div className="flex items-center gap-2">
         <FaLeaf className="text-2xl text-black" />
         <h1 className="text-2xl font-bold text-black tracking-wide">
@@ -19,7 +18,7 @@ const Nav = () => {
         </h1>
       </div>
 
-      <div className="hidden md:flex items-center gap-2 bg-white/20 px-4 py-2 rounded-xl ">
+      <div className="hidden  top-16 md:flex items-center gap-2 bg-white/20 px-4 py-2 rounded-xl ">
         <FaLeaf className="text-green-900 text-lg" />
 
         <p className="text-black font-medium text-sm">

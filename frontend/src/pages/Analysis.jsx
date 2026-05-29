@@ -4,6 +4,8 @@ import SingleDataDashboard from "@/components/SingleDataDashboard";
 import OneBrandco2 from "@/charts/OneBrandco2";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
 import Note from "@/components/Note";
+import { RiRobot2Fill } from "react-icons/ri";
+import HeaderTitles from "@/components/HeaderTitles";
 
 const Analysis = () => {
   return (
@@ -11,7 +13,7 @@ const Analysis = () => {
       <div className="w-full lg:w-[25%] bg-green-100 p-4 ">
         <div className="w-full h-12 bg-green-300 rounded-0 text-black flex flex-row justify-center items-center">
           <MdOutlineContentPasteSearch className="text-2xl mr-2" />
-          <h2 className="text-md font-semibold mb-0">Find Your Best Car</h2>
+          <HeaderTitles title="Find Your Best Car" />
         </div>
         <div className="flex flex-col gap-2.5">
           <InputForm />
@@ -21,7 +23,7 @@ const Analysis = () => {
 
       <div className="w-full min-h-screen lg:w-[45%] flex flex-col gap-4 p-6 ">
         <div className="w-full h-14 bg-green-600 rounded-2xl text-white flex flex-row justify-center items-center">
-          Dashboard
+          <HeaderTitles title="Dashboard" />
         </div>
         <div className="w-full h-full bg-green-100 rounded-2xl p-4 flex flex-col gap-3">
           <SingleDataDashboard />
@@ -31,7 +33,10 @@ const Analysis = () => {
       </div>
 
       <div className="w-full lg:w-[30%] bg-green-100 p-4 ">
-        <h2 className="text-lg font-semibold mb-4">AI Suggestions</h2>
+        <div className="w-full h-12 bg-green-300 text-black flex flex-row gap-3 items-center justify-start ">
+          <RiRobot2Fill className="text-2xl ml-3" />
+          <HeaderTitles title="AI Suggestions" />
+        </div>
       </div>
     </div>
   );

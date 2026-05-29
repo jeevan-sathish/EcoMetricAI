@@ -72,7 +72,7 @@ const SingleDataDashboard = () => {
   ];
 
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-2 mt-4">
+    <div className="w-full grid grid-cols-2 gap-1.5 md:grid-cols-2 lg:grid-cols-3  gap-2 mt-4">
       {cards.map((card, index) => (
         <DashboardCardSD
           key={index}

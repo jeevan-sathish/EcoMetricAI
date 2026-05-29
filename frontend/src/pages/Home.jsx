@@ -19,7 +19,7 @@ const Home = () => {
         setMessage(response.data.message);
         setTimeout(() => {
           navigate("/Analysis");
-        }, 1000);
+        }, 500);
       } else {
         navigate("/");
       }

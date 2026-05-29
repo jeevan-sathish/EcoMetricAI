@@ -1,10 +1,9 @@
-import { useState } from "react";
-import axios from "axios";
-
 import { brand, makeModelMap } from "../data/VehicleData";
-
-import useCarStore from "@/store/useCarStore";
 import useGetBrandco2 from "@/store/useGetBrandco2";
+import useCarStore from "@/store/useCarStore";
+import api from "@/services/api";
+import { useState } from "react";
+// import axios from "axios";
 
 export default function InputForm() {
   const { setCars } = useCarStore();
@@ -33,10 +32,7 @@ export default function InputForm() {
     console.log(form);
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/filterData",
-        form,
-      );
+      const response = await api.post("/filterData", form);
 
       setCars(response.data.data1);
       setBrandCo2(response.data.data2);

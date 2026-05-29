@@ -1,8 +1,9 @@
 import { IoCarSport } from "react-icons/io5";
 import useGreetStore from "@/store/useGreetStore";
-import axios from "axios";
+// import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "@/services/api";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Home = () => {
 
   async function handleUserNavigation() {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/greet", {
+      const response = await api.post("/greet", {
         name: name,
       });
       if (response.status == 200) {

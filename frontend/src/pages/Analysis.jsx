@@ -33,7 +33,7 @@ const Analysis = () => {
         </div>
       </div>
 
-      <div className="w-full lg:w-[30%] bg-green-100 p-4 ">
+      <div className="w-full  lg:w-[30%] bg-green-100 p-4 ">
         <div className="w-full h-12 bg-green-300 text-black flex flex-row gap-3 items-center justify-start ">
           <RiRobot2Fill className="text-2xl ml-3" />
           <HeaderTitles title="AI Suggestions" />

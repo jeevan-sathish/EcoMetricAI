@@ -84,7 +84,6 @@ def get_AI_suggestions(brand, model):
         return "input is missing"
 
     with engine.connect() as connection:
-
         data = connection.execute(
             text("""
                 SELECT
@@ -109,20 +108,15 @@ def get_AI_suggestions(brand, model):
             brand,
             model
         )
-
         prompt = get_vehicle_analysis_prompt(
             result,
             user_preferred_brand
         )
-
         response = client.chat.completions.create(
 
             model="llama-3.3-70b-versatile",
 
             messages=[
-
-               
-
                 {
                     "role": "user",
                     "content": prompt

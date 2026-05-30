@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { RiRobot2Line } from "react-icons/ri";
 import { Comment } from "react-loader-spinner";
 import useCarStore from "@/store/useCarStore";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+// import { TypeAnimation } from "react-type-animation";
 
 export const AiSuggestion = () => {
   const { cars } = useCarStore();
@@ -46,7 +49,11 @@ export const AiSuggestion = () => {
           </h1>
         </div>
       ) : (
-        <div className="p-3">{suggestion}</div>
+        <div className="p-3">
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {suggestion}
+          </ReactMarkdown>
+        </div>
       )}
     </div>
   );

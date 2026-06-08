@@ -8,7 +8,7 @@ const OneBrandco2 = () => {
   const chartWidth = Math.max(800, brandCo2.length * 80);
 
   return (
-    <div className="w-full h-[500px] bg-black text-white rounded-2xl shadow-lg p-2 mt-3">
+    <div className="w-full h-[480px] bg-black text-white rounded-2xl shadow-lg p-2 mt-3">
       <h1 className="text-2xl font-bold text-center mb-2">
         <span className="text-pink-500">{minCo2.brand}</span> Brand Models CO₂
         Emission Analysis
@@ -21,13 +21,13 @@ const OneBrandco2 = () => {
       <div className="overflow-x-auto overflow-y-hidden">
         <LineChart
           width={chartWidth}
-          height={380}
+          height={320}
           data={brandCo2}
           margin={{
             top: 20,
             right: 30,
-            left: 10,
-            bottom: 60,
+            left: 0,
+            bottom: 20,
           }}
         >
           <XAxis
@@ -54,7 +54,7 @@ const OneBrandco2 = () => {
             dataKey="co2emission"
             stroke="#22c55e"
             strokeWidth={3}
-            activeDot={{ r: 8 }}
+            activeDot={{ r: 5 }}
             name="CO₂ Emission"
           />
         </LineChart>

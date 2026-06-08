@@ -45,7 +45,7 @@ const EcoFriendlyModel = () => {
         </p>
       </div>
 
-      <div className="w-full h-112.5">
+      <div className="w-full h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={sortedData}

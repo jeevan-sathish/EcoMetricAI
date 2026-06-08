@@ -22,7 +22,7 @@ const Analysis = () => {
         </div>
       </div>
 
-      <div className="w-full min-h-screen lg:w-[45%] flex flex-col gap-4 p-5 ">
+      <div className="w-full min-h-screen lg:w-[45%] flex flex-col gap-4 p-6 ">
         <div className="w-full h-10 bg-green-400 rounded-2xl text-white flex flex-row justify-center items-center">
           <HeaderTitles title="Dashboard" />
         </div>

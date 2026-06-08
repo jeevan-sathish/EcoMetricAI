@@ -5,58 +5,71 @@ import { Comment } from "react-loader-spinner";
 import useCarStore from "@/store/useCarStore";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ReportDownloader } from "@/services/ReportDowloader";
 
 export const AiSuggestion = () => {
   const reportRef = useRef(null);
 
   const { cars } = useCarStore();
-  const [suggestion, setSuggestion] = useState("input is missing");
 
-  const data = {
-    brand: cars[0]?.brand || "",
-    model: cars[0]?.model || "",
-  };
+  const [suggestion, setSuggestion] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  async function Ai_Suggestion() {
+  async function fetchSuggestion() {
+    if (!cars?.length) return;
+
     try {
-      const res = await api.post("/filterData", data);
+      setLoading(true);
+
+      const res = await api.post("/filterData", {
+        brand: cars[0]?.brand,
+        model: cars[0]?.model,
+      });
+
       setSuggestion(res.data.suggestion);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      setSuggestion("Failed to generate AI report.");
+    } finally {
+      setLoading(false);
     }
   }
 
   useEffect(() => {
-    Ai_Suggestion();
+    fetchSuggestion();
   }, [cars]);
 
   return (
-    <div className="w-full flex flex-col gap-4">
-      <div className="bg-white rounded-0  shadow-lg  overflow-hidden rounded-bl-2xl rounded-br-2xl">
-        <div
-          ref={reportRef}
-          className="h-125 bg-black text-gray-300 overflow-y-auto p-6  "
-        >
-          {suggestion === "input is missing" ? (
-            <div className="h-full flex flex-col items-center justify-center gap-3 ">
+    <div className="w-full">
+      <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-xl">
+        <div className="flex items-center gap-3 border-b border-zinc-800 px-6 py-4">
+          <RiRobot2Line className="text-2xl text-green-500" />
+          <div>
+            <h2 className="font-semibold text-white">AI Vehicle Analysis</h2>
+            <p className="text-xs text-zinc-400">
+              Personalized sustainability insights
+            </p>
+          </div>
+        </div>
+
+        <div ref={reportRef} className="max-h-[500px] overflow-y-auto p-6">
+          {loading ? (
+            <div className="flex min-h-[300px] flex-col items-center justify-center gap-4">
               <Comment
                 visible={true}
                 height="50"
                 width="50"
-                ariaLabel="comment-loading"
-                color="#fff"
+                color="#ffffff"
                 backgroundColor="#22c55e"
               />
 
-              <RiRobot2Line className="text-6xl text-green-600 animate-pulse" />
+              <RiRobot2Line className="animate-pulse text-6xl text-green-500" />
 
-              <p className="text-sm text-gray-500">
-                Generating your AI vehicle report...
+              <p className="text-sm text-zinc-400">
+                Generating your AI vehicle report
               </p>
             </div>
           ) : (
-            <div className="prose prose-sm md:prose lg:prose-lg max-w-none ">
+            <div className="prose prose-invert text-gray-400  max-w-none">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {suggestion}
               </ReactMarkdown>
@@ -64,16 +77,6 @@ export const AiSuggestion = () => {
           )}
         </div>
       </div>
-
-      <button
-        disabled={suggestion === "input is missing"}
-        onClick={() => ReportDownloader(reportRef.current)}
-        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition  disabled:bg-gray-400
-  disabled:cursor-not-allowed
-  disabled:hover:bg-gray-400"
-      >
-        Download PDF Report
-      </button>
     </div>
   );
 };

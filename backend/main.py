@@ -1,12 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import text
-from database.db import engine
-from routes.allData import router as all_data_router
-from routes.fetchUserBased import router as fetch_user_based_data
 from pydantic import BaseModel
 
+from routes.car_routes import router as car_router
+
 app = FastAPI()
+
 
 
 app.add_middleware(
@@ -17,17 +16,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+
 class User(BaseModel):
     name: str
 
+
+
 @app.post("/greet")
 def greet_user(user: User):
-    msg = f"Welcome {user.name} to EcoMetric-AI"
+
     return {
-        "message": msg
+        "message": f"Welcome {user.name} to EcoMetric-AI"
     }
 
-app.include_router(all_data_router)
 
-app.include_router(fetch_user_based_data)
 
+app.include_router(car_router)

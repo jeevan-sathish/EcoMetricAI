@@ -1,8 +1,9 @@
 import { IoCarSport } from "react-icons/io5";
 import useGreetStore from "@/store/useGreetStore";
-import axios from "axios";
+// import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "@/services/api";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -11,14 +12,14 @@ const Home = () => {
 
   async function handleUserNavigation() {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/greet", {
+      const response = await api.post("/greet", {
         name: name,
       });
       if (response.status == 200) {
         setMessage(response.data.message);
         setTimeout(() => {
           navigate("/Analysis");
-        }, 1000);
+        }, 500);
       } else {
         navigate("/");
       }
@@ -46,7 +47,7 @@ const Home = () => {
 
       <div className="mt-6 w-full max-w-md flex flex-row gap-3">
         <input
-          className="flex-1 h-[50px] border border-gray-300 pl-3 rounded-2xl outline-none focus:border-green-500"
+          className="flex-1 h-12.5 border border-gray-300 pl-3 rounded-2xl outline-none focus:border-green-500"
           type="text"
           placeholder="What should we call you?"
           value={name}

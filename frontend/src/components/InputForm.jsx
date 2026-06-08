@@ -1,10 +1,9 @@
-import { useState } from "react";
-import axios from "axios";
-
 import { brand, makeModelMap } from "../data/VehicleData";
-
-import useCarStore from "@/store/useCarStore";
 import useGetBrandco2 from "@/store/useGetBrandco2";
+import useCarStore from "@/store/useCarStore";
+import api from "@/services/api";
+import { useState } from "react";
+// import axios from "axios";
 
 export default function InputForm() {
   const { setCars } = useCarStore();
@@ -29,19 +28,16 @@ export default function InputForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-    console.log(form);
-
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/filterData",
-        form,
-      );
+      const response = await api.post("/filterData", form);
 
       setCars(response.data.data1);
+      console.log(response.data.data1);
       setBrandCo2(response.data.data2);
+      console.log(response.data.data2);
       setMinCo2(response.data.data3[0] || {});
       console.log(response.data.data3[0]);
+      console.log(response.data.suggestion);
     } catch (error) {
       console.log(error);
     }
@@ -50,18 +46,20 @@ export default function InputForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-2xl mx-auto p-6 space-y-4 bg-white shadow rounded"
+      className="w-full max-w-2xl mx-auto p-6 space-y-4 bg-black border border-gray-500 shadow rounded-bl-2xl rounded-br-2xl"
     >
       <select
         name="brand"
         value={form.brand}
         onChange={handleChange}
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border border-gray-500 text-white rounded"
       >
-        <option value="">Select Brand</option>
+        <option className="text-black font-bold" value="">
+          Select Brand
+        </option>
 
         {brand.map((b) => (
-          <option key={b} value={b}>
+          <option className="text-black bg-transparent " key={b} value={b}>
             {b}
           </option>
         ))}
@@ -72,12 +70,14 @@ export default function InputForm() {
         value={form.model}
         onChange={handleChange}
         disabled={!form.brand}
-        className="w-full p-2 border rounded"
+        className="w-full p-2 border border-gray-500 text-white rounded"
       >
-        <option value="">Select Model</option>
+        <option className="text-black font-bold" value="">
+          Select Model
+        </option>
 
         {models.map((m) => (
-          <option key={m} value={m}>
+          <option className="text-black" key={m} value={m}>
             {m}
           </option>
         ))}
@@ -85,7 +85,7 @@ export default function InputForm() {
 
       <button
         type="submit"
-        className="w-full bg-green-600 text-white p-2 rounded"
+        className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 transition duration-300"
       >
         Submit
       </button>

@@ -1,8 +1,8 @@
-import Nav from "@/components/Nav";
+import Nav from "@/layouts/Nav";
 import { Route, Routes } from "react-router-dom";
 import Home from "@/pages/Home";
 import Analysis from "@/pages/Analysis";
-import Footer from "@/components/Footer";
+import Footer from "@/layouts/Footer";
 import ErrorPage from "@/pages/ErrorPage";
 
 const App = () => {

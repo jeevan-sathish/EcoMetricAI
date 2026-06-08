@@ -1,76 +1,87 @@
 import useSingleDataStore from "@/store/useSingleDataStore";
-import { FaCar, FaGasPump, FaLeaf, FaRoad, FaCogs } from "react-icons/fa";
+import {
+  FaCar,
+  FaGasPump,
+  FaLeaf,
+  FaRoad,
+  FaCogs,
+  FaTools,
+} from "react-icons/fa";
+import { TbEngineFilled } from "react-icons/tb";
+import { MdOutlineTrendingDown } from "react-icons/md";
+
+import DashboardCardSD from "./DashboardCardSD";
 
 const SingleDataDashboard = () => {
   const { singleData } = useSingleDataStore();
+  const cards = [
+    {
+      title: "Brand",
+      value: singleData.brand,
+      icon: FaCar,
+      color: "text-blue-600",
+    },
+    {
+      title: "Model",
+      value: singleData.model,
+      icon: FaCar,
+      color: "text-green-600",
+    },
+    {
+      title: "Combined MPG",
+      value: singleData.combmpg,
+      icon: FaRoad,
+      color: "text-purple-600",
+    },
+    {
+      title: "Fuel Type",
+      value: singleData.fueltype,
+      icon: FaGasPump,
+      color: "text-red-500",
+    },
+    {
+      title: "CO₂ Emission",
+      value: singleData.co2emission,
+      icon: FaLeaf,
+      color: "text-green-700",
+    },
+    {
+      title: "Transmission",
+      value: singleData.transmission,
+      icon: FaCogs,
+      color: "text-orange-500",
+    },
+    {
+      title: "Cylinders",
+      value: singleData.cylinders,
+      icon: MdOutlineTrendingDown,
+      color: "text-orange-500",
+    },
+    {
+      title: "Engine Size",
+      value: singleData.enginesize,
+      icon: TbEngineFilled,
+      color: "text-blue-500",
+    },
+    {
+      title: "Vehicle Class",
+      value: singleData.vehicleclass,
+      icon: FaTools,
+      color: "text-orange-500",
+    },
+  ];
 
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-      <div className="bg-white shadow-lg rounded-2xl p-5 border">
-        <div className="flex items-center gap-3">
-          <FaCar className="text-2xl text-blue-600" />
-
-          <div>
-            <p className="text-gray-500 text-sm">Brand</p>
-            <h2 className="text-xl font-bold">{singleData.brand}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white shadow-lg rounded-2xl p-5 border">
-        <div className="flex items-center gap-3">
-          <FaCar className="text-2xl text-green-600" />
-
-          <div>
-            <p className="text-gray-500 text-sm">Model</p>
-            <h2 className="text-xl font-bold">{singleData.model}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white shadow-lg rounded-2xl p-5 border">
-        <div className="flex items-center gap-3">
-          <FaRoad className="text-2xl text-purple-600" />
-
-          <div>
-            <p className="text-gray-500 text-sm">Combined MPG</p>
-            <h2 className="text-xl font-bold">{singleData.combmpg}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white shadow-lg rounded-2xl p-5 border">
-        <div className="flex items-center gap-3">
-          <FaGasPump className="text-2xl text-red-500" />
-
-          <div>
-            <p className="text-gray-500 text-sm">Fuel Type</p>
-            <h2 className="text-xl font-bold">{singleData.fueltype}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white shadow-lg rounded-2xl p-5 border">
-        <div className="flex items-center gap-3">
-          <FaLeaf className="text-2xl text-green-700" />
-
-          <div>
-            <p className="text-gray-500 text-sm">CO₂ Emission</p>
-            <h2 className="text-xl font-bold">{singleData.co2emission}</h2>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white shadow-lg rounded-2xl p-5 border">
-        <div className="flex items-center gap-3">
-          <FaCogs className="text-2xl text-orange-500" />
-
-          <div>
-            <p className="text-gray-500 text-sm">Transmission</p>
-            <h2 className="text-lg font-bold">{singleData.transmission}</h2>
-          </div>
-        </div>
-      </div>
+    <div className="w-full grid grid-cols-2 gap-1.5 md:grid-cols-2 lg:grid-cols-3  gap-4 mt-4">
+      {cards.map((card, index) => (
+        <DashboardCardSD
+          key={index}
+          title={card.title}
+          value={card.value}
+          icon={card.icon}
+          color={card.color}
+        />
+      ))}
     </div>
   );
 };

@@ -10,8 +10,7 @@ const Nav = () => {
   const GreetName = name || "Guest";
 
   return (
-    <nav className="w-full h-16 bg-green-500 shadow-md px-6 flex items-center justify-between">
-      {/* Logo */}
+    <nav className="w-full h-16 bg-blue-600 shadow-md px-6 flex items-center justify-between">
       <div className="flex items-center gap-2">
         <FaLeaf className="text-2xl text-black" />
         <h1 className="text-2xl font-bold text-black tracking-wide">
@@ -19,24 +18,34 @@ const Nav = () => {
         </h1>
       </div>
 
-      {/* Eco Friendly Car Info */}
-      <div className="hidden md:flex items-center gap-2 bg-white/20 px-4 py-2 rounded-xl">
-        <FaLeaf className="text-green-900 text-lg" />
+      <div className="hidden  top-16 md:flex items-center gap-2 bg-transparent px-4 py-2 rounded-xl ">
+        <FaLeaf className="text-green-400 text-lg animate-bounce" />
 
         <p className="text-black font-medium text-sm">
-          Eco Friendly Model:
-          <span className="font-bold ml-1">{minCo2?.model || "N/A"}</span>
+          Eco Friendly Brand-Model:
+          <span className="font-medium ml-1 text-white">
+            {minCo2.brand}-{minCo2?.model || "N/A"}
+          </span>
         </p>
 
         <span className="text-black">|</span>
 
         <p className="text-black text-sm">
           CO₂:
-          <span className="font-bold ml-1">{minCo2?.co2emission || "0"}</span>
+          <span className="font-bold text-white ml-1">
+            {minCo2?.co2emission || "0"}
+          </span>
+        </p>
+        <span className="text-black">|</span>
+
+        <p className="text-black text-sm">
+          Engine Size:
+          <span className="font-bold ml-1 text-white">
+            {minCo2?.enginesize || "0"}
+          </span>
         </p>
       </div>
 
-      {/* Profile */}
       <div className="flex items-center gap-2">
         <CgProfile className="text-3xl text-black" />
         <p className="text-black font-semibold">{GreetName}</p>

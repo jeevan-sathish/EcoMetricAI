@@ -33,10 +33,13 @@ export const AiSuggestion = () => {
 
   return (
     <div className="w-full flex flex-col gap-4">
-      <div className="bg-white rounded-0  shadow-lg  overflow-hidden">
-        <div ref={reportRef} className="h-125 bg-green-100 overflow-y-auto p-6">
+      <div className="bg-white rounded-0  shadow-lg  overflow-hidden rounded-bl-2xl rounded-br-2xl">
+        <div
+          ref={reportRef}
+          className="h-125 bg-green-100 overflow-y-auto p-6  "
+        >
           {suggestion === "input is missing" ? (
-            <div className="h-full flex flex-col items-center justify-center gap-3">
+            <div className="h-full flex flex-col items-center justify-center gap-3 ">
               <Comment
                 visible={true}
                 height="50"
@@ -53,7 +56,7 @@ export const AiSuggestion = () => {
               </p>
             </div>
           ) : (
-            <div className="prose prose-sm md:prose lg:prose-lg max-w-none">
+            <div className="prose prose-sm md:prose lg:prose-lg max-w-none ">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {suggestion}
               </ReactMarkdown>

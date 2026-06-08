@@ -26,7 +26,7 @@ const ModelTemplates = () => {
               cars.map((ele, i) => (
                 <div
                   key={i}
-                  className="w-[90%] p-3 bg-green-100 m-3 hover:shadow-2xl shadow-green-300  cursor-pointer transition duration-200"
+                  className="w-[90%] p-3 bg-green-100 m-3 hover:shadow-2xl shadow-green-300  cursor-pointer transition duration-200 rounded-[10px]"
                   onClick={() => setSingleData(ele)}
                 >
                   <div className="w-full p-2 bg-red-200 flex flex-row gap-2 items-center text-[12px]">

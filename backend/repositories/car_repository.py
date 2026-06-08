@@ -46,7 +46,7 @@ def get_lowest_emission_cars(brand):
             ) ranked
             WHERE rn <= 2
             ORDER BY model ASC, co2emission ASC
-            LIMIT 6
+            LIMIT 10
         """)
 
         result = connection.execute(query, {

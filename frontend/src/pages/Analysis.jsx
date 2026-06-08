@@ -12,7 +12,7 @@ const Analysis = () => {
   return (
     <div className="min-h-screen w-full flex flex-col  lg:flex-row bg-gray-50 gap-2">
       <div className="w-full lg:w-[25%] bg-green-100 p-4 ">
-        <div className="w-full h-12 bg-green-300 rounded-0 text-black flex flex-row justify-center items-center">
+        <div className="w-full h-12 bg-green-300 rounded-0 text-black flex flex-row justify-center items-center rounded-tl-2xl rounded-tr-2xl">
           <MdOutlineContentPasteSearch className="text-2xl mr-2" />
           <HeaderTitles title="Find Your Best Car" />
         </div>

@@ -34,10 +34,7 @@ export const AiSuggestion = () => {
   return (
     <div className="w-full flex flex-col gap-4">
       <div className="bg-white rounded-0  shadow-lg  overflow-hidden">
-        <div
-          ref={reportRef}
-          className="h-[500px] bg-green-100 overflow-y-auto p-6"
-        >
+        <div ref={reportRef} className="h-125 bg-green-100 overflow-y-auto p-6">
           {suggestion === "input is missing" ? (
             <div className="h-full flex flex-col items-center justify-center gap-3">
               <Comment
@@ -68,7 +65,7 @@ export const AiSuggestion = () => {
       <button
         disabled={suggestion === "input is missing"}
         onClick={() => ReportDownloader(reportRef.current)}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition  disabled:bg-gray-400
+        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 rounded-xl transition  disabled:bg-gray-400
   disabled:cursor-not-allowed
   disabled:hover:bg-gray-400"
       >

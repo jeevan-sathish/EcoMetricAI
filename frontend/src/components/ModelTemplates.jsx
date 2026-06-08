@@ -10,29 +10,38 @@ const ModelTemplates = () => {
   const size = cars.length;
 
   return (
-    <div className="h-screen bg-white">
-      <header className="w-full h-14 bg-green-100 flex flex-row items-center justify-center gap-4 px-4 border-b border-green-700">
-        <FaHandPointDown />
-        <h1 className="text-md font-bold">Available Varients Models</h1>
-        <p className="text-sm text-gray-600">
+    <div className="h-screen bg-black border border-b-gray-500">
+      <header className="w-full h-10 bg-gray-800  flex flex-row  items-center justify-center gap-4 px-4 border-b border-green-700">
+        <FaHandPointDown className="text-yellow-300" />
+        <h1 className="text-md font-bold text-gray-400">
+          Available Varients Models
+        </h1>
+        <p className="text-sm text-gray-400 ">
           Size:{" "}
           <span className="font-bold  text-2xl text-green-600">{size}</span>
         </p>
       </header>
-      <div className="bg-green-200">
+      <div className="bg-black">
         {cars.length > 0 ? (
-          <div className="w-full h-[90vh] bg-green-200 flex flex-col border-2xl overflow-y-scroll">
+          <div
+            className={`w-full h-[90vh] bg-black flex flex-col border-2xl ${size > 3 ? "overflow-y-scroll" : ""}`}
+          >
             {cars &&
               cars.map((ele, i) => (
                 <div
                   key={i}
-                  className="w-[90%] p-3 bg-green-100 m-3 hover:shadow-2xl shadow-green-300  cursor-pointer transition duration-200 rounded-[10px]"
+                  className="w-[90%] p-3 bg-gray-800  text-white m-3 hover:shadow-2xl shadow-green-900  cursor-pointer transition duration-200 rounded-[10px]"
                   onClick={() => setSingleData(ele)}
                 >
-                  <div className="w-full p-2 bg-red-200 flex flex-row gap-2 items-center text-[12px]">
-                    <IoLogoModelS className="text-[18px]" />
-                    <span className="text-red-600">Model:</span> {ele.model}
-                    <p>combined-mpg: {ele.combmpg}</p>
+                  <div className="w-full p-2 bg-black flex flex-row gap-2 items-center text-[12px] rounded-[10px]">
+                    <IoLogoModelS className="text-[18px] text-red-700" />
+                    <span className="text-red-600">Model:</span>
+                    <span className="text-green-800 font-bold">
+                      {ele.model}
+                    </span>
+                    <p className="text-yellow-500">
+                      combined-mpg: {ele.combmpg}
+                    </p>
                   </div>
 
                   <p>
@@ -56,7 +65,7 @@ const ModelTemplates = () => {
               ))}
           </div>
         ) : (
-          <div className="w-full h-[90vh] bg-green-200 flex flex-col border-2xl justify-center items-center">
+          <div className="w-full h-[90vh] bg-black flex flex-col border-2xl justify-center items-center">
             <ThreeDots
               visible={true}
               height="80"

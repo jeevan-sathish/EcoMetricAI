@@ -36,7 +36,7 @@ export const AiSuggestion = () => {
       <div className="bg-white rounded-0  shadow-lg  overflow-hidden rounded-bl-2xl rounded-br-2xl">
         <div
           ref={reportRef}
-          className="h-125 bg-green-100 overflow-y-auto p-6  "
+          className="h-125 bg-black text-gray-300 overflow-y-auto p-6  "
         >
           {suggestion === "input is missing" ? (
             <div className="h-full flex flex-col items-center justify-center gap-3 ">

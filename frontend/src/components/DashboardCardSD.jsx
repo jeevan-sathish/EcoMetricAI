@@ -4,7 +4,7 @@ const DashboardCardSD = ({ title, value, icon: Icon, color }) => {
 
   return (
     <div
-      className={`p-2 bg-white rounded-2xl border border-gray-600 hover:shadow-xl transition duration-300 ${
+      className={`p-2 bg-black text-yellow-600 rounded-2xl border border-gray-600 hover:shadow-xl transition duration-300 ${
         singleData ? "min-h-20 flex items-center" : ""
       }`}
     >
@@ -13,7 +13,7 @@ const DashboardCardSD = ({ title, value, icon: Icon, color }) => {
           <Icon className="text-2xl font-extrabold " />
         </div>
         <div>
-          <h3 className="text-sm text-gray-500 ">{title}</h3>
+          <h3 className="text-sm text-gray-300 ">{title}</h3>
           <p className="text-[13px] font-bold">{value}</p>
         </div>
       </div>

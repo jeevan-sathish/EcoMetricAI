@@ -1,5 +1,6 @@
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
+// import CustomTooltip from "@/components/CustomToolTip";
 
 const OneBrandco2 = () => {
   const { brandCo2, minCo2 } = useGetBrandco2();
@@ -7,7 +8,7 @@ const OneBrandco2 = () => {
   const chartWidth = Math.max(800, brandCo2.length * 80);
 
   return (
-    <div className="w-full h-[500px] bg-white rounded-2xl shadow-lg p-2 mt-3">
+    <div className="w-full h-[500px] bg-black text-white rounded-2xl shadow-lg p-2 mt-3">
       <h1 className="text-2xl font-bold text-center mb-2">
         <span className="text-pink-500">{minCo2.brand}</span> Brand Models CO₂
         Emission Analysis
@@ -40,14 +41,18 @@ const OneBrandco2 = () => {
 
           <YAxis />
 
-          <Tooltip />
+          <Tooltip
+          // content={
+          //   <CustomTooltip active={true} payload={brandCo2} label="Civic" />
+          // }
+          />
 
           <Legend verticalAlign="top" />
 
           <Line
             type="monotone"
             dataKey="co2emission"
-            stroke="#f59e0b"
+            stroke="#22c55e"
             strokeWidth={3}
             activeDot={{ r: 8 }}
             name="CO₂ Emission"

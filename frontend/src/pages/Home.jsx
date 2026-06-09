@@ -4,6 +4,7 @@ import useGreetStore from "@/store/useGreetStore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "@/services/api";
+import Login from "@/auth/Login";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Home = () => {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center bg-linear-to-b from-white via-gray-50 to-white px-6">
+    <div className="w-full min-h-screen flex flex-col justify-center items-center bg-linear-to-b from-white via-gray-50 to-white px-6 relative">
       <div className="flex flex-row items-center gap-4 justify-center">
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 text-center">
           EcoMetric <span className="text-green-600">AI</span>
@@ -67,6 +68,7 @@ const Home = () => {
         </button>
       </div>
       <p className="text-[15px]">{message}</p>
+      <Login />
     </div>
   );
 };

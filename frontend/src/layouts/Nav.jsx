@@ -4,7 +4,7 @@ import useGreetStore from "@/store/useGreetStore";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 
 const Nav = () => {
-  const { name } = useGreetStore();
+  const { name, email, profile_picture } = useGreetStore();
   const { minCo2 } = useGetBrandco2();
 
   const GreetName = name || "Guest";
@@ -46,9 +46,22 @@ const Nav = () => {
         </p>
       </div>
 
-      <div className="flex items-center gap-2">
-        <CgProfile className="text-3xl text-black" />
-        <p className="text-black font-semibold">{GreetName}</p>
+      <div className="flex w-[250px] items-center bg-gray-600 p-1 rounded-2xl gap-2">
+        {profile_picture ? (
+          <div className="w-[40px]  h-[40px] flex justify-center items-center bg-black rounded-full">
+            <img
+              src={profile_picture}
+              alt={name}
+              width={30}
+              height={30}
+              className="rounded-full"
+            />
+          </div>
+        ) : (
+          <CgProfile className="text-3xl text-black" />
+        )}
+
+        <p className="text-white font-semibold">{GreetName}</p>
       </div>
     </nav>
   );

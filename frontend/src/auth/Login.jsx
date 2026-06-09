@@ -2,14 +2,23 @@ import { GoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useGreetStore from "../store/useGreetStore";
+import { jwtDecode } from "jwt-decode";
 
 const Login = ({ toggleFunction }) => {
+  const { setName, setEmail, setProfilePicture } = useGreetStore();
   const [token, setToken] = useState("");
   const navigate = useNavigate();
 
   function handleGoogleLogin(response) {
     if (response.credential) {
+      const user = jwtDecode(response.credential);
+      console.log(user);
       setToken(response.credential);
+      setName(user.name);
+      setEmail(user.email);
+      setProfilePicture(user.picture);
+      console.log(user.picture);
       navigate("/Analysis");
     }
   }

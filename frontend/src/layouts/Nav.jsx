@@ -2,15 +2,22 @@ import { FaLeaf } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import useGreetStore from "@/store/useGreetStore";
 import useGetBrandco2 from "@/store/useGetBrandco2";
+import { useState } from "react";
+import UserProfile from "@/components/UserProfile";
 
 const Nav = () => {
-  const { name, email, profile_picture } = useGreetStore();
+  const { name, profile_picture } = useGreetStore();
   const { minCo2 } = useGetBrandco2();
+  const [profileToggle, setProfileToggle] = useState(false);
 
   const GreetName = name || "Guest";
 
+  function handleProfileToggle() {
+    setProfileToggle((prev) => !prev);
+  }
+
   return (
-    <nav className="w-full h-16 bg-blue-600 shadow-md px-6 flex items-center justify-between">
+    <nav className="w-full h-16 bg-blue-600 shadow-md px-6 flex items-center justify-between relative">
       <div className="flex items-center gap-2">
         <FaLeaf className="text-2xl text-black" />
         <h1 className="text-2xl font-bold text-black tracking-wide">
@@ -46,7 +53,10 @@ const Nav = () => {
         </p>
       </div>
 
-      <div className="flex w-[250px] items-center bg-gray-600 p-1 rounded-2xl gap-2">
+      <div
+        onClick={handleProfileToggle}
+        className="flex w-auto pr-3 items-center bg-gray-600 p-1 rounded-2xl gap-2"
+      >
         {profile_picture ? (
           <div className="w-[40px]  h-[40px] flex justify-center items-center bg-black rounded-full">
             <img
@@ -61,8 +71,12 @@ const Nav = () => {
           <CgProfile className="text-3xl text-black" />
         )}
 
-        <p className="text-white font-semibold">{GreetName}</p>
+        <div className="flex flex-col">
+          <p className="text-white font-semibold">{GreetName}</p>
+          {/* <p className="text-[8pxpx] text-center text-gray-300">{email}</p> */}
+        </div>
       </div>
+      {profileToggle && <UserProfile handleProfToggle={handleProfileToggle} />}
     </nav>
   );
 };

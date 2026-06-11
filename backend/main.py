@@ -1,12 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from database.db import engine, Base, SessionLocal
+from model.Gauth_model import UserAuth
 
 from routes.car_routes import router as car_router
 
 app = FastAPI()
 
-
+Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,17 +19,7 @@ app.add_middleware(
 
 
 
-class User(BaseModel):
-    name: str
 
-
-
-@app.post("/greet")
-def greet_user(user: User):
-
-    return {
-        "message": f"Welcome {user.name} to EcoMetric-AI"
-    }
 
 
 

@@ -4,6 +4,6 @@ import os
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("NEON_CONNECTION_STRING")
 
 engine = create_engine(DATABASE_URL)

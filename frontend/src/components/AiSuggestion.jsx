@@ -10,6 +10,7 @@ export const AiSuggestion = () => {
   const reportRef = useRef(null);
 
   const { cars } = useCarStore();
+  console.log("car store:", cars);
 
   const [suggestion, setSuggestion] = useState("");
   const [loading, setLoading] = useState(false);

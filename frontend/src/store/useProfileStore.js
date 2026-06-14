@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const useGreetStore = create((set) => ({
+const useProfileStore = create((set) => ({
   name: "",
   email: "",
   profile_picture: "",
@@ -12,4 +12,4 @@ const useGreetStore = create((set) => ({
   setProfilePicture: (profile_picture) => set({ profile_picture }),
 }));
 
-export default useGreetStore;
+export default useProfileStore;

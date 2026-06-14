@@ -1,13 +1,14 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useGreetStore from "../store/useGreetStore";
+import useProfileStore from "../store/useProfileStore";
 import { jwtDecode } from "jwt-decode";
 
 const Login = ({ toggleFunction }) => {
-  const { setName, setEmail, setProfilePicture } = useGreetStore();
+  const { setName, setEmail, setProfilePicture } = useProfileStore();
   const [token, setToken] = useState("");
+
   const navigate = useNavigate();
 
   function handleGoogleLogin(response) {
@@ -22,6 +23,7 @@ const Login = ({ toggleFunction }) => {
       navigate("/Analysis");
     }
   }
+  localStorage.setItem("outhToken", token);
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center px-4">

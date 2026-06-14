@@ -1,18 +1,54 @@
-import { brand, makeModelMap } from "../data/VehicleData";
+import { useEffect, useState } from "react";
+import api from "@/services/api";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import useCarStore from "@/store/useCarStore";
-import api from "@/services/api";
-import { useState } from "react";
-// import axios from "axios";
 
 export default function InputForm() {
   const { setCars } = useCarStore();
   const { setBrandCo2, setMinCo2 } = useGetBrandco2();
 
+  const [brands, setBrands] = useState([]);
+  const [models, setModels] = useState([]);
+
   const [form, setForm] = useState({
     brand: "",
     model: "",
   });
+
+  useEffect(() => {
+    const fetchBrands = async () => {
+      try {
+        const response = await api.post("/brands");
+        setBrands(response.data.brands || []);
+      } catch (error) {
+        console.error("Error fetching brands:", error);
+      }
+    };
+
+    fetchBrands();
+  }, []);
+
+  useEffect(() => {
+    const fetchModels = async () => {
+      if (!form.brand) {
+        setModels([]);
+        return;
+      }
+
+      try {
+        const response = await api.post("/models", {
+          brand: form.brand,
+        });
+
+        setModels(response.data.models || []);
+      } catch (error) {
+        console.error("Error fetching models:", error);
+        setModels([]);
+      }
+    };
+
+    fetchModels();
+  }, [form.brand]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -24,22 +60,22 @@ export default function InputForm() {
     }));
   }
 
-  const models = form.brand ? makeModelMap[form.brand] || [] : [];
-
   async function handleSubmit(e) {
     e.preventDefault();
+
     try {
       const response = await api.post("/filterData", form);
 
-      setCars(response.data.data1);
-      console.log(response.data.data1);
-      setBrandCo2(response.data.data2);
-      console.log(response.data.data2);
-      setMinCo2(response.data.data3[0] || {});
-      console.log(response.data.data3[0]);
-      console.log(response.data.suggestion);
+      setCars(response.data.data1 || []);
+      setBrandCo2(response.data.data2 || []);
+      setMinCo2(response.data.data3?.[0] || {});
+
+      console.log("Cars:", response.data.data1);
+      console.log("Brand CO2:", response.data.data2);
+      console.log("Min CO2:", response.data.data3?.[0]);
+      console.log("Suggestion:", response.data.suggestion);
     } catch (error) {
-      console.log(error);
+      console.error("Error submitting form:", error);
     }
   }
 
@@ -54,13 +90,13 @@ export default function InputForm() {
         onChange={handleChange}
         className="w-full p-2 border border-gray-500 text-white rounded"
       >
-        <option className="text-black font-bold" value="">
+        <option value="" className="text-black">
           Select Brand
         </option>
 
-        {brand.map((b) => (
-          <option className="text-black bg-transparent " key={b} value={b}>
-            {b}
+        {brands.map((brand) => (
+          <option key={brand} value={brand} className="text-black">
+            {brand}
           </option>
         ))}
       </select>
@@ -72,13 +108,13 @@ export default function InputForm() {
         disabled={!form.brand}
         className="w-full p-2 border border-gray-500 text-white rounded"
       >
-        <option className="text-black font-bold" value="">
+        <option value="" className="text-black">
           Select Model
         </option>
 
-        {models.map((m) => (
-          <option className="text-black" key={m} value={m}>
-            {m}
+        {models.map((model) => (
+          <option key={model} value={model} className="text-black">
+            {model}
           </option>
         ))}
       </select>

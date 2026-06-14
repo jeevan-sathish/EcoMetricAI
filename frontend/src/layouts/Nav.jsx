@@ -1,6 +1,6 @@
 import { FaLeaf } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
-import useGreetStore from "@/store/useGreetStore";
+import useGreetStore from "@/store/useProfileStore";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import { useState } from "react";
 import UserProfile from "@/components/UserProfile";

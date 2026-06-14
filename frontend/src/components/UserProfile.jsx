@@ -1,4 +1,4 @@
-import useGreetStore from "@/store/useGreetStore";
+import useGreetStore from "@/store/useProfileStore";
 import { CgProfile } from "react-icons/cg";
 
 const UserProfile = ({ handleProfToggle }) => {

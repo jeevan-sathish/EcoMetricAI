@@ -22,5 +22,7 @@ def filter_car_data(brand, model):
         "data1": data1,
         "data2": data2,
         "data3": data3,
-        "suggestion":ai_response
+        "suggestion":ai_response,
+        
+        
     }

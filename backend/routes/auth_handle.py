@@ -70,9 +70,9 @@ async def login(
 
         return {
             "access_token": access_token,
-            "name": user.name,
-            "email": user.email,
-            "picture": user.picture
+            "name": name,
+            "email": email,
+            "picture": picture
         }
 
     except Exception as e:

@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import api from "@/services/api";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import useCarStore from "@/store/useCarStore";
+// import useProfileStore from "@/store/useProfileStore";
 
 export default function InputForm() {
   const { setCars } = useCarStore();
   const { setBrandCo2, setMinCo2 } = useGetBrandco2();
-
+  // const { setName, setEmail, setpicture } = useProfileStore();
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
 
@@ -70,6 +71,9 @@ export default function InputForm() {
           Authorization: `Bearer ${token}`,
         },
       });
+      // setName(response.data.user.name);
+      // setEmail(response.data.user.email);
+      // setpicture(response.data.user.Picture);
 
       setCars(response.data.data1 || []);
       setBrandCo2(response.data.data2 || []);

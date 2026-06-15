@@ -16,15 +16,24 @@ export const AiSuggestion = () => {
   const [loading, setLoading] = useState(false);
 
   async function fetchSuggestion() {
+    const token = localStorage.getItem("access_token");
     if (!cars?.length) return;
 
     try {
       setLoading(true);
 
-      const res = await api.post("/filterData", {
-        brand: cars[0]?.brand,
-        model: cars[0]?.model,
-      });
+      const res = await api.post(
+        "/filterData",
+        {
+          brand: cars[0]?.brand,
+          model: cars[0]?.model,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
 
       setSuggestion(res.data.suggestion);
     } catch (error) {

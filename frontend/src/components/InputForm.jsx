@@ -62,9 +62,14 @@ export default function InputForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    const token = localStorage.getItem("access_token");
 
     try {
-      const response = await api.post("/filterData", form);
+      const response = await api.post("/filterData", form, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       setCars(response.data.data1 || []);
       setBrandCo2(response.data.data2 || []);

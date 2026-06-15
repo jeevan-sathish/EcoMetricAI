@@ -1,8 +1,16 @@
 import useGreetStore from "@/store/useProfileStore";
 import { CgProfile } from "react-icons/cg";
+import { useNavigate } from "react-router-dom";
 
-const UserProfile = ({ handleProfToggle }) => {
+const UserProfile = ({ handleProfToggle, setProfileToggle }) => {
   const { name, email, profile_picture } = useGreetStore();
+  const navigate = useNavigate();
+
+  function handleLogOut() {
+    localStorage.removeItem("access_token");
+    navigate("/");
+    setProfileToggle(false);
+  }
   return (
     <div className="w-[280px] h-[250px] bg-gray-800 z-50 shadow-2xl shadow-gray-700 absolute top-[10%] left-[81%] rounded-2xl flex flex-col gap-1 items-center">
       <div className="rounded-2xl w-[90%] bg-black p-2 flex justify-center items-center m-3">
@@ -24,12 +32,21 @@ const UserProfile = ({ handleProfToggle }) => {
         </div>
       </div>
       <p className="text-white">{email}</p>
-      <button
-        onClick={handleProfToggle}
-        className="w-30 p-2 mt-[10px] text-center bg-black text-white rounded-2xl hover:bg-red-400"
-      >
-        cancel
-      </button>
+      <div className="w-full p-2 flex flex-row justify-center items-center gap-1">
+        <button
+          onClick={handleProfToggle}
+          className="w-30 p-2 mt-[10px] text-center bg-black text-white rounded-2xl hover:bg-gray-300 text-red-500"
+        >
+          cancel
+        </button>
+
+        <button
+          onClick={handleLogOut}
+          className="w-30 p-2 mt-[10px] text-center bg-black text-white rounded-2xl hover:bg-red-400"
+        >
+          LogOut
+        </button>
+      </div>
     </div>
   );
 };

@@ -83,7 +83,12 @@ const Nav = () => {
           {/* <p className="text-[8pxpx] text-center text-gray-300">{email}</p> */}
         </div>
       </div>
-      {profileToggle && <UserProfile handleProfToggle={handleProfileToggle} />}
+      {profileToggle && (
+        <UserProfile
+          handleProfToggle={handleProfileToggle}
+          setProfileToggle={setProfileToggle}
+        />
+      )}
     </nav>
   );
 };

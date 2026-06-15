@@ -16,7 +16,7 @@ def filter_car_data(brand, model):
     data3 = get_best_car(brand)
 
     ai_response =get_AI_suggestions(brand,model)
-    print(ai_response)
+    
 
     return {
         "data1": data1,

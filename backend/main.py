@@ -7,6 +7,7 @@ from model.Gauth_model import UserAuth
 from database.db import engine
 from routes.car_routes import router as car_router
 from routes.vehicle_brand_models_routes import router as vehicle_router
+from routes.auth_handle import router as auth_handle
 
 
 
@@ -26,6 +27,6 @@ app.add_middleware(
 
 
 app.include_router(vehicle_router)
-
+app.include_router(auth_handle)
 
 app.include_router(car_router)

@@ -90,7 +90,7 @@ export default function InputForm() {
         onChange={handleChange}
         className="w-full p-2 border border-gray-500 text-white rounded"
       >
-        <option value="" className="text-black">
+        <option value="" className="text-white bg-gray-800 ">
           Select Brand
         </option>
 
@@ -108,7 +108,7 @@ export default function InputForm() {
         disabled={!form.brand}
         className="w-full p-2 border border-gray-500 text-white rounded"
       >
-        <option value="" className="text-black">
+        <option value="" className="text-white bg-gray-800 ">
           Select Model
         </option>
 

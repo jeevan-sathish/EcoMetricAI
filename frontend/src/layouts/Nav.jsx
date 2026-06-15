@@ -4,6 +4,7 @@ import useGreetStore from "@/store/useProfileStore";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import { useState } from "react";
 import UserProfile from "@/components/UserProfile";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   const { name, profile_picture } = useGreetStore();
@@ -25,7 +26,13 @@ const Nav = () => {
         </h1>
       </div>
 
-      <div className="hidden  top-16 md:flex items-center gap-2 bg-transparent px-4 py-2 rounded-xl ">
+      <h1>
+        <Link to="/" className="text-white hover:text-gray-300">
+          Back
+        </Link>
+      </h1>
+
+      <div className="hidden bg-transparent top-16 md:flex items-center gap-2 text-white px-4 py-2 rounded-xl ">
         <FaLeaf className="text-green-400 text-lg animate-bounce" />
 
         <p className="text-black font-medium text-sm">

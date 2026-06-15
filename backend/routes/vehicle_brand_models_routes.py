@@ -11,10 +11,10 @@ router = APIRouter()
 def get_brands_list():
     with engine.connect() as connection:
         query = text("""
-            SELECT DISTINCT brand
-            FROM cars
+            select distinct brand
+            from cars
             ORDER BY brand ASC
-            LIMIT 10
+            LIMIT 30
         """)
 
         result = connection.execute(query)

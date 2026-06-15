@@ -3,11 +3,19 @@ import { IoCarSport } from "react-icons/io5";
 import { useState } from "react";
 
 import Login from "@/auth/Login";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [loginToggle, setLoginToggle] = useState(false);
+  const navigate = useNavigate();
 
   async function handleUserNavigation() {
+    const acces_token = localStorage.getItem("access_token");
+
+    if (acces_token) {
+      navigate("/Analysis");
+      return;
+    }
     setLoginToggle((prev) => !prev);
   }
 

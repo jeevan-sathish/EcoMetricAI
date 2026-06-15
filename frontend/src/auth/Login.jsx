@@ -1,29 +1,31 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { FcGoogle } from "react-icons/fc";
-import { useState, useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
 import useProfileStore from "../store/useProfileStore";
-import { jwtDecode } from "jwt-decode";
+import api from "@/services/api";
 
 const Login = ({ toggleFunction }) => {
   const { setName, setEmail, setProfilePicture } = useProfileStore();
-  const [token, setToken] = useState("");
 
   const navigate = useNavigate();
 
-  function handleGoogleLogin(response) {
-    if (response.credential) {
-      const user = jwtDecode(response.credential);
-      console.log(user);
-      setToken(response.credential);
-      setName(user.name);
-      setEmail(user.email);
-      setProfilePicture(user.picture);
-      console.log(user.picture);
+  async function handleGoogleLogin(response) {
+    try {
+      const res = await api.post("/auth/login", {
+        token: response.credential,
+      });
+
+      localStorage.setItem("access_token", res.data.access_token);
+
+      setName(res.data.name);
+      setEmail(res.data.email);
+      setProfilePicture(res.data.picture);
       navigate("/Analysis");
+    } catch (error) {
+      console.log("error in login", error);
     }
   }
-  localStorage.setItem("outhToken", token);
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center px-4">

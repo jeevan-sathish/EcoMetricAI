@@ -1,5 +1,6 @@
 from database.db import Base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String,DateTime
+from datetime import datetime
 
 class UserAuth(Base):
     __tablename__ = "authUsers"
@@ -8,3 +9,4 @@ class UserAuth(Base):
     name = Column(String, nullable=False)
     email = Column(String, unique=True, index=True, nullable=False)
     picture = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)

@@ -19,6 +19,17 @@ export const AiSuggestion = () => {
     const token = localStorage.getItem("access_token");
     if (!cars?.length) return;
 
+    const brand = cars[0]?.brand;
+    const model = cars[0]?.model;
+
+    const cacheKey = `${brand}-${model}`;
+    const cacheSuggestion = localStorage.getItem(cacheKey);
+
+    if (cacheSuggestion) {
+      setSuggestion(cacheSuggestion);
+      return;
+    }
+
     try {
       setLoading(true);
 
@@ -34,8 +45,10 @@ export const AiSuggestion = () => {
           },
         },
       );
+      const airesponse = res.data.suggestion;
 
-      setSuggestion(res.data.suggestion);
+      setSuggestion(airesponse);
+      localStorage.setItem(cacheKey, airesponse);
     } catch (error) {
       console.error(error);
       setSuggestion("Failed to generate AI report.");

@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import api from "@/services/api";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import useCarStore from "@/store/useCarStore";
+import { useNavigate } from "react-router-dom";
 // import useProfileStore from "@/store/useProfileStore";
 
 export default function InputForm() {
   const { setCars } = useCarStore();
   const { setBrandCo2, setMinCo2 } = useGetBrandco2();
-  const [errorMsg, setErrorMessage] = useState("");
-  const [];
+
+  const [toggleAlert, setToggleAlert] = useState(false);
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     brand: "",
@@ -83,7 +85,7 @@ export default function InputForm() {
         console.log("Min CO2:", response.data.data3?.[0]);
         console.log("Suggestion:", response.data.suggestion);
       } else {
-        setErrorMessage("user not logged in!");
+        setToggleAlert(true);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -130,12 +132,21 @@ export default function InputForm() {
         ))}
       </select>
 
-      <button
-        type="submit"
-        className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 transition duration-300"
-      >
-        Submit
-      </button>
+      {!toggleAlert ? (
+        <button
+          type="submit"
+          className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 transition duration-300"
+        >
+          Submit
+        </button>
+      ) : (
+        <button
+          onClick={() => navigate("/")}
+          className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 transition duration-300"
+        >
+          Login Here
+        </button>
+      )}
     </form>
   );
 }

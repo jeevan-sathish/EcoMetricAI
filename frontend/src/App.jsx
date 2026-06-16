@@ -1,10 +1,9 @@
 import React from "react";
 import Nav from "@/layouts/Nav";
 import { Route, Routes } from "react-router-dom";
-// import Home from "@/pages/Home";
-// import Analysis from "@/pages/Analysis";
+
 import Footer from "@/layouts/Footer";
-// import ErrorPage from "@/pages/ErrorPage";
+
 import useProfileStore from "./store/useProfileStore";
 import api from "./services/api";
 import { lazy, Suspense } from "react";

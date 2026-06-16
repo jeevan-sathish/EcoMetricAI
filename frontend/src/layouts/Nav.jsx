@@ -18,71 +18,79 @@ const Nav = () => {
   }
 
   return (
-    <nav className="w-full h-16 bg-blue-600 shadow-md px-6 flex items-center justify-between relative">
-      <div className="flex items-center gap-2">
-        <FaLeaf className="text-2xl text-black" />
-        <h1 className="text-2xl font-bold text-black tracking-wide">
-          EcoMetric-AI
-        </h1>
+    <nav className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-zinc-800 bg-zinc-950 px-6 shadow-lg">
+      <div className="flex items-center gap-3">
+        <div className="rounded-xl bg-green-500/10 p-2">
+          <FaLeaf className="text-xl text-green-500" />
+        </div>
+
+        <div>
+          <h1 className="text-xl font-bold tracking-wide text-white">
+            EcoMetric<span className="text-green-500">AI</span>
+          </h1>
+          <p className="text-[10px] text-zinc-500">
+            Sustainable Vehicle Intelligence
+          </p>
+        </div>
       </div>
 
-      <h1>
-        <Link to="/" className="text-white hover:text-gray-300">
-          Back
-        </Link>
-      </h1>
+      <Link
+        to="/"
+        className="rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition-all hover:border-green-500 hover:text-green-400"
+      >
+        Back
+      </Link>
 
-      <div className="hidden bg-transparent top-16 md:flex items-center gap-2 text-white px-4 py-2 rounded-xl ">
-        <FaLeaf className="text-green-400 text-lg animate-bounce" />
+      <div className="hidden items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 md:flex">
+        <FaLeaf className="text-green-500" />
 
-        <p className="text-black font-medium text-sm">
-          Eco Friendly Brand-Model:
-          <span className="font-medium ml-1 text-white">
+        <div className="flex items-center gap-2 text-sm">
+          <span className="text-zinc-400">Best Choice</span>
+
+          <span className="font-semibold text-green-400">
             {minCo2.brand}-{minCo2?.model || "N/A"}
           </span>
-        </p>
 
-        <span className="text-black">|</span>
+          <span className="text-zinc-700">|</span>
 
-        <p className="text-black text-sm">
-          CO₂:
-          <span className="font-bold text-white ml-1">
-            {minCo2?.co2emission || "0"}
+          <span className="text-zinc-400">
+            CO₂:
+            <span className="ml-1 font-bold text-white">
+              {minCo2?.co2emission || "0"}
+            </span>
           </span>
-        </p>
-        <span className="text-black">|</span>
 
-        <p className="text-black text-sm">
-          Engine Size:
-          <span className="font-bold ml-1 text-white">
-            {minCo2?.enginesize || "0"}
+          <span className="text-zinc-700">|</span>
+
+          <span className="text-zinc-400">
+            Engine:
+            <span className="ml-1 font-bold text-white">
+              {minCo2?.enginesize || "0"}
+            </span>
           </span>
-        </p>
+        </div>
       </div>
 
       <div
         onClick={handleProfileToggle}
-        className="flex w-auto pr-3 items-center bg-gray-600 p-1 rounded-2xl gap-2"
+        className="flex cursor-pointer items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950 px-2 py-1 transition-all hover:border-green-500"
       >
         {profile_picture ? (
-          <div className="w-[40px]  h-[40px] flex justify-center items-center bg-black rounded-full">
-            <img
-              src={profile_picture}
-              alt={name}
-              width={30}
-              height={30}
-              className="rounded-full"
-            />
-          </div>
+          <img
+            src={profile_picture}
+            alt={name}
+            className="h-10 w-10 rounded-full border border-green-500 object-cover"
+          />
         ) : (
-          <CgProfile className="text-3xl text-black" />
+          <CgProfile className="text-3xl text-zinc-400" />
         )}
 
-        <div className="flex flex-col">
-          <p className="text-white font-semibold">{GreetName}</p>
-          {/* <p className="text-[8pxpx] text-center text-gray-300">{email}</p> */}
+        <div className="hidden flex-col md:flex">
+          <p className="font-medium text-white">{GreetName}</p>
+          <p className="text-xs text-zinc-500">User Account</p>
         </div>
       </div>
+
       {profileToggle && (
         <UserProfile
           handleProfToggle={handleProfileToggle}

@@ -1,19 +1,25 @@
 import React from "react";
 import Nav from "@/layouts/Nav";
 import { Route, Routes } from "react-router-dom";
-import Home from "@/pages/Home";
-import Analysis from "@/pages/Analysis";
+// import Home from "@/pages/Home";
+// import Analysis from "@/pages/Analysis";
 import Footer from "@/layouts/Footer";
-import ErrorPage from "@/pages/ErrorPage";
+// import ErrorPage from "@/pages/ErrorPage";
 import useProfileStore from "./store/useProfileStore";
 import api from "./services/api";
+import { lazy, Suspense } from "react";
+import { Comment } from "react-loader-spinner";
+
+const Home = lazy(() => import("./pages/Home"));
+const Analysis = lazy(() => import("./pages/Analysis"));
+const ErrorPage = lazy(() => import("./pages/ErrorPage"));
 
 const App = () => {
   const { setName, setEmail, setProfilePicture } = useProfileStore();
   const token = localStorage.getItem("access_token");
   async function fetchuserProfile() {
     try {
-      if (!token) window.location.reload();
+      if (!token) return;
       const userprofileData = await api.get("/profile/profileData", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -39,11 +45,25 @@ const App = () => {
       <Nav />
 
       <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Analysis" element={<Analysis />} />
-          <Route path="/ErrorPage" element={<ErrorPage />} />
-        </Routes>
+        <Suspense
+          fallback={
+            <div className="flex h-[70vh] items-center justify-center">
+              <Comment
+                visible={true}
+                height="60"
+                width="60"
+                color="#ffffff"
+                backgroundColor="#22c55e"
+              />
+            </div>
+          }
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/Analysis" element={<Analysis />} />
+            <Route path="/ErrorPage" element={<ErrorPage />} />
+          </Routes>
+        </Suspense>
       </main>
 
       <Footer />

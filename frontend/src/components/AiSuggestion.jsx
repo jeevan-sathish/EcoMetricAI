@@ -1,10 +1,11 @@
 import api from "@/services/api";
 import { useEffect, useRef, useState } from "react";
 import { RiRobot2Line } from "react-icons/ri";
-import { Comment } from "react-loader-spinner";
+import { Comment, ThreeDots } from "react-loader-spinner";
 import useCarStore from "@/store/useCarStore";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import SpeechBox from "./SpeechBox";
 
 export const AiSuggestion = () => {
   const reportRef = useRef(null);
@@ -72,6 +73,22 @@ export const AiSuggestion = () => {
               Personalized sustainability insights
             </p>
           </div>
+          {suggestion ? (
+            <SpeechBox suggestion={suggestion} />
+          ) : (
+            <div>
+              <ThreeDots
+                visible={true}
+                height="40"
+                width="40"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          )}
         </div>
 
         <div ref={reportRef} className="max-h-[500px] overflow-y-auto p-6">

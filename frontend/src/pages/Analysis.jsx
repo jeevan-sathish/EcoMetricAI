@@ -7,6 +7,7 @@ import Note from "@/components/Note";
 import { RiRobot2Fill } from "react-icons/ri";
 import HeaderTitles from "@/components/HeaderTitles";
 import { AiSuggestion } from "@/components/AiSuggestion";
+import { IoSparklesSharp } from "react-icons/io5";
 
 const Analysis = () => {
   return (
@@ -33,13 +34,19 @@ const Analysis = () => {
         </div>
       </div>
 
-      <div className="w-full  lg:w-[30%] bg-black border border-l-gray-700 p-4  ">
-        <div className="w-full h-12 bg-green-300 text-black flex flex-row gap-3 items-center justify-start rounded-tl-2xl rounded-tr-2xl p-4">
+      <div className="w-full   lg:w-[30%] bg-black border border-l-gray-700 p-4   ">
+        <div className="w-full h-12 bg-green-300 text-black flex flex-row gap-5 items-center justify-start rounded-tl-2xl rounded-tr-2xl p-4">
           <RiRobot2Fill className="text-2xl ml-3" />
           <HeaderTitles title="AI Suggestions" />
+          <div className="flex flex-row gap-2 justify-center items-center">
+            <button className="rounded-2xl flex flex-row justify-center text-center">
+              <IoSparklesSharp /> Quick Summery
+            </button>
+          </div>
         </div>
-        <div className="w-full h-auto p-2 ">
+        <div className="w-full h-auto p-2 flex flex-col gap-6  ">
           <AiSuggestion />
+          <div className="w-full h-77.5 rounded-2xl bg-gray-950 border border-gray-800"></div>
         </div>
       </div>
     </div>

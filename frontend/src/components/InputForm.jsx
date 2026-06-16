@@ -7,7 +7,8 @@ import useCarStore from "@/store/useCarStore";
 export default function InputForm() {
   const { setCars } = useCarStore();
   const { setBrandCo2, setMinCo2 } = useGetBrandco2();
-  // const { setName, setEmail, setpicture } = useProfileStore();
+  const [errorMsg, setErrorMessage] = useState("");
+  const [];
   const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
 
@@ -66,23 +67,24 @@ export default function InputForm() {
     const token = localStorage.getItem("access_token");
 
     try {
-      const response = await api.post("/filterData", form, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      // setName(response.data.user.name);
-      // setEmail(response.data.user.email);
-      // setpicture(response.data.user.Picture);
+      if (token) {
+        const response = await api.post("/filterData", form, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-      setCars(response.data.data1 || []);
-      setBrandCo2(response.data.data2 || []);
-      setMinCo2(response.data.data3?.[0] || {});
+        setCars(response.data.data1 || []);
+        setBrandCo2(response.data.data2 || []);
+        setMinCo2(response.data.data3?.[0] || {});
 
-      console.log("Cars:", response.data.data1);
-      console.log("Brand CO2:", response.data.data2);
-      console.log("Min CO2:", response.data.data3?.[0]);
-      console.log("Suggestion:", response.data.suggestion);
+        console.log("Cars:", response.data.data1);
+        console.log("Brand CO2:", response.data.data2);
+        console.log("Min CO2:", response.data.data3?.[0]);
+        console.log("Suggestion:", response.data.suggestion);
+      } else {
+        setErrorMessage("user not logged in!");
+      }
     } catch (error) {
       console.error("Error submitting form:", error);
     }

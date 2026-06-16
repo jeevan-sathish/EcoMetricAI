@@ -3,13 +3,17 @@ import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 
 const UserProfile = ({ handleProfToggle, setProfileToggle }) => {
-  const { name, email, profile_picture } = useGreetStore();
+  const { name, email, profile_picture, setName, setEmail, setProfilePicture } =
+    useGreetStore();
   const navigate = useNavigate();
 
   function handleLogOut() {
     localStorage.removeItem("access_token");
     navigate("/");
     setProfileToggle(false);
+    setEmail("");
+    setName("");
+    setProfilePicture("");
   }
   return (
     <div className="w-[280px] h-[250px] bg-gray-800 z-50 shadow-2xl shadow-gray-700 absolute top-[10%] left-[81%] rounded-2xl flex flex-col gap-1 items-center">

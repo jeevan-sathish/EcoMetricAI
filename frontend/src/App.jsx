@@ -13,7 +13,7 @@ const App = () => {
   const token = localStorage.getItem("access_token");
   async function fetchuserProfile() {
     try {
-      if (!token) return;
+      if (!token) window.location.reload();
       const userprofileData = await api.get("/profile/profileData", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -29,6 +29,7 @@ const App = () => {
 
   React.useEffect(() => {
     const token = localStorage.getItem("access_token");
+
     if (token) {
       fetchuserProfile();
     }

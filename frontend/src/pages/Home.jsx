@@ -1,35 +1,26 @@
 import { IoCarSport } from "react-icons/io5";
-import useGreetStore from "@/store/useGreetStore";
-// import axios from "axios";
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
+
+import Login from "@/auth/Login";
 import { useNavigate } from "react-router-dom";
-import api from "@/services/api";
 
 const Home = () => {
+  const [loginToggle, setLoginToggle] = useState(false);
   const navigate = useNavigate();
-  const { name, setName } = useGreetStore();
-  const [message, setMessage] = useState("");
 
   async function handleUserNavigation() {
-    try {
-      const response = await api.post("/greet", {
-        name: name,
-      });
-      if (response.status == 200) {
-        setMessage(response.data.message);
-        setTimeout(() => {
-          navigate("/Analysis");
-        }, 500);
-      } else {
-        navigate("/");
-      }
-    } catch (error) {
-      setMessage(error);
+    const acces_token = localStorage.getItem("access_token");
+
+    if (acces_token) {
+      navigate("/Analysis");
+      return;
     }
+    setLoginToggle((prev) => !prev);
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col justify-center items-center bg-linear-to-b from-white via-gray-50 to-white px-6">
+    <div className="w-full min-h-screen flex flex-col justify-center items-center bg-linear-to-b from-white via-gray-50 to-white px-6 relative">
       <div className="flex flex-row items-center gap-4 justify-center">
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 text-center">
           EcoMetric <span className="text-green-600">AI</span>
@@ -45,28 +36,16 @@ const Home = () => {
         cleaner mobility decisions.
       </p>
 
-      <div className="mt-6 w-full max-w-md flex flex-row gap-3">
-        <input
-          className="flex-1 h-12.5 border border-gray-300 pl-3 rounded-2xl outline-none focus:border-green-500"
-          type="text"
-          placeholder="What should we call you?"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-
+      <div className="mt-6 w-full  max-w-md flex flex-row justify-center gap-3">
         <button
           onClick={handleUserNavigation}
-          disabled={!name}
-          className={`w-35 rounded-2xl text-white font-medium transition ${
-            name
-              ? "bg-green-500 hover:bg-green-600"
-              : "bg-gray-300 cursor-not-allowed"
-          }`}
+          className={`w-70 h-[70px] rounded-2xl text-white font-medium transition bg-green-500 hover:bg-green-600`}
         >
           Get Start
         </button>
       </div>
-      <p className="text-[15px]">{message}</p>
+
+      {loginToggle && <Login toggleFunction={handleUserNavigation} />}
     </div>
   );
 };

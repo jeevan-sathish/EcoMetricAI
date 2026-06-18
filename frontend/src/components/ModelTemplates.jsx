@@ -3,6 +3,7 @@ import useSingleDataStore from "@/store/useSingleDataStore";
 import { IoLogoModelS } from "react-icons/io";
 import { FaHandPointDown } from "react-icons/fa6";
 import { ThreeDots } from "react-loader-spinner";
+import LoadingSkeleton from "./LoadingSkeleton";
 
 const ModelTemplates = () => {
   const { cars } = useCarStore();
@@ -65,18 +66,23 @@ const ModelTemplates = () => {
               ))}
           </div>
         ) : (
-          <div className="w-full h-[90vh] bg-black flex flex-col border-2xl justify-center items-center">
-            <ThreeDots
+          <div className="w-full h-[90vh] bg-black flex flex-col border-2xl  items-center">
+            {/* <ThreeDots
               visible={true}
-              height="80"
-              width="80"
+              height="140"
+              width="140"
               color="#4fa94d"
               radius="9"
               ariaLabel="three-dots-loading"
               wrapperStyle={{}}
               wrapperClass=""
             />
-            <p>no models selected</p>
+
+            <p className="text-white">no models selected</p> */}
+
+            <LoadingSkeleton />
+            <LoadingSkeleton />
+            <LoadingSkeleton />
           </div>
         )}
       </div>

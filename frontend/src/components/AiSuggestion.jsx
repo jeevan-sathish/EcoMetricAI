@@ -1,31 +1,55 @@
 import api from "@/services/api";
 import { useEffect, useRef, useState } from "react";
 import { RiRobot2Line } from "react-icons/ri";
-import { Comment } from "react-loader-spinner";
+import { Comment, ThreeDots } from "react-loader-spinner";
 import useCarStore from "@/store/useCarStore";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import SpeechBox from "./SpeechBox";
 
 export const AiSuggestion = () => {
   const reportRef = useRef(null);
 
   const { cars } = useCarStore();
+  console.log("car store:", cars);
 
   const [suggestion, setSuggestion] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function fetchSuggestion() {
+    const token = localStorage.getItem("access_token");
     if (!cars?.length) return;
+
+    const brand = cars[0]?.brand;
+    const model = cars[0]?.model;
+
+    const cacheKey = `${brand}-${model}`;
+    const cacheSuggestion = localStorage.getItem(cacheKey);
+
+    if (cacheSuggestion) {
+      setSuggestion(cacheSuggestion);
+      return;
+    }
 
     try {
       setLoading(true);
 
-      const res = await api.post("/filterData", {
-        brand: cars[0]?.brand,
-        model: cars[0]?.model,
-      });
+      const res = await api.post(
+        "/filterData",
+        {
+          brand: cars[0]?.brand,
+          model: cars[0]?.model,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      const airesponse = res.data.suggestion;
 
-      setSuggestion(res.data.suggestion);
+      setSuggestion(airesponse);
+      localStorage.setItem(cacheKey, airesponse);
     } catch (error) {
       console.error(error);
       setSuggestion("Failed to generate AI report.");
@@ -49,6 +73,22 @@ export const AiSuggestion = () => {
               Personalized sustainability insights
             </p>
           </div>
+          {suggestion ? (
+            <SpeechBox suggestion={suggestion} />
+          ) : (
+            <div>
+              <ThreeDots
+                visible={true}
+                height="40"
+                width="40"
+                color="#4fa94d"
+                radius="9"
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+          )}
         </div>
 
         <div ref={reportRef} className="max-h-[500px] overflow-y-auto p-6">

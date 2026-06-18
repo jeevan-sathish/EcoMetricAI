@@ -17,6 +17,7 @@ const Login = ({ toggleFunction }) => {
       });
 
       localStorage.setItem("access_token", res.data.access_token);
+      localStorage.setItem("refresh_token", res.data.refresh_token);
 
       setName(res.data.name);
       setEmail(res.data.email);

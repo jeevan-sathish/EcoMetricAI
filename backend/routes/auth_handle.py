@@ -1,16 +1,16 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends,HTTPException
 from sqlalchemy.orm import Session
-
+from jose import jwt, JWTError
 from google.oauth2 import id_token
 from google.auth.transport import requests
-
+from schemas.refresh_token_schema import RefreshTokenSchema
 from dotenv import load_dotenv
 import os
 
 from database.db import get_db
 from schemas.auth_token_schema import AuthToken
 from model.Gauth_model import UserAuth
-from utils.jwt_handler import create_acces_token
+from utils.jwt_handler import create_acces_token , create_refresh_token
 
 load_dotenv()
 
@@ -68,8 +68,16 @@ async def login(
             }
         )
 
+        refresh_token =create_refresh_token(
+            {
+                "sub":user.email,
+                "user_id":user.id
+            }
+        )
+
         return {
             "access_token": access_token,
+            "refresh_token":refresh_token,
             "name": name,
             "email": email,
             "picture": picture
@@ -82,3 +90,31 @@ async def login(
         return {
             "message": "Login failed"
         }
+
+@router.post("/refresh")
+def refresh_token(payload:RefreshTokenSchema):
+    try:
+        decode =jwt.decode(
+            payload.refresh_token,
+            os.getenv(client_id),
+            algorithms=["HS256"]
+
+        )
+        email =decode.get("sub")
+        user_id=decoded.get("user_id")
+
+        new_access_token =create_access_token(
+            {
+                "sub":email,
+                "user_id":user_id
+            }
+        )
+
+        return {
+            "access_token":new_access_token
+        }
+    except JWTError:
+        raise HTTPException(
+            status_code=401,
+            details="Invalid refresh token"
+        )

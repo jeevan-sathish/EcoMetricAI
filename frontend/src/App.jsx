@@ -8,6 +8,7 @@ import useProfileStore from "./store/useProfileStore";
 import api from "./services/api";
 import { lazy, Suspense } from "react";
 import { Comment } from "react-loader-spinner";
+import ProtectedRoute from "./auth/ProtectedRoute";
 
 const Home = lazy(() => import("./pages/Home"));
 const Analysis = lazy(() => import("./pages/Analysis"));
@@ -38,7 +39,7 @@ const App = () => {
     if (token) {
       fetchuserProfile();
     }
-  }, [token]);
+  }, []);
   return (
     <div className="w-full h-full">
       <Nav />
@@ -59,7 +60,14 @@ const App = () => {
         >
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/Analysis" element={<Analysis />} />
+            <Route
+              path="/Analysis"
+              element={
+                <ProtectedRoute>
+                  <Analysis />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/ErrorPage" element={<ErrorPage />} />
           </Routes>
         </Suspense>

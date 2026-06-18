@@ -22,23 +22,11 @@ const SpeechBox = ({ suggestion }) => {
     window.speechSynthesis.cancel();
   }
   return (
-    <div className="flex flex-row gap-4 p-2 text-[17px] ">
-      <RiSpeakAiFill
-        onClick={handleSpeak}
-        className="text-white hover:text-green-400 "
-      />
-      <MdPauseCircle
-        onClick={handlePause}
-        className="text-white hover:text-yellow-300"
-      />
-      <GrResume
-        onClick={handleResume}
-        className="text-white hover:text-green-200"
-      />
-      <IoStopCircleSharp
-        onClick={handleStop}
-        className="text-white hover:text-red-500"
-      />
+    <div className="flex flex-row gap-4 p-2 text-[17px] text-gray-500 ">
+      <RiSpeakAiFill onClick={handleSpeak} className=" hover:text-green-400 " />
+      <MdPauseCircle onClick={handlePause} className=" hover:text-yellow-300" />
+      <GrResume onClick={handleResume} className=" hover:text-green-200" />
+      <IoStopCircleSharp onClick={handleStop} className=" hover:text-red-500" />
     </div>
   );
 };

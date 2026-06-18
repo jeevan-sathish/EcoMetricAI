@@ -8,6 +8,7 @@ import { RiRobot2Fill } from "react-icons/ri";
 import HeaderTitles from "@/components/HeaderTitles";
 import { AiSuggestion } from "@/components/AiSuggestion";
 import { IoSparklesSharp } from "react-icons/io5";
+import AllProfileList from "@/components/AllProfileList";
 
 const Analysis = () => {
   return (
@@ -46,7 +47,7 @@ const Analysis = () => {
         </div>
         <div className="w-full h-auto p-2 flex flex-col gap-6  ">
           <AiSuggestion />
-          <div className="w-full h-77.5 rounded-2xl bg-gray-950 border border-gray-800"></div>
+          <AllProfileList />
         </div>
       </div>
     </div>

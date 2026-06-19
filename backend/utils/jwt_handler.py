@@ -12,7 +12,7 @@ def create_acces_token(data:dict):
 
     to_encode =data.copy()
 
-    expire =datetime.now(timezone.utc) + timedelta(minutes=15)
+    expire =datetime.utcnow() + timedelta(minutes=15)
 
     to_encode.update({
         "exp":expire
@@ -29,7 +29,7 @@ def create_refresh_token(data:dict):
     to_encode=data.copy()
     
     expire =(
-        datetime.mow(timezone.utc)+timedelta(days=7)
+        datetime.utcnow()+timedelta(days=7)
     )
 
     to_encode.update({

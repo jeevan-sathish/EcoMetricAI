@@ -15,11 +15,17 @@ from routes.all_profiles_route import router as allprofileroute
 
 app = FastAPI()
 
+origins = [
+    "http://localhost:5173",
+    "https://eco-metric-ai.vercel.app",
+]
+
+
 Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

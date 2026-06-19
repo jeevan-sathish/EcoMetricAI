@@ -3,9 +3,11 @@ import api from "@/services/api";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import useCarStore from "@/store/useCarStore";
 import { useNavigate } from "react-router-dom";
+import useModelLoadingStore from "@/store/useModelLoadingStore";
 // import useProfileStore from "@/store/useProfileStore";
 
 export default function InputForm() {
+  const { setModelLoading } = useModelLoadingStore();
   const { setCars } = useCarStore();
   const { setBrandCo2, setMinCo2 } = useGetBrandco2();
 
@@ -66,29 +68,36 @@ export default function InputForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+
     const token = localStorage.getItem("access_token");
 
+    if (!token) {
+      setToggleAlert(true);
+      setModelLoading(false);
+      return;
+    }
+
     try {
-      if (token) {
-        const response = await api.post("/filterData", form, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+      setModelLoading(true);
 
-        setCars(response.data.data1 || []);
-        setBrandCo2(response.data.data2 || []);
-        setMinCo2(response.data.data3?.[0] || {});
+      const response = await api.post("/filterData", form, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-        console.log("Cars:", response.data.data1);
-        console.log("Brand CO2:", response.data.data2);
-        console.log("Min CO2:", response.data.data3?.[0]);
-        console.log("Suggestion:", response.data.suggestion);
-      } else {
-        setToggleAlert(true);
-      }
+      setCars(response.data.data1 || []);
+      setBrandCo2(response.data.data2 || []);
+      setMinCo2(response.data.data3?.[0] || {});
+
+      console.log("Cars:", response.data.data1);
+      console.log("Brand CO2:", response.data.data2);
+      console.log("Min CO2:", response.data.data3?.[0]);
+      console.log("Suggestion:", response.data.suggestion);
     } catch (error) {
       console.error("Error submitting form:", error);
+    } finally {
+      setModelLoading(false);
     }
   }
 

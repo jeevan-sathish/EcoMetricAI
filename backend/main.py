@@ -1,9 +1,9 @@
-from sqlalchemy import text
+
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database.db import engine, Base, SessionLocal
-from model.Gauth_model import UserAuth
+from database.db import engine, Base 
+
 from database.db import engine
 from routes.car_routes import router as car_router
 from routes.vehicle_brand_models_routes import router as vehicle_router
@@ -25,6 +25,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def root():
+    return {"message": "EcoMetricAI API Running"}
 
 
 

@@ -15,6 +15,7 @@ const Login = ({ toggleFunction }) => {
       const res = await api.post("/auth/login", {
         token: response.credential,
       });
+      console.log(response.credential);
 
       localStorage.setItem("access_token", res.data.access_token);
       localStorage.setItem("refresh_token", res.data.refresh_token);

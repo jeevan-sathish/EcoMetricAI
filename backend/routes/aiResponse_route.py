@@ -10,7 +10,7 @@ def get_aisuggestion(inp:UserInput):
     print("suggeston route hit")
     model =inp.model
     brand=inp.brand
-    response =get_AI_suggestions(model,brand)
+    response =get_AI_suggestions(brand,model)
     print("response hit")
 
     return {

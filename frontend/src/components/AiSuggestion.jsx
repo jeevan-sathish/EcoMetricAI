@@ -12,47 +12,53 @@ export const AiSuggestion = () => {
 
   const { cars } = useCarStore();
   // console.log("car store:", cars);
+  console.log("BRANCH FEATURE EXECUTING----------------------->");
 
   const [suggestion, setSuggestion] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function fetchSuggestion() {
     console.log("fetchsuggestion called");
-    // const token = localStorage.getItem("access_token");
+
     if (!cars?.length) return;
 
     const brand = cars[0]?.brand;
     const model = cars[0]?.model;
 
     const cacheKey = `${brand}-${model}`;
+
     const cacheSuggestion = localStorage.getItem(cacheKey);
 
-    if (cacheSuggestion) {
+    if (
+      cacheSuggestion &&
+      cacheSuggestion !== "undefined" &&
+      cacheSuggestion !== "null"
+    ) {
+      console.log("Using cache");
       setSuggestion(cacheSuggestion);
       return;
     }
-
     try {
       setLoading(true);
 
-      const res = await api.post(
-        "/aisuggestion",
-        {
-          brand: cars[0]?.brand,
-          model: cars[0]?.model,
-        },
-        // {
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        // },
-      );
-      const airesponse = res.data.suggestion;
-      console.log("airesponse", airesponse);
+      const res = await api.post("/aisuggestion", {
+        brand,
+        model,
+      });
+
+      console.log("FULL RESPONSE:", res.data);
+
+      const airesponse = res.data?.suggestion;
+
+      if (!airesponse) {
+        throw new Error("Empty AI response");
+      }
+
       setSuggestion(airesponse);
       localStorage.setItem(cacheKey, airesponse);
     } catch (error) {
-      console.error(error);
+      console.log("ERROR:", error);
+
       setSuggestion("Failed to generate AI report.");
     } finally {
       setLoading(false);

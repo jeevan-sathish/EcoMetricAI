@@ -4,7 +4,7 @@ import useGreetStore from "@/store/useProfileStore";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import { useState } from "react";
 import UserProfile from "@/components/UserProfile";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const Nav = () => {
   const { name, profile_picture } = useGreetStore();
@@ -34,12 +34,12 @@ const Nav = () => {
         </div>
       </div>
 
-      <Link
+      {/* <Link
         to="/"
         className="rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition-all hover:border-green-500 hover:text-green-400"
       >
         Back
-      </Link>
+      </Link> */}
 
       <div className="hidden items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 md:flex">
         <FaLeaf className="text-green-500" />

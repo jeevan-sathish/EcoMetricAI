@@ -43,12 +43,11 @@ const OneBrandco2 = () => {
         Browse models using navigation
       </p>
 
-      {/* CHART */}
-      <div className="w-full h-[420px]">
+      <div className="w-full h-[410px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={visibleData}
-            margin={{ top: 20, right: 10, left: 0, bottom: 30 }}
+            margin={{ top: 20, right: 0, left: 0, bottom: 30 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#1f1f1f" />
 
@@ -96,7 +95,6 @@ const OneBrandco2 = () => {
         </ResponsiveContainer>
       </div>
 
-      {/* NAVIGATION (BELOW CHART - PROFESSIONAL STYLE) */}
       <div className="flex items-center justify-between mt-4 px-2">
         <button
           onClick={() => setStartIndex((prev) => Math.max(prev - PAGE_SIZE, 0))}

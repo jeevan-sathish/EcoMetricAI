@@ -7,7 +7,12 @@ router=APIRouter()
 
 @router.post('/aisuggestion')
 def get_aisuggestion(inp:UserInput,user=Depends(get_current_user)):
+    print("suggeston route hit")
     model =inp.model
     brand=inp.brand
+    response =get_AI_suggestions(model,brand)
+    print("response hit")
 
-    return get_AI_suggestions(model,brand)
+    return {
+        "suggestion":response
+    }

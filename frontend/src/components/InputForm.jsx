@@ -94,7 +94,7 @@ export default function InputForm() {
       console.log("Cars:", response.data.data1);
       console.log("Brand CO2:", response.data.data2);
       console.log("Min CO2:", response.data.data3?.[0]);
-      console.log("Suggestion:", response.data.suggestion);
+      // console.log("Suggestion:", response.data.suggestion);
     } catch (error) {
       console.log("FULL ERROR:", error);
       console.log("MESSAGE:", error.message);

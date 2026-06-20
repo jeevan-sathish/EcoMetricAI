@@ -11,7 +11,7 @@ export const AiSuggestion = () => {
   const reportRef = useRef(null);
 
   const { cars } = useCarStore();
-  console.log("car store:", cars);
+  // console.log("car store:", cars);
 
   const [suggestion, setSuggestion] = useState("");
   const [loading, setLoading] = useState(false);
@@ -48,7 +48,7 @@ export const AiSuggestion = () => {
         // },
       );
       const airesponse = res.data.suggestion;
-      console.log("airesponce hit");
+      console.log("airesponse", airesponse);
       setSuggestion(airesponse);
       localStorage.setItem(cacheKey, airesponse);
     } catch (error) {

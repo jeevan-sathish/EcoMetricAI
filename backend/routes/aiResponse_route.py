@@ -6,7 +6,7 @@ from repositories.car_repository import get_AI_suggestions
 router=APIRouter()
 
 @router.post('/aisuggestion')
-def get_aisuggestion(inp:UserInput,user=Depends(get_current_user)):
+def get_aisuggestion(inp:UserInput):
     print("suggeston route hit")
     model =inp.model
     brand=inp.brand

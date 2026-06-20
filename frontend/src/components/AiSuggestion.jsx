@@ -47,7 +47,7 @@ export const AiSuggestion = () => {
         },
       );
       const airesponse = res.data.suggestion;
-
+      console.log("airesponce hit");
       setSuggestion(airesponse);
       localStorage.setItem(cacheKey, airesponse);
     } catch (error) {

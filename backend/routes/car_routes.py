@@ -18,3 +18,4 @@ def filter_data(inp: UserInput,user=Depends(get_current_user)):
         inp.model,
         
     )
+

@@ -35,7 +35,7 @@ export const AiSuggestion = () => {
       setLoading(true);
 
       const res = await api.post(
-        "/filterData",
+        "/aisuggestion",
         {
           brand: cars[0]?.brand,
           model: cars[0]?.model,

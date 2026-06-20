@@ -136,12 +136,12 @@ def get_AI_suggestions(brand, model):
 
         
 
-    except RateLimitError:
-        return "AI suggestions temporarily unavailable. Groq quota exceeded."
+    # except RateLimitError:
+    #     return "AI suggestions temporarily unavailable. Groq quota exceeded."
 
-    except Exception as e:
-        print("AI ERROR:", str(e))
-        return "Unable to generate AI suggestions."
+    # except Exception as e:
+    #     print("AI ERROR:", str(e))
+    #     return "Unable to generate AI suggestions."
 
     
         

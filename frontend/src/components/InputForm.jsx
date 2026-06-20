@@ -8,6 +8,7 @@ import useModelLoadingStore from "@/store/useModelLoadingStore";
 
 export default function InputForm() {
   const { setModelLoading } = useModelLoadingStore();
+  const { modelLoading } = useModelLoadingStore();
   const { setCars } = useCarStore();
   const { setBrandCo2, setMinCo2 } = useGetBrandco2();
 
@@ -85,7 +86,7 @@ export default function InputForm() {
           Authorization: `Bearer ${token}`,
         },
       });
-
+      console.log(response.data.data1);
       setCars(response.data.data1 || []);
       setBrandCo2(response.data.data2 || []);
       setMinCo2(response.data.data3?.[0] || {});
@@ -95,7 +96,11 @@ export default function InputForm() {
       console.log("Min CO2:", response.data.data3?.[0]);
       console.log("Suggestion:", response.data.suggestion);
     } catch (error) {
-      console.error("Error submitting form:", error);
+      console.log("FULL ERROR:", error);
+      console.log("MESSAGE:", error.message);
+      console.log("CODE:", error.code);
+      console.log("RESPONSE:", error.response);
+      console.log("REQUEST:", error.request);
     } finally {
       setModelLoading(false);
     }
@@ -144,9 +149,10 @@ export default function InputForm() {
       {!toggleAlert ? (
         <button
           type="submit"
+          disabled={modelLoading}
           className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 transition duration-300"
         >
-          Submit
+          {modelLoading ? "loading..." : "Submit"}
         </button>
       ) : (
         <button

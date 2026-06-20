@@ -9,23 +9,35 @@ from repositories.car_repository import (
 
 def filter_car_data(brand, model):
 
-    ai_response = get_AI_suggestions(brand,model)
+    try:
+        print("step1")
+        data1 = get_selected_car(brand, model)
+        
+        print("step2")
+        
+        data2 = get_lowest_emission_cars(brand)
+        print("step3")
+        data3 = get_best_car(brand)
+        print("step4")
+        ai_response = get_AI_suggestions(brand, model)
 
-    data1 = get_selected_car(brand, model)
+        return {
+            
+            "data1": data1,
+            "data2": data2,
+            "data3": data3,
+            "suggestion": ai_response,
+        }
 
-    data2 = get_lowest_emission_cars(brand)
+    except Exception as e:
+        print("error:", str(e))
 
-    data3 = get_best_car(brand)
-
+        return {
+            "suggestion": "Server error",
+            "data1": [],
+            "data2": [],
+            "data3": [],
+        }
+        
+        
     
-    
-
-    return {
-        "suggestion":ai_response,
-        "data1": data1,
-        "data2": data2,
-        "data3": data3,
-        
-        
-        
-    }

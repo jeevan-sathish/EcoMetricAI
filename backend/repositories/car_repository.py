@@ -3,6 +3,7 @@ from database.db import engine
 from prompts.Vehicle_analysis_prompt import get_vehicle_analysis_prompt 
 from groq import Groq
 from dotenv import load_dotenv
+from groq import RateLimitError
 import os
 load_dotenv()
 
@@ -78,57 +79,67 @@ def get_best_car(brand):
         return [dict(row._mapping) for row in result.fetchall()]
     
 
+
+
 def get_AI_suggestions(brand, model):
 
     if not brand or not model:
-        return "input is missing"
+        return "Input is missing"
+    
+    return f"this is AI response {model}, {brand}"
 
-    with engine.connect() as connection:
-        data = connection.execute(
-            text("""
-                SELECT
-                    brand,
-                    model,
-                    fueltype,
-                    co2emission,
-                    combmpg,
-                    vehicleclass
-                FROM cars
-                ORDER BY co2emission ASC
-                LIMIT 20
-            """)
-        ).fetchall()
+    # try:
+        # with engine.connect() as connection:
+        #     data = connection.execute(
+        #         text("""
+        #             SELECT
+        #                 brand,
+        #                 model,
+        #                 fueltype,
+        #                 co2emission,
+        #                 combmpg,
+        #                 vehicleclass
+        #             FROM cars
+        #             ORDER BY co2emission ASC
+        #             LIMIT 5
+        #         """)
+        #     ).fetchall()
 
-        result = [
-            dict(row._mapping)
-            for row in data
-        ]
+        #     result = [dict(row._mapping) for row in data]
 
-        user_preferred_brand = get_selected_car(
-            brand,
-            model
-        )
-        prompt = get_vehicle_analysis_prompt(
-            result,
-            user_preferred_brand
-        )
-        response = client.chat.completions.create(
+        #     user_preferred_brand = get_selected_car(
+        #         brand,
+        #         model
+        #     )
 
-            model="llama-3.3-70b-versatile",
+        #     prompt = get_vehicle_analysis_prompt(
+        #         result,
+        #         user_preferred_brand
+        #     )
 
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt
-                }
+        #     response = client.chat.completions.create(
+        #         model="llama-3.1-8b-instant",  # smaller model
+        #         messages=[
+        #             {
+        #                 "role": "user",
+        #                 "content": prompt
+        #             }
+        #         ],
+        #         temperature=0.5,
+        #         max_tokens=300
+        #     )
+        #     print(response)
 
-            ],
+        #     return response.choices[0].message.content
 
-            temperature=0.5,
-            max_tokens=700
-        )
+        
 
-        return response.choices[0].message.content
+    # except RateLimitError:
+    #     return "AI suggestions temporarily unavailable. Groq quota exceeded."
+
+    # except Exception as e:
+    #     print("AI ERROR:", str(e))
+    #     return "Unable to generate AI suggestions."
 
     
         

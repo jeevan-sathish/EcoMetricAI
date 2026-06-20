@@ -19,11 +19,13 @@ oauth2_schem =OAuth2PasswordBearer(
 
 def get_current_user(token:str = Depends(oauth2_schem),db:Session =Depends(get_db)):
     try:
+        print("auth started")
         payload =jwt.decode(
             token,
             secret_key,
             algorithms=[algo]
         )
+        print(payload)
 
         email =payload.get("sub")
         user_id =payload.get("user_id")
@@ -37,6 +39,8 @@ def get_current_user(token:str = Depends(oauth2_schem),db:Session =Depends(get_d
             db.query(UserAuth).filter(UserAuth.id == user_id).first()
         )
 
+        print("user",user)
+
         if not user:
             raise HTTPException(
                 status_code=404,
@@ -44,6 +48,7 @@ def get_current_user(token:str = Depends(oauth2_schem),db:Session =Depends(get_d
             )
         
         return user
+    
     
     except JWTError:
 

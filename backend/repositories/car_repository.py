@@ -86,51 +86,53 @@ def get_AI_suggestions(brand, model):
     if not brand or not model:
         return "Input is missing"
     
+    return f"AI responce posed {model} and {brand}"
+    
     
 
-    try:
-        with engine.connect() as connection:
-            data = connection.execute(
-                text("""
-                    SELECT
-                        brand,
-                        model,
-                        fueltype,
-                        co2emission,
-                        combmpg,
-                        vehicleclass
-                    FROM cars
-                    ORDER BY co2emission ASC
-                    LIMIT 5
-                """)
-            ).fetchall()
+    # try:
+    #     with engine.connect() as connection:
+    #         data = connection.execute(
+    #             text("""
+    #                 SELECT
+    #                     brand,
+    #                     model,
+    #                     fueltype,
+    #                     co2emission,
+    #                     combmpg,
+    #                     vehicleclass
+    #                 FROM cars
+    #                 ORDER BY co2emission ASC
+    #                 LIMIT 5
+    #             """)
+    #         ).fetchall()
 
-            result = [dict(row._mapping) for row in data]
+    #         result = [dict(row._mapping) for row in data]
 
-            user_preferred_brand = get_selected_car(
-                brand,
-                model
-            )
+    #         user_preferred_brand = get_selected_car(
+    #             brand,
+    #             model
+    #         )
 
-            prompt = get_vehicle_analysis_prompt(
-                result,
-                user_preferred_brand
-            )
+    #         prompt = get_vehicle_analysis_prompt(
+    #             result,
+    #             user_preferred_brand
+    #         )
 
-            response = client.chat.completions.create(
-                model="llama-3.1-8b-instant",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": prompt
-                    }
-                ],
-                temperature=0.5,
-                max_tokens=300
-            )
-            print(response)
+    #         response = client.chat.completions.create(
+    #             model="llama-3.1-8b-instant",
+    #             messages=[
+    #                 {
+    #                     "role": "user",
+    #                     "content": prompt
+    #                 }
+    #             ],
+    #             temperature=0.5,
+    #             max_tokens=300
+    #         )
+    #         print(response)
 
-            return response.choices[0].message.content
+    #         return response.choices[0].message.content
 
         
 

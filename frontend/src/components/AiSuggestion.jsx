@@ -36,10 +36,10 @@ export const AiSuggestion = () => {
 
       const res = await api.post(
         "/aisuggestion",
-        {
-          brand: cars[0]?.brand,
-          model: cars[0]?.model,
-        },
+        // {
+        //   brand: cars[0]?.brand,
+        //   model: cars[0]?.model,
+        // },
         {
           headers: {
             Authorization: `Bearer ${token}`,

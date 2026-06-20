@@ -17,7 +17,8 @@ export const AiSuggestion = () => {
   const [loading, setLoading] = useState(false);
 
   async function fetchSuggestion() {
-    const token = localStorage.getItem("access_token");
+    console.log("fetchsuggestion called");
+    // const token = localStorage.getItem("access_token");
     if (!cars?.length) return;
 
     const brand = cars[0]?.brand;

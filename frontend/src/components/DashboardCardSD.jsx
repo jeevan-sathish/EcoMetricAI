@@ -1,20 +1,37 @@
-import useSingleDataStore from "../store/useSingleDataStore";
-const DashboardCardSD = ({ title, value, icon: Icon, color }) => {
-  const { singleData } = useSingleDataStore();
+import { useEffect, useState } from "react";
+
+const DashboardCardSD = ({ title, value, icon: Icon, color, loading }) => {
+  const [showSkeleton, setShowSkeleton] = useState(true);
+
+  useEffect(() => {
+    if (!loading) {
+      const timer = setTimeout(() => setShowSkeleton(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
+
+  if (loading || showSkeleton) {
+    return (
+      <div className="p-4 rounded-2xl border border-gray-700 bg-zinc-900 animate-pulse">
+        <div className="h-3 w-24 bg-zinc-700 rounded mb-4" />
+        <div className="flex items-center justify-between">
+          <div className="h-5 w-20 bg-zinc-700 rounded" />
+          <div className="h-8 w-8 bg-zinc-700 rounded-full" />
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div
-      className={`p-2 bg-black text-yellow-600 rounded-2xl border border-gray-600 hover:shadow-xl transition duration-300 ${
-        singleData ? "min-h-20 flex items-center" : ""
-      }`}
-    >
-      <div className="flex gap-4  items-center">
-        <div className={`p-3 rounded-full bg-gray-100 ${color} text-center`}>
-          <Icon className="text-2xl font-extrabold " />
+    <div className="p-4 max-h-[120px] bg-black text-white rounded-2xl border border-gray-700 hover:shadow-xl transition duration-300">
+      <div className="flex gap-4 items-center">
+        <div className={`p-3 rounded-full bg-gray-100 ${color}`}>
+          <Icon className="text-2xl" />
         </div>
+
         <div>
-          <h3 className="text-sm text-gray-300 ">{title}</h3>
-          <p className="text-[13px] font-bold">{value}</p>
+          <h3 className="text-sm text-gray-400">{title}</h3>
+          <p className="text-[12px] font-bold text-amber-400">{value ?? "—"}</p>
         </div>
       </div>
     </div>

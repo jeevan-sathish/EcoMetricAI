@@ -23,7 +23,7 @@ const AllProfileList = () => {
     handleAllUsersProfile();
   }, []);
   return (
-    <div className="w-full h-80 rounded-2xl flex flex-col gap-2 bg-gray-950 border border-gray-800 p-5">
+    <div className="w-full h-90 rounded-2xl flex flex-col gap-3 bg-gray-950 border border-gray-800 p-5">
       <div className="flex items-center gap-1 mb-0">
         <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
           <FaAward className="text-amber-400 text-xl" />
@@ -59,7 +59,7 @@ const AllProfileList = () => {
         </div>
       </div>
       <div>
-        <div className="text-white text-lg font-semibold mb-2 flex flex-row item-center text-center gap-3 ">
+        <div className="text-white text-lg font-semibold mt-3 mb-2 flex flex-row item-center text-center gap-3 ">
           <HiMiniUsers className="text-[28px] text-cyan-500" />
           <p>Our Trusted Users</p>
         </div>

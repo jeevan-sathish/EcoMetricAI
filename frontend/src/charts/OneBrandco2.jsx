@@ -35,8 +35,8 @@ const OneBrandco2 = () => {
   return (
     <div className="w-full bg-black text-white rounded-2xl shadow-lg p-4 mt-3">
       <h1 className="text-xl md:text-2xl font-bold text-center mb-1">
-        <span className="text-pink-500">{minCo2?.brand}</span> CO₂ Emission
-        Overview
+        <span className="text-pink-500">{minCo2?.brand}</span> Brands CO₂
+        Emission Overview
       </h1>
 
       <p className="text-center text-gray-400 text-sm mb-4">

@@ -31,16 +31,26 @@ api.interceptors.request.use((config) => {
 
 api.interceptors.response.use(
   (response) => response,
+
   async (error) => {
     const originalRequest = error.config;
 
+    if (!originalRequest) {
+      return Promise.reject(error);
+    }
+
+    // Skip refresh endpoint itself
+    if (originalRequest.url?.includes("/auth/refresh")) {
+      return Promise.reject(error);
+    }
+
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
           .then((token) => {
-            originalRequest.headers.Authorization = "Bearer " + token;
+            originalRequest.headers.Authorization = `Bearer ${token}`;
             return api(originalRequest);
           })
           .catch((err) => Promise.reject(err));
@@ -52,7 +62,14 @@ api.interceptors.response.use(
       try {
         const refreshToken = localStorage.getItem("refresh_token");
 
-        const res = await api.post("/auth/refresh", {
+        if (!refreshToken) {
+          localStorage.removeItem("access_token");
+          localStorage.removeItem("refresh_token");
+          window.location.href = "/";
+          return Promise.reject(error);
+        }
+
+        const res = await axios.post("http://localhost:8000/auth/refresh", {
           refresh_token: refreshToken,
         });
 
@@ -60,9 +77,11 @@ api.interceptors.response.use(
 
         localStorage.setItem("access_token", newToken);
 
-        api.defaults.headers.common.Authorization = "Bearer " + newToken;
+        api.defaults.headers.common.Authorization = `Bearer ${newToken}`;
 
         processQueue(null, newToken);
+
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
 
         return api(originalRequest);
       } catch (err) {
@@ -72,6 +91,7 @@ api.interceptors.response.use(
         localStorage.removeItem("refresh_token");
 
         window.location.href = "/";
+
         return Promise.reject(err);
       } finally {
         isRefreshing = false;

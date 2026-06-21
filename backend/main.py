@@ -11,6 +11,8 @@ from routes.auth_handle import router as auth_handle
 from routes.user_profile_route import router as profile_router
 from routes.aiResponse_route import router as airesponse_router
 from routes.all_profiles_route import router as allprofileroute
+from routes.load_dataset import router as dataset_routers
+
 
 
 
@@ -43,3 +45,5 @@ app.include_router(allprofileroute)
 app.include_router(car_router)
 print("router hitting")
 app.include_router(airesponse_router)
+print("dataset loading router hit...")
+app.include_router(dataset_routers)

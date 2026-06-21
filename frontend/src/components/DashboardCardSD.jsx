@@ -23,7 +23,7 @@ const DashboardCardSD = ({ title, value, icon: Icon, color, loading }) => {
   }
 
   return (
-    <div className="p-4 max-h-[120px] bg-black text-white rounded-2xl border border-gray-700 hover:shadow-xl transition duration-300">
+    <div className="p-4 h-[80px] bg-black text-white rounded-2xl border border-gray-700 hover:shadow-xl transition duration-300">
       <div className="flex gap-4 items-center">
         <div className={`p-3 rounded-full bg-gray-100 ${color}`}>
           <Icon className="text-2xl" />
@@ -31,7 +31,7 @@ const DashboardCardSD = ({ title, value, icon: Icon, color, loading }) => {
 
         <div>
           <h3 className="text-sm text-gray-400">{title}</h3>
-          <p className="text-[12px] font-bold text-amber-400">{value ?? "—"}</p>
+          <p className="text-[11px] font-bold text-amber-400">{value ?? "—"}</p>
         </div>
       </div>
     </div>

@@ -101,9 +101,9 @@ def refresh_token(payload:RefreshTokenSchema):
 
         )
         email =decode.get("sub")
-        user_id=decoded.get("user_id")
+        user_id=decode.get("user_id")
 
-        new_access_token =create_access_token(
+        new_access_token =create_acces_token(
             {
                 "sub":email,
                 "user_id":user_id

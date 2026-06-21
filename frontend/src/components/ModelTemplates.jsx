@@ -28,7 +28,7 @@ const ModelTemplates = () => {
       <div className="bg-black">
         {!modelLoading ? (
           <div
-            className={`w-full h-[90vh] bg-black flex flex-col border-2xl ${size > 3 ? "overflow-y-scroll" : ""}`}
+            className={`w-full h-[100vh] bg-black flex flex-col border-2xl ${size > 3 ? "overflow-y-scroll" : ""}`}
           >
             {cars &&
               cars.map((ele, i) => (

@@ -40,7 +40,7 @@ export const AiSuggestion = () => {
     }
     try {
       setLoading(true);
-
+      console.log("hitting aisuggestion router.........");
       const res = await api.post("/aisuggestion", {
         brand,
         model,

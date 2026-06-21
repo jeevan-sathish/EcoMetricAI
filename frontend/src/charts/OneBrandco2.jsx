@@ -47,7 +47,7 @@ const OneBrandco2 = () => {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={visibleData}
-            margin={{ top: 20, right: 0, left: 0, bottom: 30 }}
+            margin={{ top: 20, right: 25, left: 0, bottom: 30 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#1f1f1f" />
 

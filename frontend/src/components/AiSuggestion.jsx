@@ -6,8 +6,10 @@ import useCarStore from "@/store/useCarStore";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import SpeechBox from "./SpeechBox";
+import useAIassistantToggleStore from "@/store/useAIassistentToggleStore";
 
 export const AiSuggestion = () => {
+  const { toggleAiMode } = useAIassistantToggleStore();
   const reportRef = useRef(null);
 
   const { cars } = useCarStore();
@@ -67,8 +69,10 @@ export const AiSuggestion = () => {
   }
 
   useEffect(() => {
-    fetchSuggestion();
-  }, [cars]);
+    if (toggleAiMode) {
+      fetchSuggestion();
+    }
+  }, [cars, toggleAiMode]);
 
   return (
     <div className="w-full">

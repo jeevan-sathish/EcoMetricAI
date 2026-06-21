@@ -22,6 +22,7 @@ const Login = ({ toggleFunction }) => {
       setName(res.data.name);
       setEmail(res.data.email);
       setProfilePicture(res.data.picture);
+
       navigate("/Analysis");
     } catch (error) {
       console.log("error in login", error);
@@ -52,17 +53,6 @@ const Login = ({ toggleFunction }) => {
           Sign in securely with your Google account to access AI-powered vehicle
           analysis, sustainability insights, and personalized recommendations.
         </p>
-
-        {/* <div className="mt-6 flex items-center gap-2">
-          <div
-            className={`w-2 h-2 rounded-full ${
-              token ? "bg-green-500" : "bg-red-500"
-            }`}
-          />
-          <span className="text-sm">
-            {token ? "Login Successful" : "Waiting for Login"}
-          </span>
-        </div> */}
 
         <button
           onClick={toggleFunction}

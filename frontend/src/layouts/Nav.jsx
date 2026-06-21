@@ -5,10 +5,12 @@ import useGetBrandco2 from "@/store/useGetBrandco2";
 import { useState } from "react";
 import UserProfile from "@/components/UserProfile";
 import AiToggleButton from "@/components/AiToggleButton";
+import { useLocation } from "react-router-dom";
 
 // import { Link } from "react-router-dom";
 
 const Nav = () => {
+  const location = useLocation();
   const { name, profile_picture } = useGreetStore();
   const { minCo2 } = useGetBrandco2();
   const [profileToggle, setProfileToggle] = useState(false);
@@ -35,38 +37,39 @@ const Nav = () => {
           </p>
         </div>
       </div>
+      {location.pathname === "/Analysis" && (
+        <div className="hidden items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 md:flex">
+          <FaLeaf className="text-green-500" />
 
-      <div className="hidden items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 md:flex">
-        <FaLeaf className="text-green-500" />
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-zinc-400">Best Choice</span>
 
-        <div className="flex items-center gap-2 text-sm">
-          <span className="text-zinc-400">Best Choice</span>
-
-          <span className="font-semibold text-green-400">
-            {minCo2.brand}-{minCo2?.model || "N/A"}
-          </span>
-
-          <span className="text-zinc-700">|</span>
-
-          <span className="text-zinc-400">
-            CO₂:
-            <span className="ml-1 font-bold text-white">
-              {minCo2?.co2emission || "0"}
+            <span className="font-semibold text-green-400">
+              {minCo2.brand}-{minCo2?.model || "N/A"}
             </span>
-          </span>
 
-          <span className="text-zinc-700">|</span>
+            <span className="text-zinc-700">|</span>
 
-          <span className="text-zinc-400">
-            Engine:
-            <span className="ml-1 font-bold text-white">
-              {minCo2?.enginesize || "0"}
+            <span className="text-zinc-400">
+              CO₂:
+              <span className="ml-1 font-bold text-white">
+                {minCo2?.co2emission || "0"}
+              </span>
             </span>
-          </span>
+
+            <span className="text-zinc-700">|</span>
+
+            <span className="text-zinc-400">
+              Engine:
+              <span className="ml-1 font-bold text-white">
+                {minCo2?.enginesize || "0"}
+              </span>
+            </span>
+          </div>
         </div>
-      </div>
+      )}
 
-      <AiToggleButton />
+      {location.pathname === "/Analysis" && <AiToggleButton />}
 
       <div
         onClick={handleProfileToggle}

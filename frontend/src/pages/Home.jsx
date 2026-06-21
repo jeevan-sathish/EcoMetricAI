@@ -1,6 +1,6 @@
 import { IoCarSport } from "react-icons/io5";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import Login from "@/auth/Login";
 import { useNavigate } from "react-router-dom";

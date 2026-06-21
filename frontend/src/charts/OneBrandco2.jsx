@@ -1,5 +1,5 @@
 import useGetBrandco2 from "@/store/useGetBrandco2";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   LineChart,
   Line,
@@ -13,7 +13,7 @@ import {
 
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
-const PAGE_SIZE = 6;
+const page_size = 6;
 
 const OneBrandco2 = () => {
   const { brandCo2, minCo2 } = useGetBrandco2();
@@ -27,10 +27,10 @@ const OneBrandco2 = () => {
     );
   }
 
-  const visibleData = brandCo2.slice(startIndex, startIndex + PAGE_SIZE);
+  const visibleData = brandCo2.slice(startIndex, startIndex + page_size);
 
   const canGoBack = startIndex > 0;
-  const canGoNext = startIndex + PAGE_SIZE < brandCo2.length;
+  const canGoNext = startIndex + page_size < brandCo2.length;
 
   return (
     <div className="w-full bg-black text-white rounded-2xl shadow-lg p-4 mt-3">
@@ -56,19 +56,20 @@ const OneBrandco2 = () => {
               angle={-25}
               textAnchor="end"
               interval={0}
-              tick={{ fontSize: 11, fill: "#ccc" }}
+              tick={{ fontSize: 12, fill: "#ffffff" }}
               height={70}
             />
 
             <YAxis
-              tick={{ fill: "#ccc" }}
+              tick={{ fill: "#fff" }}
               width={60}
               label={{
                 value: "CO₂ (g/km)",
                 angle: -90,
+
                 position: "insideLeft",
-                offset: 10,
-                fill: "#888",
+                offset: 7,
+                fill: "#fff",
               }}
             />
 
@@ -97,7 +98,7 @@ const OneBrandco2 = () => {
 
       <div className="flex items-center justify-between mt-4 px-2">
         <button
-          onClick={() => setStartIndex((prev) => Math.max(prev - PAGE_SIZE, 0))}
+          onClick={() => setStartIndex((prev) => Math.max(prev - page_size, 0))}
           disabled={!canGoBack}
           className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition disabled:opacity-40 disabled:cursor-not-allowed"
         >
@@ -106,14 +107,14 @@ const OneBrandco2 = () => {
         </button>
 
         <div className="text-sm text-gray-400">
-          {startIndex + 1} - {Math.min(startIndex + PAGE_SIZE, brandCo2.length)}{" "}
+          {startIndex + 1} - {Math.min(startIndex + page_size, brandCo2.length)}{" "}
           of {brandCo2.length}
         </div>
 
         <button
           onClick={() =>
             setStartIndex((prev) =>
-              Math.min(prev + PAGE_SIZE, brandCo2.length - PAGE_SIZE),
+              Math.min(prev + page_size, brandCo2.length - page_size),
             )
           }
           disabled={!canGoNext}

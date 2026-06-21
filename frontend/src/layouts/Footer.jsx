@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="w-full h-13 bg-gray-900 text-white flex items-center justify-between px-4 border-t border-gray-700">
       <div className="flex items-center gap-2">
         <FaLeaf className="text-green-400 text-sm" />
-        <span className="text-xs font-semibold">EcoMetricAI</span>
+        <span className="text-xs font-semibold">EcoMetric AI</span>
       </div>
 
       <p className="text-[10px] text-gray-400">

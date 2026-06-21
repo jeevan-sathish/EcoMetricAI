@@ -86,15 +86,10 @@ export default function InputForm() {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data.data1);
+
       setCars(response.data.data1 || []);
       setBrandCo2(response.data.data2 || []);
       setMinCo2(response.data.data3?.[0] || {});
-
-      console.log("Cars:", response.data.data1);
-      console.log("Brand CO2:", response.data.data2);
-      console.log("Min CO2:", response.data.data3?.[0]);
-      // console.log("Suggestion:", response.data.suggestion);
     } catch (error) {
       console.log("FULL ERROR:", error);
       console.log("MESSAGE:", error.message);

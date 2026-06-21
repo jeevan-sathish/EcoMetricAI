@@ -34,60 +34,25 @@ def count_rows():
 
 
 
-@router.get("/check-users-table")
-def check_users_table():
-    with engine.connect() as conn:
-        result = conn.execute(
-            text("""
-                SELECT EXISTS (
-                    SELECT FROM information_schema.tables
-                    WHERE table_schema = 'public'
-                    AND table_name = 'authUsers'
-                );
-            """)
-        )
 
-        exists = result.scalar()
 
-        return {
-            "users_table_exists": exists
-        }
-    
-@router.get("/tables")
+
+@router.get("/usersemail")
 def get_tables():
     with engine.connect() as conn:
         result = conn.execute(text("""
-            SELECT table_name
-            FROM information_schema.tables
-            WHERE table_schema = 'public'
+            SELECT * FROM authusers
         """))
 
-        return [row[0] for row in result]
+        rows = result.mappings().all()
+        return rows
 
 
 
 
 
 
-@router.get("/auth-columns")
-def auth_columns():
-    with engine.connect() as conn:
-        result = conn.execute(text("""
-            SELECT column_name
-            FROM information_schema.columns
-            WHERE table_name = 'authUsers'
-        """))
-
-        return [row[0] for row in result]
 
 
 
 
-@router.get("/renderusers")
-def users():
-    with engine.connect() as conn:
-        result = conn.execute(
-            text('SELECT * FROM "authUsers"')
-        )
-
-        return [dict(row._mapping) for row in result]

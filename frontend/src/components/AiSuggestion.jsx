@@ -13,6 +13,7 @@ export const AiSuggestion = () => {
   const { cars } = useCarStore();
   // console.log("car store:", cars);
   console.log("BRANCH FEATURE EXECUTING----------------------->");
+  console.log("API URL:", import.meta.env.VITE_API_URL);
 
   const [suggestion, setSuggestion] = useState("");
   const [loading, setLoading] = useState(false);

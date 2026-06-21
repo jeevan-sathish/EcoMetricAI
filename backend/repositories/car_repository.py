@@ -92,6 +92,7 @@ def get_AI_suggestions(brand, model):
 
     try:
         with engine.connect() as connection:
+            print("ai suggestion cooking...")
             data = connection.execute(
                 text("""
                     SELECT
@@ -130,7 +131,7 @@ def get_AI_suggestions(brand, model):
                 temperature=0.5,
                 max_tokens=300
             )
-            print(response)
+           
 
             return response.choices[0].message.content
 

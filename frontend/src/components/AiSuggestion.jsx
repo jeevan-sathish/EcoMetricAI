@@ -104,6 +104,11 @@ export const AiSuggestion = () => {
         </div>
 
         <div ref={reportRef} className="max-h-[500px] overflow-y-auto p-6">
+          {!loading && (
+            <p className="text-gray-500 text-[15px] text-center">
+              Enable Ai mode for detail analysis.
+            </p>
+          )}
           {loading ? (
             <div className="flex min-h-[300px] flex-col items-center justify-center gap-4">
               <Comment

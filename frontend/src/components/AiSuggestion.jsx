@@ -7,9 +7,11 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import SpeechBox from "./SpeechBox";
 import useAIassistantToggleStore from "@/store/useAIassistentToggleStore";
+import Toast from "./Toast";
+import { MdDeleteSweep } from "react-icons/md";
 
 export const AiSuggestion = () => {
-  const { toggleAiMode } = useAIassistantToggleStore();
+  const { toggleAiMode, setToggleAiMode } = useAIassistantToggleStore();
   const reportRef = useRef(null);
 
   const { cars } = useCarStore();
@@ -20,10 +22,13 @@ export const AiSuggestion = () => {
   const [suggestion, setSuggestion] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const toastMessage = "Please select Brand and Model to perform AI analysis";
+  const hasCars = cars && cars.length > 0;
+
   async function fetchSuggestion() {
     console.log("fetchsuggestion called");
 
-    if (!cars?.length) return;
+    if (!toggleAiMode || !cars?.length) return;
 
     const brand = cars[0]?.brand;
     const model = cars[0]?.model;
@@ -68,14 +73,19 @@ export const AiSuggestion = () => {
     }
   }
 
+  function handleClearSuggestion() {
+    setSuggestion("");
+    setToggleAiMode();
+  }
+
   useEffect(() => {
-    if (toggleAiMode) {
+    if (toggleAiMode && hasCars) {
       fetchSuggestion();
     }
   }, [cars, toggleAiMode]);
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <div className="overflow-hidden rounded-2xl border border-zinc-800 bg-zinc-950 shadow-xl">
         <div className="flex items-center gap-3 border-b border-zinc-800 px-6 py-4">
           <RiRobot2Line className="text-2xl text-green-500" />
@@ -86,7 +96,12 @@ export const AiSuggestion = () => {
             </p>
           </div>
           {suggestion ? (
-            <SpeechBox suggestion={suggestion} />
+            <div className="flex flex-row gap-2 justify-center items-center">
+              <SpeechBox suggestion={suggestion} />
+              <button className="  p-0 text-white">
+                <MdDeleteSweep onClick={handleClearSuggestion} />
+              </button>
+            </div>
           ) : (
             <div>
               <ThreeDots
@@ -104,11 +119,13 @@ export const AiSuggestion = () => {
         </div>
 
         <div ref={reportRef} className="max-h-[500px] overflow-y-auto p-6">
-          {!loading && (
+          {!toggleAiMode & (suggestion.length === 0) && (
             <p className="text-gray-500 text-[15px] text-center">
-              Enable Ai mode for detail analysis.
+              Enable AI mode for detailed analysis.
             </p>
           )}
+          {!hasCars && toggleAiMode && <Toast message={toastMessage} />}
+
           {loading ? (
             <div className="flex min-h-[300px] flex-col items-center justify-center gap-4">
               <Comment

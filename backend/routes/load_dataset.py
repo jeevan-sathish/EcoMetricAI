@@ -29,11 +29,14 @@ def upload_dataset(user=Depends(get_current_user)):
     }
 
 
-@router.get("/count")
-def count_rows():
-    with engine.connect() as conn:
-        result = conn.execute(text("SELECT COUNT(*) FROM cars"))
-        return {"rows": result.scalar()}
+@router.get("/datasize")
+def count_rows(db:Session=Depends(get_db)):
+    count =db.query(CarModel).count()
+    return {
+        "car_data_size":count
+    }
+    
+    
 
 @router.get("/tables")
 def get_tables():

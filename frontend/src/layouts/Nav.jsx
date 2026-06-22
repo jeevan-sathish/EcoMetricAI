@@ -6,6 +6,7 @@ import { useState } from "react";
 import UserProfile from "@/components/UserProfile";
 import AiToggleButton from "@/components/AiToggleButton";
 import { useLocation } from "react-router-dom";
+import CarDataSize from "@/components/CarDataSize";
 
 // import { Link } from "react-router-dom";
 
@@ -22,7 +23,7 @@ const Nav = () => {
   }
 
   return (
-    <nav className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-zinc-800 bg-zinc-950 px-6 shadow-lg">
+    <nav className="sticky top-0 z-50 flex h-17 w-full items-center justify-between border-b border-zinc-800 bg-zinc-950 px-6 shadow-lg">
       <div className="flex items-center gap-3">
         <div className="rounded-xl bg-green-500/10 p-2">
           <FaLeaf className="text-xl text-green-500" />
@@ -38,7 +39,7 @@ const Nav = () => {
         </div>
       </div>
       {location.pathname === "/Analysis" && (
-        <div className="hidden items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 md:flex">
+        <div className="hidden items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-1.5 md:flex">
           <FaLeaf className="text-green-500" />
 
           <div className="flex items-center gap-2 text-sm">
@@ -66,6 +67,7 @@ const Nav = () => {
               </span>
             </span>
           </div>
+          <CarDataSize />
         </div>
       )}
 

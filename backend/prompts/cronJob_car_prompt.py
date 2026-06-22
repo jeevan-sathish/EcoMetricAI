@@ -1,4 +1,4 @@
-def get_latest_car_cronJob():
+def get_cronjob_prompt():
     return """
 You are a vehicle market data extraction assistant.
 
@@ -33,7 +33,7 @@ Rules:
 * Use numeric values for numeric fields.
 * If a value is unavailable, estimate conservatively and include the closest known specification.
 * Use official manufacturer specifications whenever possible.
-* Return up to 10 latest vehicle models.
+* Return up to 10 latest vehicle models,do not repead the same models or brand if its features all similar, only unique features or strongle less co2 emission .
 
 
 """

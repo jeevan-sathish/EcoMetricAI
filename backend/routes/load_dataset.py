@@ -8,6 +8,7 @@ import pandas as pd
 import os 
 import json
 from dotenv import load_dotenv
+from services.car_cronjob_service import load_latest_model_CJ
 
 load_dotenv()
 router =APIRouter(prefix="/dataset", tags=["Dataset"])
@@ -72,3 +73,9 @@ def get_tables():
 
 
 
+# @router.get('/getCronresponse')
+# def run_cron():
+#     load_latest_model_CJ()
+#     return {
+#         "message":"groq executing"
+#     }

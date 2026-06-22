@@ -3,7 +3,6 @@ from repositories.car_repository import (
     
 )
 
-
 def filter_car_data(brand, model):
     try:
         data1, data2, data3 = get_all_car_data(brand, model)

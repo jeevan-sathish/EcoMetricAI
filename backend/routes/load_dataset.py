@@ -1,8 +1,12 @@
 from fastapi import APIRouter,Depends
 from sqlalchemy import create_engine,text
+from sqlalchemy.orm import Session
 from utils.auth_middleware import get_current_user
+from model.cars_model import CarModel
+from database.db import get_db
 import pandas as pd
 import os 
+import json
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -31,7 +35,18 @@ def count_rows():
         result = conn.execute(text("SELECT COUNT(*) FROM cars"))
         return {"rows": result.scalar()}
 
+@router.get("/tables")
+def get_tables():
+    with engine.connect() as conn:
+        result = conn.execute(text("""
+            SELECT table_name
+            FROM information_schema.tables
+            WHERE table_schema = 'public'
+        """))
 
+        tables = [row[0] for row in result]
+
+        return {"tables": tables}
 
 
 
@@ -47,9 +62,6 @@ def get_tables():
 
         rows = result.mappings().all()
         return rows
-
-
-
 
 
 

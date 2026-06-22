@@ -68,7 +68,7 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-            <Route path="/ErrorPage" element={<ErrorPage />} />
+            <Route path="*" element={<ErrorPage />} />
           </Routes>
         </Suspense>
       </main>

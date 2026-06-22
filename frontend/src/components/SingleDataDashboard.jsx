@@ -31,7 +31,7 @@ const SingleDataDashboard = () => {
       value: singleData?.model,
       icon: FaCar,
       color: "text-green-600",
-      size: "base",
+      size: "sm",
     },
     {
       title: "Combined MPG",

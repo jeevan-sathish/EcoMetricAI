@@ -36,18 +36,19 @@ const DashboardCardSD = ({
   }
 
   return (
-    <div className="p-4 h-[80px]  bg-black text-white rounded-2xl border border-gray-700 hover:shadow-xl transition duration-300">
-      <div className="flex gap-4  items-center">
-        <div className={`p-3 rounded-full bg-gray-100 ${color}`}>
-          <Icon className="text-2xl" />
-        </div>
+    <div className="p-4 h-[80px] bg-black text-white rounded-2xl border border-gray-700 hover:shadow-xl transition duration-300 flex items-center">
+      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100">
+        <Icon className={`text-xl ${color}`} />
+      </div>
 
-        <div>
-          <h3 className="text-sm text-gray-400">{title}</h3>
-          <p className={`${sizeMap[size]} font-bold  text-amber-500`}>
-            {value ?? "—"}
-          </p>
-        </div>
+      <div className="ml-4 flex flex-col justify-center">
+        <h3 className="text-sm text-gray-400">{title}</h3>
+
+        <p
+          className={`${sizeMap[size]} font-bold text-amber-500 leading-tight`}
+        >
+          {value ?? "—"}
+        </p>
       </div>
     </div>
   );

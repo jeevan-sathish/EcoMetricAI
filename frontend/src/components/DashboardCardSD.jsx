@@ -12,11 +12,11 @@ const DashboardCardSD = ({ title, value, icon: Icon, color, loading }) => {
 
   if (loading || showSkeleton) {
     return (
-      <div className="p-4 rounded-2xl border border-gray-700 bg-zinc-900 animate-pulse">
+      <div className="p-4 rounded-2xl border border-gray-700  flex flex-col justify-center bg-zinc-900 animate-pulse">
         <div className="h-3 w-24 bg-zinc-700 rounded mb-4" />
-        <div className="flex items-center justify-between">
-          <div className="h-5 w-20 bg-zinc-700 rounded" />
+        <div className="flex items-center justify-center gap-5">
           <div className="h-8 w-8 bg-zinc-700 rounded-full" />
+          <div className="h-5 w-20 bg-zinc-700 rounded" />
         </div>
       </div>
     );

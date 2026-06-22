@@ -4,7 +4,7 @@ import { IoSparklesSharp } from "react-icons/io5";
 const AiToggleButton = () => {
   const { toggleAiMode, setToggleAiMode } = useAIassistantToggleStore();
   return (
-    <div className="p-1 flex flex-row items-center gap-2 bg-gray-950 pl-3 pr-3 pt-2 pb-2 rounded-2xl border-2 border-black">
+    <div className="p-1 flex flex-row items-center gap-2 bg-gray-950 pl-3 pr-3 pt-1 pb-1 rounded-2xl border-2 border-black">
       <div className="text-white flex flex-col text-center gap-1.5 items-center">
         <IoSparklesSharp className="text-[15px] " />
         <p className="text-[10px] text-gray-400"> Ai mode</p>

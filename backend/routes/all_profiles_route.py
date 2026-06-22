@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from database.db import get_db
 from model.Gauth_model import UserAuth
+from utils.auth_middleware import get_current_user
 
 router = APIRouter(
     prefix="/profile",
@@ -11,7 +12,8 @@ router = APIRouter(
 
 @router.get("/allprofiles")
 def get_all_profiles(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    user=Depends(get_current_user)
 ):
 
     users = db.query(UserAuth).all()

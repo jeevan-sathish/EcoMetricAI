@@ -23,6 +23,9 @@ pnpm-debug.log*
 # -------------------------
 .env
 *.env
+.env.production
+.env.local
+.env.*.local
 
 # =========================
 # BACKEND (FastAPI)

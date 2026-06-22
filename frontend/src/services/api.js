@@ -1,7 +1,7 @@
 import axios from "axios";
 // import.meta.env.VITE_API_URL ||
 const api = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 let isRefreshing = false;
@@ -39,7 +39,6 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // Skip refresh endpoint itself
     if (originalRequest.url?.includes("/auth/refresh")) {
       return Promise.reject(error);
     }
@@ -69,9 +68,12 @@ api.interceptors.response.use(
           return Promise.reject(error);
         }
 
-        const res = await axios.post("http://localhost:8000/auth/refresh", {
-          refresh_token: refreshToken,
-        });
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}/auth/refresh`,
+          {
+            refresh_token: refreshToken,
+          },
+        );
 
         const newToken = res.data.access_token;
 

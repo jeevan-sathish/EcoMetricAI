@@ -93,10 +93,11 @@ async def login(
 
 @router.post("/refresh")
 def refresh_token(payload:RefreshTokenSchema):
+    secret =os.getenv("SECRET_KEY")
     try:
         decode =jwt.decode(
             payload.refresh_token,
-            os.getenv(client_id),
+            secret,
             algorithms=["HS256"]
 
         )
@@ -116,5 +117,5 @@ def refresh_token(payload:RefreshTokenSchema):
     except JWTError:
         raise HTTPException(
             status_code=401,
-            details="Invalid refresh token"
+            detail="Invalid refresh token"
         )

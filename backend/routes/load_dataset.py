@@ -77,3 +77,25 @@ def run_cron(db: Session = Depends(get_db)):
         "message": "cron executed",
         "insertedCount": inserted
     }
+
+
+
+@router.get("/check-indexes")
+def check_indexes():
+    with engine.connect() as conn:
+        result = conn.execute(text("""
+            SELECT indexname, indexdef
+            FROM pg_indexes
+            WHERE tablename = 'cars'
+        """))
+        return {"indexes": [dict(row._mapping) for row in result]}
+
+
+@router.post("/drop-redundant-indexes")
+def drop_indexes():
+    with engine.connect() as conn:
+        conn.execute(text("DROP INDEX IF EXISTS ix_cars_brand"))
+        conn.execute(text("DROP INDEX IF EXISTS ix_cars_model"))
+        conn.execute(text("DROP INDEX IF EXISTS ix_cars_co2emission"))
+        conn.commit()
+    return {"message": "redundant indexes dropped"}

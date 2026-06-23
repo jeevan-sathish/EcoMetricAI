@@ -37,13 +37,13 @@ app.add_middleware(
 
 
 
-print("feature branch")
+
 app.include_router(vehicle_router)
 app.include_router(auth_handle)
 app.include_router(profile_router)
 app.include_router(allprofileroute)
 app.include_router(car_router)
-print("router hitting")
+
 app.include_router(airesponse_router)
-print("dataset loading router hit...")
+
 app.include_router(dataset_routers)

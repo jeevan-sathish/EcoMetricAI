@@ -7,13 +7,14 @@ from schemas.auth_token_schema import AuthToken
 router = APIRouter()
 
 @router.post("/filterData")
-def filter_data(inp: UserInput,user=Depends(get_current_user),):
-    print(user.name)
+def filter_data(inp: UserInput,user=Depends(get_current_user)):
+   
+    
     
 
     return filter_car_data(
         inp.brand,
         inp.model,
         
-        
     )
+

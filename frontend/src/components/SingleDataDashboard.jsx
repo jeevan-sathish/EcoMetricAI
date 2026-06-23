@@ -1,4 +1,5 @@
 import useSingleDataStore from "@/store/useSingleDataStore";
+
 import {
   FaCar,
   FaGasPump,
@@ -14,65 +15,77 @@ import DashboardCardSD from "./DashboardCardSD";
 
 const SingleDataDashboard = () => {
   const { singleData } = useSingleDataStore();
+
+  const isLoading = !singleData || !singleData.brand;
+
   const cards = [
     {
       title: "Brand",
-      value: singleData.brand,
+      value: singleData?.brand,
       icon: FaCar,
       color: "text-blue-600",
+      size: "sm",
     },
     {
       title: "Model",
-      value: singleData.model,
+      value: singleData?.model,
       icon: FaCar,
       color: "text-green-600",
+      size: "sm",
     },
     {
       title: "Combined MPG",
-      value: singleData.combmpg,
+      value: singleData?.combmpg,
       icon: FaRoad,
       color: "text-purple-600",
+      size: "sm",
     },
     {
       title: "Fuel Type",
-      value: singleData.fueltype,
+      value: singleData?.fueltype,
       icon: FaGasPump,
       color: "text-red-500",
+      size: "sm",
     },
     {
       title: "CO₂ Emission",
-      value: singleData.co2emission,
+      value: singleData?.co2emission,
       icon: FaLeaf,
       color: "text-green-700",
+      size: "lg",
     },
     {
       title: "Transmission",
-      value: singleData.transmission,
+      value: singleData?.transmission,
       icon: FaCogs,
       color: "text-orange-500",
+      size: "sm",
     },
     {
       title: "Cylinders",
-      value: singleData.cylinders,
+      value: singleData?.cylinders,
       icon: MdOutlineTrendingDown,
       color: "text-orange-500",
+      size: "sm",
     },
     {
       title: "Engine Size",
-      value: singleData.enginesize,
+      value: singleData?.enginesize,
       icon: TbEngineFilled,
       color: "text-blue-500",
+      size: "sm",
     },
     {
       title: "Vehicle Class",
-      value: singleData.vehicleclass,
+      value: singleData?.vehicleclass,
       icon: FaTools,
       color: "text-orange-500",
+      size: "sm",
     },
   ];
 
   return (
-    <div className="w-full grid grid-cols-2 gap-1.5 md:grid-cols-2 lg:grid-cols-3  gap-4 mt-4">
+    <div className="w-full grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4  mt-1">
       {cards.map((card, index) => (
         <DashboardCardSD
           key={index}
@@ -80,6 +93,8 @@ const SingleDataDashboard = () => {
           value={card.value}
           icon={card.icon}
           color={card.color}
+          loading={isLoading}
+          size={card.size}
         />
       ))}
     </div>

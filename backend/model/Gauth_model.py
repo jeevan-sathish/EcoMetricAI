@@ -3,7 +3,7 @@ from sqlalchemy import Column, Integer, String,DateTime
 from datetime import datetime
 
 class UserAuth(Base):
-    __tablename__ = "authUsers"
+    __tablename__ = "authusers"
     
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, nullable=False)

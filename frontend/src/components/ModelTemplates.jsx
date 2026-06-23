@@ -2,11 +2,14 @@ import useCarStore from "@/store/useCarStore";
 import useSingleDataStore from "@/store/useSingleDataStore";
 import { IoLogoModelS } from "react-icons/io";
 import { FaHandPointDown } from "react-icons/fa6";
-import { ThreeDots } from "react-loader-spinner";
+
 import LoadingSkeleton from "./LoadingSkeleton";
+import useModelLoadingStore from "@/store/useModelLoadingStore";
 
 const ModelTemplates = () => {
   const { cars } = useCarStore();
+  const { modelLoading } = useModelLoadingStore();
+
   const { setSingleData } = useSingleDataStore();
   const size = cars.length;
 
@@ -23,9 +26,9 @@ const ModelTemplates = () => {
         </p>
       </header>
       <div className="bg-black">
-        {cars.length > 0 ? (
+        {!modelLoading ? (
           <div
-            className={`w-full h-[90vh] bg-black flex flex-col border-2xl ${size > 3 ? "overflow-y-scroll" : ""}`}
+            className={`w-full h-[100vh] bg-black flex flex-col border-2xl ${size > 3 ? "overflow-y-scroll" : ""}`}
           >
             {cars &&
               cars.map((ele, i) => (
@@ -67,19 +70,6 @@ const ModelTemplates = () => {
           </div>
         ) : (
           <div className="w-full h-[90vh] bg-black flex flex-col border-2xl  items-center">
-            {/* <ThreeDots
-              visible={true}
-              height="140"
-              width="140"
-              color="#4fa94d"
-              radius="9"
-              ariaLabel="three-dots-loading"
-              wrapperStyle={{}}
-              wrapperClass=""
-            />
-
-            <p className="text-white">no models selected</p> */}
-
             <LoadingSkeleton />
             <LoadingSkeleton />
             <LoadingSkeleton />

@@ -4,9 +4,14 @@ import useGreetStore from "@/store/useProfileStore";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import { useState } from "react";
 import UserProfile from "@/components/UserProfile";
-import { Link } from "react-router-dom";
+import AiToggleButton from "@/components/AiToggleButton";
+import { useLocation } from "react-router-dom";
+import CarDataSize from "@/components/CarDataSize";
+
+// import { Link } from "react-router-dom";
 
 const Nav = () => {
+  const location = useLocation();
   const { name, profile_picture } = useGreetStore();
   const { minCo2 } = useGetBrandco2();
   const [profileToggle, setProfileToggle] = useState(false);
@@ -18,7 +23,7 @@ const Nav = () => {
   }
 
   return (
-    <nav className="sticky top-0 z-50 flex h-16 w-full items-center justify-between border-b border-zinc-800 bg-zinc-950 px-6 shadow-lg">
+    <nav className="sticky top-0 z-50 flex h-17 w-full items-center justify-between border-b border-zinc-800 bg-zinc-950 px-6 shadow-lg">
       <div className="flex items-center gap-3">
         <div className="rounded-xl bg-green-500/10 p-2">
           <FaLeaf className="text-xl text-green-500" />
@@ -33,43 +38,40 @@ const Nav = () => {
           </p>
         </div>
       </div>
+      {location.pathname === "/Analysis" && (
+        <div className="hidden items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-1.5 md:flex">
+          <FaLeaf className="text-green-500" />
 
-      <Link
-        to="/"
-        className="rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition-all hover:border-green-500 hover:text-green-400"
-      >
-        Back
-      </Link>
+          <div className="flex items-center gap-2 text-sm">
+            <span className="text-zinc-400">Best Choice</span>
 
-      <div className="hidden items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900 px-4 py-2 md:flex">
-        <FaLeaf className="text-green-500" />
-
-        <div className="flex items-center gap-2 text-sm">
-          <span className="text-zinc-400">Best Choice</span>
-
-          <span className="font-semibold text-green-400">
-            {minCo2.brand}-{minCo2?.model || "N/A"}
-          </span>
-
-          <span className="text-zinc-700">|</span>
-
-          <span className="text-zinc-400">
-            CO₂:
-            <span className="ml-1 font-bold text-white">
-              {minCo2?.co2emission || "0"}
+            <span className="font-semibold text-green-400">
+              {minCo2.brand}-{minCo2?.model || "N/A"}
             </span>
-          </span>
 
-          <span className="text-zinc-700">|</span>
+            <span className="text-zinc-700">|</span>
 
-          <span className="text-zinc-400">
-            Engine:
-            <span className="ml-1 font-bold text-white">
-              {minCo2?.enginesize || "0"}
+            <span className="text-zinc-400">
+              CO₂:
+              <span className="ml-1 font-bold text-white">
+                {minCo2?.co2emission || "0"}
+              </span>
             </span>
-          </span>
+
+            <span className="text-zinc-700">|</span>
+
+            <span className="text-zinc-400">
+              Engine:
+              <span className="ml-1 font-bold text-white">
+                {minCo2?.enginesize || "0"}
+              </span>
+            </span>
+          </div>
+          <CarDataSize />
         </div>
-      </div>
+      )}
+
+      {location.pathname === "/Analysis" && <AiToggleButton />}
 
       <div
         onClick={handleProfileToggle}

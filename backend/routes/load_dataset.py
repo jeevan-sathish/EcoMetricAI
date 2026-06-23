@@ -37,7 +37,6 @@ def count_rows(db:Session=Depends(get_db)):
         "car_data_size":count
     }
     
-    
 
 @router.get("/tables")
 def get_tables():
@@ -54,9 +53,6 @@ def get_tables():
 
 
 
-
-
-
 @router.get("/usersemail")
 def get_tables():
     with engine.connect() as conn:
@@ -70,12 +66,14 @@ def get_tables():
 
 
 
+@router.post("/getCronresponse")
+def run_cron(db: Session = Depends(get_db)):
 
+    inserted = load_latest_model_CJ(db)
 
+    print("cron function route executed")
 
-# @router.get('/getCronresponse')
-# def run_cron():
-#     load_latest_model_CJ()
-#     return {
-#         "message":"groq executing"
-#     }
+    return {
+        "message": "cron executed",
+        "insertedCount": inserted
+    }

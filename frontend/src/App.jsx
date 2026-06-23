@@ -16,15 +16,12 @@ const ErrorPage = lazy(() => import("./pages/ErrorPage"));
 
 const App = () => {
   const { setName, setEmail, setProfilePicture } = useProfileStore();
-  const token = localStorage.getItem("access_token");
+
   async function fetchuserProfile() {
+    const token = localStorage.getItem("access_token");
     try {
       if (!token) return;
-      const userprofileData = await api.get("/profile/profileData", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const userprofileData = await api.get("/profile/profileData");
       setName(userprofileData.data.name);
       setEmail(userprofileData.data.email);
       setProfilePicture(userprofileData.data.picture);

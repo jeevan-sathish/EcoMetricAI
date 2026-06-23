@@ -6,20 +6,22 @@ from model.cars_model import CarModel
 from prompts.cronJob_car_prompt import get_cronjob_prompt
 import json
 
+def load_latest_model_CJ(db: Session):
 
-def load_latest_model_CJ(db:Session):
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-    client =Groq(api_key=os.getenv("GROQ_API_KEY"))
-    response =client.chat.completions.create(
+    response = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
         messages=[{
-            "role":"user",
-            "content":get_cronjob_prompt()
+            "role": "user",
+            "content": get_cronjob_prompt()
         }]
     )
-    result =json.loads(response.choices[0].message.content)
-    
-    inserted_count =0
+
+    result = json.loads(response.choices[0].message.content)
+
+    inserted_count = 0
+
     for row in result:
         exists = db.query(CarModel).filter_by(
             brand=row["brand"],
@@ -34,14 +36,10 @@ def load_latest_model_CJ(db:Session):
 
         if not exists:
             db.add(CarModel(**row))
-            inserted_count+=1
+            inserted_count += 1
 
     db.commit()
-    print("inserted data:",inserted_count)
-    return {
-        "inserted":inserted_count
-    }
 
+    print("Inserted:", inserted_count)
 
-
-
+    return inserted_count

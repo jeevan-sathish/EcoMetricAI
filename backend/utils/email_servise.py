@@ -25,7 +25,7 @@ def send_cron_email(inserted_count: int, inserted_cars: list):
         body = f"""
         <h2>Cron Job Completed</h2>
         <p>Ran at: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}</p>
-        <p><strong>{inserted_count} new vehicle(s)</strong> were inserted into the database.</p>
+        <p><strong>{inserted_count} new vehicle(s)</strong> were found .</p>
         <table border="1" cellpadding="8" cellspacing="0">
             <thead>
                 <tr>

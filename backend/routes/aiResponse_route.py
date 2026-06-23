@@ -12,7 +12,7 @@ def get_aisuggestion(inp:UserInput,user=Depends(get_current_user)):
     model =inp.model
     brand=inp.brand
     response =get_AI_suggestions(brand,model)
-    print("response hit")
+    
 
     return {
         "suggestion":response

@@ -37,7 +37,6 @@ export const AiSuggestion = () => {
       cacheSuggestion !== "undefined" &&
       cacheSuggestion !== "null"
     ) {
-      console.log("Using cache");
       setSuggestion(cacheSuggestion);
       return;
     }
@@ -48,8 +47,6 @@ export const AiSuggestion = () => {
         brand,
         model,
       });
-
-      console.log("FULL RESPONSE:", res.data);
 
       const airesponse = res.data?.suggestion;
 

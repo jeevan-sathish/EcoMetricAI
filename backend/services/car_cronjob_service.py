@@ -46,6 +46,6 @@ def load_latest_model_CJ(db: Session):
     db.commit()
     send_cron_email(inserted_count,inserted_cars)
 
-    print("Inserted:", inserted_count)
+   
 
     return inserted_count

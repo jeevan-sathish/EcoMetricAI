@@ -48,6 +48,6 @@ def send_cron_email(inserted_count: int, inserted_cars: list):
             "subject": subject,
             "html": body,
         })
-        print("Email sent successfully")
+        
     except Exception as e:
         print("Email send failed:", str(e))

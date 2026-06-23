@@ -10,7 +10,7 @@ path="./dataset/car_emission_canada7000.csv"
 engine=create_engine(DATABASE_STRING)
 df=pd.read_csv(path)
 
-print(df.head())
+
 
 df.to_sql("cars",con=engine,if_exists="replace",index=False)
 

@@ -11,7 +11,6 @@ const CarDataSize = () => {
       const response = await api.get("/dataset/datasize");
       const result = response.data.car_data_size;
       setCarSize(result);
-      console.log(result);
     } catch (error) {
       console.log(error?.response?.data?.detail ?? error.message);
     }

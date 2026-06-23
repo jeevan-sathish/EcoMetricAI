@@ -71,7 +71,6 @@ def run_cron(db: Session = Depends(get_db)):
 
     inserted = load_latest_model_CJ(db)
 
-    print("cron function route executed")
 
     return {
         "message": "cron executed",

@@ -15,9 +15,6 @@ export const AiSuggestion = () => {
   const reportRef = useRef(null);
 
   const { cars } = useCarStore();
-  // console.log("car store:", cars);
-  console.log("BRANCH FEATURE EXECUTING----------------------->");
-  console.log("API URL:", import.meta.env.VITE_API_URL);
 
   const [suggestion, setSuggestion] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,8 +23,6 @@ export const AiSuggestion = () => {
   const hasCars = cars && cars.length > 0;
 
   async function fetchSuggestion() {
-    console.log("fetchsuggestion called");
-
     if (!toggleAiMode || !cars?.length) return;
 
     const brand = cars[0]?.brand;
@@ -119,7 +114,7 @@ export const AiSuggestion = () => {
         </div>
 
         <div ref={reportRef} className="max-h-[500px] overflow-y-auto p-6">
-          {!toggleAiMode & (suggestion.length === 0) && (
+          {!toggleAiMode && suggestion.length === 0 && (
             <p className="text-gray-500 text-[15px] text-center">
               Enable AI mode for detailed analysis.
             </p>

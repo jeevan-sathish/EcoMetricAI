@@ -1,6 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,Depends
 from sqlalchemy import text
-
+from utils.auth_middleware import get_current_user
 from database.db import engine
 from schemas.vehicle_models_schema import ListOfModels
 
@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 @router.post("/brands")
-def get_brands_list():
+def get_brands_list(user=Depends(get_current_user)):
     with engine.connect() as connection:
         query = text("""
             select distinct brand
@@ -25,7 +25,7 @@ def get_brands_list():
 
 
 @router.post("/models")
-def get_models_list(data: ListOfModels):
+def get_models_list(data: ListOfModels,user=Depends(get_current_user)):
     with engine.connect() as connection:
         query = text("""
             SELECT DISTINCT model

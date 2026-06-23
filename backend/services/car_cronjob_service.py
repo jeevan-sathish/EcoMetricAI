@@ -19,13 +19,27 @@ def load_latest_model_CJ(db:Session):
     )
     result =json.loads(response.choices[0].message.content)
     
+    inserted_count =0
     for row in result:
-        db.add(CarModel(**row))
+        exists = db.query(CarModel).filter_by(
+            brand=row["brand"],
+            model=row["model"],
+            vehicleclass=row["vehicleclass"],
+            enginesize=row["enginesize"],
+            cylinders=row["cylinders"],
+            transmission=row["transmission"],
+            fueltype=row["fueltype"],
+            co2emission=row["co2emission"],
+        ).first()
+
+        if not exists:
+            db.add(CarModel(**row))
+            inserted_count+=1
 
     db.commit()
-    print("inserted data:",len(result))
+    print("inserted data:",inserted_count)
     return {
-        "inserted":len(result)
+        "inserted":inserted_count
     }
 
 

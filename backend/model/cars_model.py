@@ -6,8 +6,8 @@ class CarModel(Base):
 
     id = Column(BigInteger, primary_key=True)
 
-    brand = Column(String,index=True)
-    model = Column(String,index=True)
+    brand = Column(String)
+    model = Column(String)
     vehicleclass = Column(String)
 
     enginesize = Column(Float)

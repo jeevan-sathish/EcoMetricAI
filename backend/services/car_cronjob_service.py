@@ -6,6 +6,8 @@ from model.cars_model import CarModel
 from prompts.cronJob_car_prompt import get_cronjob_prompt
 import json
 
+load_dotenv()
+
 def load_latest_model_CJ(db: Session):
 
     client = Groq(api_key=os.getenv("GROQ_API_KEY"))

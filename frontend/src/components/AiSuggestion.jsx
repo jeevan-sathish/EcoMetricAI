@@ -97,7 +97,7 @@ export const AiSuggestion = () => {
                 <MdDeleteSweep onClick={handleClearSuggestion} />
               </button>
             </div>
-          ) : (
+          ) : loading ? (
             <div>
               <ThreeDots
                 visible={true}
@@ -110,7 +110,7 @@ export const AiSuggestion = () => {
                 wrapperClass=""
               />
             </div>
-          )}
+          ) : null}
         </div>
 
         <div ref={reportRef} className="max-h-[500px] overflow-y-auto p-6">

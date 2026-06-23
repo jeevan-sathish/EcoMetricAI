@@ -20,6 +20,7 @@ const AllProfileList = () => {
   }
 
   useEffect(() => {
+    if (allprofile.length > 0) return;
     handleAllUsersProfile();
   }, []);
   return (

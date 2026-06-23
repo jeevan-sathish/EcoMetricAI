@@ -27,6 +27,11 @@ const App = () => {
       setProfilePicture(userprofileData.data.picture);
     } catch (error) {
       console.log("Error fetching user profile", error);
+      if (error.response?.status === 401) {
+        setName("");
+        setEmail("");
+        setProfilePicture("");
+      }
     }
   }
 

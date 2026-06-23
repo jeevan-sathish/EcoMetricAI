@@ -4,16 +4,21 @@ import useGetBrandco2 from "@/store/useGetBrandco2";
 import useCarStore from "@/store/useCarStore";
 import { useNavigate } from "react-router-dom";
 import useModelLoadingStore from "@/store/useModelLoadingStore";
-// import useProfileStore from "@/store/useProfileStore";
+import useDropdownCacheStore from "@/store/useDropdownCacheStore";
 
 export default function InputForm() {
-  const { setModelLoading } = useModelLoadingStore();
-  const { modelLoading } = useModelLoadingStore();
+  const { modelLoading, setModelLoading } = useModelLoadingStore();
   const { setCars } = useCarStore();
   const { setBrandCo2, setMinCo2 } = useGetBrandco2();
+  const {
+    brands,
+    setBrands,
+    setModelsForBrand,
+    hasModelsForBrand,
+    getModelsForBrand,
+  } = useDropdownCacheStore();
 
   const [toggleAlert, setToggleAlert] = useState(false);
-  const [brands, setBrands] = useState([]);
   const [models, setModels] = useState([]);
   const navigate = useNavigate();
 
@@ -23,6 +28,8 @@ export default function InputForm() {
   });
 
   useEffect(() => {
+    if (brands.length > 0) return;
+
     const fetchBrands = async () => {
       try {
         const response = await api.post("/brands");
@@ -36,18 +43,22 @@ export default function InputForm() {
   }, []);
 
   useEffect(() => {
+    if (!form.brand) {
+      setModels([]);
+      return;
+    }
+
+    if (hasModelsForBrand(form.brand)) {
+      setModels(getModelsForBrand(form.brand));
+      return;
+    }
+
     const fetchModels = async () => {
-      if (!form.brand) {
-        setModels([]);
-        return;
-      }
-
       try {
-        const response = await api.post("/models", {
-          brand: form.brand,
-        });
-
-        setModels(response.data.models || []);
+        const response = await api.post("/models", { brand: form.brand });
+        const fetchedModels = response.data.models || [];
+        setModelsForBrand(form.brand, fetchedModels);
+        setModels(fetchedModels);
       } catch (error) {
         console.error("Error fetching models:", error);
         setModels([]);
@@ -59,7 +70,6 @@ export default function InputForm() {
 
   function handleChange(e) {
     const { name, value } = e.target;
-
     setForm((prev) => ({
       ...prev,
       [name]: value,
@@ -82,20 +92,14 @@ export default function InputForm() {
       setModelLoading(true);
 
       const response = await api.post("/filterData", form, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       setCars(response.data.data1 || []);
       setBrandCo2(response.data.data2 || []);
       setMinCo2(response.data.data3?.[0] || {});
     } catch (error) {
-      console.log("FULL ERROR:", error);
-      console.log("MESSAGE:", error.message);
-      console.log("CODE:", error.code);
-      console.log("RESPONSE:", error.response);
-      console.log("REQUEST:", error.request);
+      console.error("Filter error:", error?.response?.data ?? error.message);
     } finally {
       setModelLoading(false);
     }
@@ -112,10 +116,9 @@ export default function InputForm() {
         onChange={handleChange}
         className="w-full p-2 border border-gray-500 text-white rounded"
       >
-        <option value="" className="text-white bg-gray-800 ">
+        <option value="" className="text-white bg-gray-800">
           Select Brand
         </option>
-
         {brands.map((brand) => (
           <option key={brand} value={brand} className="text-black">
             {brand}
@@ -130,10 +133,9 @@ export default function InputForm() {
         disabled={!form.brand}
         className="w-full p-2 border border-gray-500 text-white rounded"
       >
-        <option value="" className="text-white bg-gray-800 ">
+        <option value="" className="text-white bg-gray-800">
           Select Model
         </option>
-
         {models.map((model) => (
           <option key={model} value={model} className="text-black">
             {model}

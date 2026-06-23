@@ -13,7 +13,7 @@ const CarDataSize = () => {
       setCarSize(result);
       console.log(result);
     } catch (error) {
-      console.log(error.response.data.detail);
+      console.log(error?.response?.data?.detail ?? error.message);
     }
   }
 

@@ -43,7 +43,7 @@ const SingleDataDashboard = () => {
       value: singleData?.combmpg,
       icon: FaRoad,
       color: "text-purple-600",
-      size: "sm",
+      size: "md",
     },
     {
       title: "Fuel Type",
@@ -58,6 +58,7 @@ const SingleDataDashboard = () => {
       icon: FaLeaf,
       color: "text-green-700",
       size: "lg",
+      showScore: true,
     },
     {
       title: "Transmission",
@@ -71,21 +72,21 @@ const SingleDataDashboard = () => {
       value: singleData?.cylinders,
       icon: MdOutlineTrendingDown,
       color: "text-orange-500",
-      size: "sm",
+      size: "lg",
     },
     {
       title: "Engine Size",
       value: singleData?.enginesize,
       icon: TbEngineFilled,
       color: "text-blue-500",
-      size: "sm",
+      size: "lg",
     },
     {
       title: "Vehicle Class",
       value: singleData?.vehicleclass,
       icon: FaTools,
       color: "text-orange-500",
-      size: "sm",
+      size: "md",
     },
   ];
 
@@ -124,6 +125,7 @@ const SingleDataDashboard = () => {
       icon: FaLeaf,
       color: "text-green-700",
       size: "lg",
+      showScore: true,
     },
     {
       title: "Transmission",
@@ -167,6 +169,7 @@ const SingleDataDashboard = () => {
               color={card.color}
               loading={isLoading}
               size={card.size}
+              showScore={card.showScore}
             />
           ))
         : cards.map((card, index) => (
@@ -178,6 +181,7 @@ const SingleDataDashboard = () => {
               color={card.color}
               loading={isLoading}
               size={card.size}
+              showScore={card.showScore}
             />
           ))}
     </div>

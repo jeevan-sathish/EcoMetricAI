@@ -135,7 +135,7 @@ export const AiSuggestion = () => {
               </p>
             </div>
           ) : (
-            <div className="prose prose-invert text-gray-400  max-w-none">
+            <div className="prose prose-invert text-gray-300  max-w-none">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {suggestion}
               </ReactMarkdown>

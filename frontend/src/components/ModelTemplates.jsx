@@ -14,10 +14,10 @@ const ModelTemplates = () => {
   const size = cars.length;
 
   return (
-    <div className="h-screen bg-black border border-b-gray-500">
-      <header className="w-full h-10 bg-gray-800  flex flex-row  items-center justify-center gap-4 px-4 border-b border-green-700">
+    <div className="h-full bg-black border border-b-gray-500 rounded-bl-2xl rounded-br-2xl">
+      <header className="w-full h-10 bg-gray-800  flex flex-row  items-center justify-center gap-4 px-4 border-b border-green-700 rounded-tl-2xl rounded-tr-2xl">
         <FaHandPointDown className="text-yellow-300" />
-        <h1 className="text-md font-bold text-gray-400">
+        <h1 className="text-[15px] font-bold text-gray-400">
           Available Varients Models
         </h1>
         <p className="text-sm text-gray-400 ">
@@ -39,11 +39,11 @@ const ModelTemplates = () => {
                 >
                   <div className="w-full p-2 bg-black flex flex-row gap-2 items-center text-[12px] rounded-[10px]">
                     <IoLogoModelS className="text-[18px] text-red-700" />
-                    <span className="text-red-600">Model:</span>
+                    <span className="text-red-600 font-bold">Model:</span>
                     <span className="text-green-800 font-bold">
                       {ele.model}
                     </span>
-                    <p className="text-yellow-500">
+                    <p className="text-yellow-500 font-bold">
                       combined-mpg: {ele.combmpg}
                     </p>
                   </div>

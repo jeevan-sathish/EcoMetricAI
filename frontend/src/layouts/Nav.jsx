@@ -43,7 +43,7 @@ const Nav = () => {
           <FaLeaf className="text-green-500" />
 
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-zinc-400">Best Choice</span>
+            <span className="text-zinc-200 font-bold">Best Choice</span>
 
             <span className="font-semibold text-green-400">
               {minCo2.brand}-{minCo2?.model || "N/A"}
@@ -51,7 +51,7 @@ const Nav = () => {
 
             <span className="text-zinc-700">|</span>
 
-            <span className="text-zinc-400">
+            <span className="text-zinc-300 font-bold">
               CO₂:
               <span className="ml-1 font-bold text-white">
                 {minCo2?.co2emission || "0"}
@@ -60,7 +60,7 @@ const Nav = () => {
 
             <span className="text-zinc-700">|</span>
 
-            <span className="text-zinc-400">
+            <span className="text-zinc-300 font-bold">
               Engine:
               <span className="ml-1 font-bold text-white">
                 {minCo2?.enginesize || "0"}

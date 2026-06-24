@@ -21,8 +21,8 @@ const CarDataSize = () => {
   }, []);
   return (
     <div className="rounded-xl border gap-2 border-zinc-800 bg-zinc-950 p-2  flex flex-row justify-center items-center">
-      <LuChartNoAxesCombined className="text-[14px] text-green-500" />
-      <p className="text-[12px] text-gray-500">{carSize}</p>
+      <LuChartNoAxesCombined className="text-[15px] text-green-500" />
+      <p className="text-[12px] text-gray-300">{carSize}</p>
     </div>
   );
 };

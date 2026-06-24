@@ -118,13 +118,17 @@ export default function InputForm() {
         name="brand"
         value={form.brand}
         onChange={handleChange}
-        className="w-full p-2 border border-gray-500 text-white rounded"
+        className="w-full p-2 border border-gray-500 text-white rounded hover:cursor-grab"
       >
-        <option value="" className="text-white bg-gray-800">
+        <option value="" className="text-white bg-gray-800 hover:cursor-grab">
           Select Brand
         </option>
         {brands.map((brand) => (
-          <option key={brand} value={brand} className="text-black">
+          <option
+            key={brand}
+            value={brand}
+            className="text-black hover:cursor-grab"
+          >
             {brand}
           </option>
         ))}
@@ -135,13 +139,17 @@ export default function InputForm() {
         value={form.model}
         onChange={handleChange}
         disabled={!form.brand}
-        className="w-full p-2 border border-gray-500 text-white rounded"
+        className="w-full p-2 border border-gray-500 text-white rounded hover:cursor-grab"
       >
-        <option value="" className="text-white bg-gray-800">
+        <option value="" className="text-white bg-gray-800 hover:cursor-grab">
           Select Model
         </option>
         {models.map((model) => (
-          <option key={model} value={model} className="text-black">
+          <option
+            key={model}
+            value={model}
+            className="text-black hover:cursor-grab"
+          >
             {model}
           </option>
         ))}
@@ -151,7 +159,7 @@ export default function InputForm() {
         <button
           type="submit"
           disabled={modelLoading}
-          className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 transition duration-300"
+          className={`w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 transition duration-300 ${modelLoading ? "hover:cursor-wait" : "hover:cursor-grab"}`}
         >
           {modelLoading ? "loading..." : "Submit"}
         </button>

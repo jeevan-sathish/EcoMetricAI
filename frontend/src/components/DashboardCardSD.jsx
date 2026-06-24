@@ -58,15 +58,15 @@ const DashboardCardSD = ({
 
           {showScore && value != null && (
             <span
-              className={`ml-2 text-[12px] ${
-                value <= 120
+              className={`ml-1 text-[12px] ${
+                value <= 150
                   ? "text-green-400"
-                  : value <= 150
+                  : value <= 250
                     ? "text-yellow-400"
                     : "text-red-500"
               }`}
             >
-              {value <= 120 ? " Good" : value <= 150 ? " Average" : " Bad"}
+              {value <= 150 ? " Good" : value <= 250 ? " Average" : " Bad"}
             </span>
           )}
         </p>

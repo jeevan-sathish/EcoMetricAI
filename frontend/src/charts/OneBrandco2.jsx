@@ -17,6 +17,7 @@ const page_size = 6;
 
 const OneBrandco2 = () => {
   const { brandCo2, minCo2 } = useGetBrandco2();
+
   const [startIndex, setStartIndex] = useState(0);
 
   if (!brandCo2 || brandCo2.length === 0) {

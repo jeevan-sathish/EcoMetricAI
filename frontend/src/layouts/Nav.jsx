@@ -75,7 +75,7 @@ const Nav = () => {
 
       <div
         onClick={handleProfileToggle}
-        className="flex cursor-pointer items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950 px-2 py-1 transition-all hover:border-green-500"
+        className="flex cursor-pointer items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950 px-2 py-1 transition-all hover:bg-black"
       >
         {profile_picture ? (
           <img

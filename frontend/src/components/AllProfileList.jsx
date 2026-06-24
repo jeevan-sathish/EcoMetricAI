@@ -60,13 +60,13 @@ const AllProfileList = () => {
         </div>
       </div>
       <div>
-        <div className="text-white text-lg font-semibold mt-3 mb-2 flex flex-row item-center text-center gap-3 ">
+        <div className="text-white text-lg font-semibold mt-3 mb-2 flex flex-row item-center justify-center text-center gap-3 ">
           <HiMiniUsers className="text-[28px] text-cyan-500" />
           <p>Our Trusted Users</p>
         </div>
 
-        <div className="flex items-center">
-          {allprofile.slice(0, 6).map((user, index) => (
+        <div className="flex items-center justify-center">
+          {allprofile.slice(0, 5).map((user, index) => (
             <img
               key={user.id}
               src={user.picture}
@@ -89,7 +89,7 @@ const AllProfileList = () => {
           )}
         </div>
 
-        <p className="text-gray-400 mt-2 text-sm">
+        <p className="text-gray-400 mt-2 text-sm flex justify-center">
           Join {allprofile.length}+ eco-conscious users using EcoMetric AI.
         </p>
       </div>

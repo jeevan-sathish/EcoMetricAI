@@ -17,10 +17,16 @@ const DashboardCardSD = ({
   const [showSkeleton, setShowSkeleton] = useState(true);
 
   useEffect(() => {
-    if (!loading) {
-      const timer = setTimeout(() => setShowSkeleton(false), 300);
-      return () => clearTimeout(timer);
+    if (loading) {
+      setShowSkeleton(true);
+      return;
     }
+
+    const timer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [loading]);
 
   if (loading || showSkeleton) {

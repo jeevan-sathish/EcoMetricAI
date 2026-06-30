@@ -1,4 +1,12 @@
 @import "tailwindcss";
+.react-select__menu-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.react-select__menu-list::-webkit-scrollbar-thumb {
+  background: #22c55e;
+  border-radius: 10px;
+}
 
 /* :root {
   --text: #6b6375;

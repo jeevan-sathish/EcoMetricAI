@@ -5,6 +5,7 @@ import useCarStore from "@/store/useCarStore";
 import { useNavigate } from "react-router-dom";
 import useModelLoadingStore from "@/store/useModelLoadingStore";
 import useDropdownCacheStore from "@/store/useDropdownCacheStore";
+import Select from "react-select";
 
 export default function InputForm() {
   const { modelLoading, setModelLoading } = useModelLoadingStore();
@@ -109,51 +110,94 @@ export default function InputForm() {
     }
   }
 
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: "#111827",
+      borderColor: state.isFocused ? "#22c55e" : "#4b5563",
+      color: "white",
+      minHeight: "46px",
+      borderRadius: "8px",
+      boxShadow: "none",
+      "&:hover": {
+        borderColor: "#22c55e",
+      },
+    }),
+
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "#111827",
+      borderRadius: "8px",
+      overflow: "hidden",
+    }),
+
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isFocused ? "#16a34a" : "#111827",
+      color: "white",
+      cursor: "pointer",
+    }),
+
+    singleValue: (provided) => ({
+      ...provided,
+      color: "white",
+    }),
+
+    input: (provided) => ({
+      ...provided,
+      color: "white",
+    }),
+
+    placeholder: (provided) => ({
+      ...provided,
+      color: "#9ca3af",
+    }),
+  };
+
+  const brandOptions = brands.map((brand) => ({
+    value: brand,
+    label: brand,
+  }));
+
+  const modelOptions = models.map((model) => ({
+    value: model,
+    label: model,
+  }));
+
   return (
     <form
       onSubmit={handleSubmit}
       className="w-full max-w-2xl mx-auto p-6 space-y-4 bg-black border border-gray-500 shadow rounded-bl-2xl rounded-br-2xl"
     >
-      <select
-        name="brand"
-        value={form.brand}
-        onChange={handleChange}
-        className="w-full p-2 border border-gray-500 text-white rounded hover:cursor-grab"
-      >
-        <option value="" className="text-white bg-gray-800 hover:cursor-grab">
-          Select Brand
-        </option>
-        {brands.map((brand) => (
-          <option
-            key={brand}
-            value={brand}
-            className="text-black hover:cursor-grab"
-          >
-            {brand}
-          </option>
-        ))}
-      </select>
+      <Select
+        options={brandOptions}
+        value={brandOptions.find((option) => option.value === form.brand)}
+        onChange={(selected) =>
+          setForm({
+            ...form,
+            brand: selected ? selected.value : "",
+            model: "",
+          })
+        }
+        placeholder="Select Brand"
+        styles={customStyles}
+        classNamePrefix="react-select"
+      />
 
-      <select
-        name="model"
-        value={form.model}
-        onChange={handleChange}
-        disabled={!form.brand}
-        className="w-full p-2 border border-gray-500 text-white rounded hover:cursor-grab"
-      >
-        <option value="" className="text-white bg-gray-800 hover:cursor-grab">
-          Select Model
-        </option>
-        {models.map((model) => (
-          <option
-            key={model}
-            value={model}
-            className="text-black hover:cursor-grab"
-          >
-            {model}
-          </option>
-        ))}
-      </select>
+      <Select
+        options={modelOptions}
+        value={modelOptions.find((option) => option.value === form.model)}
+        onChange={(selected) =>
+          setForm({
+            ...form,
+            model: selected ? selected.value : "",
+          })
+        }
+        placeholder="Select Model"
+        isDisabled={!form.brand}
+        styles={customStyles}
+        classNamePrefix="react-select"
+      />
 
       {!toggleAlert ? (
         <button

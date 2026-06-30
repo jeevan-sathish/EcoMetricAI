@@ -9,6 +9,10 @@ import SpeechBox from "./SpeechBox";
 import useAIassistantToggleStore from "@/store/useAIassistentToggleStore";
 import Toast from "./Toast";
 import { MdDeleteSweep } from "react-icons/md";
+import rehypeRaw from "rehype-raw";
+
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 export const AiSuggestion = () => {
   const { toggleAiMode, setToggleAiMode } = useAIassistantToggleStore();
@@ -136,7 +140,30 @@ export const AiSuggestion = () => {
             </div>
           ) : (
             <div className="prose prose-invert text-gray-300  max-w-none">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  code({ inline, className, children, ...props }) {
+                    const match = /language-(\w+)/.exec(className || "");
+
+                    return !inline && match ? (
+                      <SyntaxHighlighter
+                        style={oneDark}
+                        language={match[1]}
+                        PreTag="div"
+                        {...props}
+                      >
+                        {String(children).replace(/\n$/, "")}
+                      </SyntaxHighlighter>
+                    ) : (
+                      <code className="bg-zinc-800 px-1 py-0.5 rounded">
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
                 {suggestion}
               </ReactMarkdown>
             </div>

@@ -8,8 +8,6 @@ import AiToggleButton from "@/components/AiToggleButton";
 import { useLocation } from "react-router-dom";
 import CarDataSize from "@/components/CarDataSize";
 
-// import { Link } from "react-router-dom";
-
 const Nav = () => {
   const location = useLocation();
   const { name, profile_picture } = useGreetStore();

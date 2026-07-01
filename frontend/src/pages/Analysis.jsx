@@ -26,7 +26,7 @@ const Analysis = () => {
   }
   return (
     <div className="min-h-screen w-full flex flex-col  lg:flex-row bg-black gap-2">
-      <div className="w-full h-full lg:w-[25%] bg-black border border-r-gray-600 p-4 ">
+      <div className="w-full h-full lg:w-[25%] bg-black border border-r-gray-800 p-4 ">
         <div className="w-full h-12 bg-green-300 rounded-0 text-black flex flex-row justify-center items-center rounded-tl-2xl rounded-tr-2xl">
           <MdOutlineContentPasteSearch className="text-2xl mr-2" />
           <HeaderTitles title="Find Your Best Car" />
@@ -81,7 +81,7 @@ const Analysis = () => {
         </div>
       </div>
 
-      <div className="w-full   lg:w-[30%] bg-black border border-l-gray-700 p-4   ">
+      <div className="w-full   lg:w-[30%] bg-black border border-l-gray-800 p-4   ">
         <div className="w-full h-12 bg-green-300 text-black flex flex-row gap-5 items-center justify-start rounded-tl-2xl rounded-tr-2xl p-4">
           <RiRobot2Fill className="text-2xl ml-3" />
           <HeaderTitles title="AI Suggestions" />

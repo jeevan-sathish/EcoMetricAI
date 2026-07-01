@@ -11,7 +11,7 @@ import {
   Brush,
 } from "recharts";
 
-const WINDOW_SIZE = 6;
+const WINDOW_SIZE = 5;
 
 const OneBrandco2 = () => {
   const { brandCo2, minCo2 } = useGetBrandco2();

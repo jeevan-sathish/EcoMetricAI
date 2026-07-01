@@ -167,7 +167,7 @@ export default function InputForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-2xl mx-auto p-6 space-y-4 bg-black border border-gray-500 shadow rounded-bl-2xl rounded-br-2xl"
+      className="w-full max-w-2xl mx-auto p-6 space-y-4 bg-black border border-gray-900 shadow rounded-bl-2xl rounded-br-2xl"
     >
       <Select
         options={brandOptions}

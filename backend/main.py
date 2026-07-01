@@ -12,6 +12,7 @@ from routes.user_profile_route import router as profile_router
 from routes.aiResponse_route import router as airesponse_router
 from routes.all_profiles_route import router as allprofileroute
 from routes.load_dataset import router as dataset_routers
+from routes.customChat_handler_route import router as custom_Chat_Router
 
 
 
@@ -43,7 +44,6 @@ app.include_router(auth_handle)
 app.include_router(profile_router)
 app.include_router(allprofileroute)
 app.include_router(car_router)
-
 app.include_router(airesponse_router)
-
 app.include_router(dataset_routers)
+app.include_router(custom_Chat_Router)

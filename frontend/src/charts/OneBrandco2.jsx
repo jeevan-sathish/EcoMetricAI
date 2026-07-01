@@ -1,5 +1,4 @@
 import useGetBrandco2 from "@/store/useGetBrandco2";
-import { useState } from "react";
 import {
   LineChart,
   Line,
@@ -9,29 +8,23 @@ import {
   Legend,
   ResponsiveContainer,
   CartesianGrid,
+  Brush,
 } from "recharts";
 
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-
-const page_size = 6;
+const WINDOW_SIZE = 6;
 
 const OneBrandco2 = () => {
   const { brandCo2, minCo2 } = useGetBrandco2();
 
-  const [startIndex, setStartIndex] = useState(0);
-
   if (!brandCo2 || brandCo2.length === 0) {
     return (
       <div className="w-full h-[480px] bg-black text-white rounded-2xl shadow-lg flex items-center justify-center">
-        <p className="text-gray-400">No CO₂ data available 🚗</p>
+        <p className="text-gray-400">No CO₂ data available </p>
       </div>
     );
   }
 
-  const visibleData = brandCo2.slice(startIndex, startIndex + page_size);
-
-  const canGoBack = startIndex > 0;
-  const canGoNext = startIndex + page_size < brandCo2.length;
+  const initialEndIndex = Math.min(WINDOW_SIZE - 1, brandCo2.length - 1);
 
   return (
     <div className="w-full bg-black text-white rounded-2xl shadow-lg p-4 mt-3">
@@ -41,14 +34,14 @@ const OneBrandco2 = () => {
       </h1>
 
       <p className="text-center text-gray-400 text-sm mb-4">
-        Browse models using navigation
+        Drag the slider below to browse models
       </p>
 
-      <div className="w-full h-[410px]">
+      <div className="w-full h-[450px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={visibleData}
-            margin={{ top: 20, right: 25, left: 0, bottom: 30 }}
+            data={brandCo2}
+            margin={{ top: 20, right: 25, left: 0, bottom: 10 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#1f1f1f" />
 
@@ -67,7 +60,6 @@ const OneBrandco2 = () => {
               label={{
                 value: "CO₂ (g/km)",
                 angle: -90,
-
                 position: "insideLeft",
                 offset: 7,
                 fill: "#fff",
@@ -80,6 +72,7 @@ const OneBrandco2 = () => {
                 border: "1px solid #333",
                 borderRadius: "10px",
                 color: "#fff",
+                cursor: "grab",
               }}
             />
 
@@ -93,37 +86,19 @@ const OneBrandco2 = () => {
               dot={{ r: 3 }}
               activeDot={{ r: 6 }}
             />
+
+            <Brush
+              dataKey="model"
+              height={20}
+              stroke="black"
+              fill="lightgreen"
+              travellerWidth={10}
+              startIndex={0}
+              endIndex={initialEndIndex}
+              tickFormatter={() => ""}
+            />
           </LineChart>
         </ResponsiveContainer>
-      </div>
-
-      <div className="flex items-center justify-between mt-4 px-2">
-        <button
-          onClick={() => setStartIndex((prev) => Math.max(prev - page_size, 0))}
-          disabled={!canGoBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          <FiChevronLeft size={18} />
-          Prev
-        </button>
-
-        <div className="text-sm text-gray-400">
-          {startIndex + 1} - {Math.min(startIndex + page_size, brandCo2.length)}{" "}
-          of {brandCo2.length}
-        </div>
-
-        <button
-          onClick={() =>
-            setStartIndex((prev) =>
-              Math.min(prev + page_size, brandCo2.length - page_size),
-            )
-          }
-          disabled={!canGoNext}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition disabled:opacity-40 disabled:cursor-not-allowed"
-        >
-          Next
-          <FiChevronRight size={18} />
-        </button>
       </div>
     </div>
   );

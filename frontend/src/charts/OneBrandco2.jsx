@@ -1,3 +1,4 @@
+import { useEffect, useMemo, useRef, useState } from "react";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import {
   LineChart,
@@ -11,20 +12,42 @@ import {
   Brush,
 } from "recharts";
 
+// how many points show in the window at once
 const WINDOW_SIZE = 5;
 
 const OneBrandco2 = () => {
   const { brandCo2, minCo2 } = useGetBrandco2();
 
+  // unique signature of current dataset (changes on ANY brand or model switch)
+  const signature = useMemo(
+    () => (brandCo2 ? brandCo2.map((d) => d.model).join("|") : ""),
+    [brandCo2],
+  );
+
+  // controlled brush window state
+  const [range, setRange] = useState({ start: 0, end: WINDOW_SIZE - 1 });
+
+  // tracks whether the NEXT onChange call is Recharts auto-firing after a data swap
+  // (we want to ignore that one, not let it override our fixed window)
+  const ignoreNextChange = useRef(false);
+
+  useEffect(() => {
+    if (!brandCo2 || brandCo2.length === 0) return;
+    ignoreNextChange.current = true; // Brush will auto-fire onChange right after this — skip it
+    setRange({
+      start: 0,
+      end: Math.min(WINDOW_SIZE - 1, brandCo2.length - 1),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [signature]);
+
   if (!brandCo2 || brandCo2.length === 0) {
     return (
       <div className="w-full h-[480px] bg-black text-white rounded-2xl shadow-lg flex items-center justify-center">
-        <p className="text-gray-400">No CO₂ data available </p>
+        <p className="text-gray-400">No CO₂ data available 🚗</p>
       </div>
     );
   }
-
-  const initialEndIndex = Math.min(WINDOW_SIZE - 1, brandCo2.length - 1);
 
   return (
     <div className="w-full bg-black text-white rounded-2xl shadow-lg p-4 mt-3">
@@ -72,7 +95,6 @@ const OneBrandco2 = () => {
                 border: "1px solid #333",
                 borderRadius: "10px",
                 color: "#fff",
-                cursor: "grab",
               }}
             />
 
@@ -89,12 +111,28 @@ const OneBrandco2 = () => {
 
             <Brush
               dataKey="model"
-              height={20}
-              stroke="black"
-              fill="lightgreen"
+              height={30}
+              stroke="#22c55e"
+              fill="#111"
               travellerWidth={10}
-              startIndex={0}
-              endIndex={initialEndIndex}
+              startIndex={range.start}
+              endIndex={range.end}
+              onChange={(newRange) => {
+                if (ignoreNextChange.current) {
+                  ignoreNextChange.current = false;
+                  return; // skip Recharts' auto full-width correction
+                }
+                if (
+                  newRange &&
+                  newRange.startIndex != null &&
+                  newRange.endIndex != null
+                ) {
+                  setRange({
+                    start: newRange.startIndex,
+                    end: newRange.endIndex,
+                  });
+                }
+              }}
               tickFormatter={() => ""}
             />
           </LineChart>

@@ -69,15 +69,6 @@ export default function InputForm() {
     fetchModels();
   }, [form.brand]);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-      ...(name === "brand" ? { model: "" } : {}),
-    }));
-  }
-
   async function handleSubmit(e) {
     e.preventDefault();
 

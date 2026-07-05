@@ -1,5 +1,5 @@
+import { useEffect, useRef, useState } from "react";
 import useGetBrandco2 from "@/store/useGetBrandco2";
-import { useState } from "react";
 import {
   LineChart,
   Line,
@@ -10,14 +10,21 @@ import {
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-
-const page_size = 6;
+const WINDOW_SIZE = 5;
 
 const OneBrandco2 = () => {
   const { brandCo2, minCo2 } = useGetBrandco2();
   const [startIndex, setStartIndex] = useState(0);
+  const trackRef = useRef(null);
+  const dragState = useRef(null);
+
+  const [prevData, setPrevData] = useState(brandCo2);
+  if (brandCo2 !== prevData) {
+    setPrevData(brandCo2);
+    if (startIndex !== 0) setStartIndex(0);
+  }
 
   if (!brandCo2 || brandCo2.length === 0) {
     return (
@@ -27,10 +34,73 @@ const OneBrandco2 = () => {
     );
   }
 
-  const visibleData = brandCo2.slice(startIndex, startIndex + page_size);
+  const total = brandCo2.length;
+  const maxStartIndex = Math.max(0, total - WINDOW_SIZE);
+  const clampedStart = Math.min(startIndex, maxStartIndex);
+  const windowedData = brandCo2.slice(clampedStart, clampedStart + WINDOW_SIZE);
+  const rangeEnd = Math.min(clampedStart + WINDOW_SIZE, total);
 
-  const canGoBack = startIndex > 0;
-  const canGoNext = startIndex + page_size < brandCo2.length;
+  const canGoPrev = clampedStart > 0;
+  const canGoNext = clampedStart < maxStartIndex;
+
+  const maxCo2 = Math.max(...brandCo2.map((d) => d.co2emission || 0), 1);
+  const slotPercent = 100 / total;
+  const windowLeftPercent = clampedStart * slotPercent;
+  const windowWidthPercent = WINDOW_SIZE * slotPercent;
+
+  function goPrev() {
+    setStartIndex((i) => Math.max(0, i - 1));
+  }
+
+  function goNext() {
+    setStartIndex((i) => Math.min(maxStartIndex, i + 1));
+  }
+
+  function indexFromClientX(clientX) {
+    if (!trackRef.current) return clampedStart;
+    const rect = trackRef.current.getBoundingClientRect();
+    const ratio = (clientX - rect.left) / rect.width;
+    return Math.round(ratio * total);
+  }
+
+  function handleWindowPointerDown(e) {
+    e.preventDefault();
+    dragState.current = {
+      startClientX: e.clientX,
+      startIndexAtDrag: clampedStart,
+    };
+    window.addEventListener("pointermove", handleWindowPointerMove);
+    window.addEventListener("pointerup", handleWindowPointerUp);
+  }
+
+  function handleWindowPointerMove(e) {
+    if (!dragState.current || !trackRef.current) return;
+    const rect = trackRef.current.getBoundingClientRect();
+    const slotWidthPx = rect.width / total;
+    const deltaX = e.clientX - dragState.current.startClientX;
+    const deltaIndex = Math.round(deltaX / slotWidthPx);
+    const next = dragState.current.startIndexAtDrag + deltaIndex;
+    setStartIndex(Math.max(0, Math.min(maxStartIndex, next)));
+  }
+
+  function handleWindowPointerUp() {
+    dragState.current = null;
+    window.removeEventListener("pointermove", handleWindowPointerMove);
+    window.removeEventListener("pointerup", handleWindowPointerUp);
+  }
+
+  function handleTrackClick(e) {
+    const clickedIndex = indexFromClientX(e.clientX);
+    const centered = clickedIndex - Math.floor(WINDOW_SIZE / 2);
+    setStartIndex(Math.max(0, Math.min(maxStartIndex, centered)));
+  }
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener("pointermove", handleWindowPointerMove);
+      window.removeEventListener("pointerup", handleWindowPointerUp);
+    };
+  }, []);
 
   return (
     <div className="w-full bg-black text-white rounded-2xl shadow-lg p-4 mt-3">
@@ -40,20 +110,20 @@ const OneBrandco2 = () => {
       </h1>
 
       <p className="text-center text-gray-400 text-sm mb-4">
-        Browse models using navigation
+        Showing {clampedStart + 1}–{rangeEnd} of {total} models
       </p>
 
-      <div className="w-full h-[410px]">
+      <div className="w-full h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={visibleData}
+            data={windowedData}
             margin={{ top: 20, right: 25, left: 0, bottom: 30 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#1f1f1f" />
 
             <XAxis
               dataKey="model"
-              angle={-25}
+              angle={-20}
               textAnchor="end"
               interval={0}
               tick={{ fontSize: 12, fill: "#ffffff" }}
@@ -66,10 +136,9 @@ const OneBrandco2 = () => {
               label={{
                 value: "CO₂ (g/km)",
                 angle: -90,
-
                 position: "insideLeft",
                 offset: 7,
-                fill: "#fff",
+                fill: "green",
               }}
             />
 
@@ -82,46 +151,82 @@ const OneBrandco2 = () => {
               }}
             />
 
-            <Legend />
-
             <Line
               type="monotone"
               dataKey="co2emission"
               stroke="#22c55e"
               strokeWidth={3}
-              dot={{ r: 3 }}
-              activeDot={{ r: 6 }}
+              dot={{ r: 4 }}
+              activeDot={{ r: 7 }}
+              isAnimationActive={true}
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="flex items-center justify-between mt-4 px-2">
+      <div className="flex items-center gap-3 mt-4 px-1">
         <button
-          onClick={() => setStartIndex((prev) => Math.max(prev - page_size, 0))}
-          disabled={!canGoBack}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition disabled:opacity-40 disabled:cursor-not-allowed"
+          onClick={goPrev}
+          disabled={!canGoPrev}
+          className={`flex items-center justify-center w-8 h-8 rounded-lg border shrink-0 transition ${
+            canGoPrev
+              ? "border-green-500 text-green-400 hover:bg-green-500/10 cursor-pointer"
+              : "border-gray-800 text-gray-600 cursor-not-allowed"
+          }`}
         >
-          <FiChevronLeft size={18} />
-          Prev
+          <ChevronLeft size={16} />
         </button>
 
-        <div className="text-sm text-gray-400">
-          {startIndex + 1} - {Math.min(startIndex + page_size, brandCo2.length)}{" "}
-          of {brandCo2.length}
+        <div
+          ref={trackRef}
+          onClick={handleTrackClick}
+          className="relative flex-1 h-10 bg-zinc-900 border border-zinc-800 rounded-lg overflow-hidden cursor-pointer select-none"
+        >
+          <div className="absolute inset-0 flex items-end px-0.5 gap-[2px]">
+            {brandCo2.map((d, i) => {
+              const isActive =
+                i >= clampedStart && i < clampedStart + WINDOW_SIZE;
+              const heightPct = Math.max(
+                8,
+                ((d.co2emission || 0) / maxCo2) * 100,
+              );
+              return (
+                <div
+                  key={i}
+                  className={`flex-1 rounded-sm transition-colors ${
+                    isActive ? "bg-green-500/80" : "bg-gray-700"
+                  }`}
+                  style={{ height: `${heightPct}%` }}
+                />
+              );
+            })}
+          </div>
+
+          <div
+            onPointerDown={handleWindowPointerDown}
+            className="absolute top-0 h-full bg-green-500/20 border-2 border-green-500 rounded-md cursor-grab active:cursor-grabbing touch-none"
+            style={{
+              left: `${windowLeftPercent}%`,
+              width: `${windowWidthPercent}%`,
+            }}
+          >
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-0.5">
+              <span className="w-0.5 h-3 bg-green-300 rounded-full" />
+              <span className="w-0.5 h-3 bg-green-300 rounded-full" />
+            </div>
+          </div>
         </div>
 
         <button
-          onClick={() =>
-            setStartIndex((prev) =>
-              Math.min(prev + page_size, brandCo2.length - page_size),
-            )
-          }
+          onClick={goNext}
           disabled={!canGoNext}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 hover:bg-gray-800 transition disabled:opacity-40 disabled:cursor-not-allowed"
+          className={`flex items-center justify-center w-8 h-8 rounded-lg border shrink-0 transition ${
+            canGoNext
+              ? "border-green-500 text-green-400 hover:bg-green-500/10 cursor-pointer"
+              : "border-gray-800 text-gray-600 cursor-not-allowed"
+          }`}
         >
-          Next
-          <FiChevronRight size={18} />
+          <ChevronRight size={16} />
         </button>
       </div>
     </div>

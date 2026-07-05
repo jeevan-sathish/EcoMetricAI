@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const sizeMap = {
-  sm: "text-sm",
+  sm: "text-[11px]",
   base: "text-base",
   lg: "text-lg",
 };
@@ -13,14 +13,21 @@ const DashboardCardSD = ({
   color,
   loading,
   size,
+  showScore = false,
 }) => {
   const [showSkeleton, setShowSkeleton] = useState(true);
 
   useEffect(() => {
-    if (!loading) {
-      const timer = setTimeout(() => setShowSkeleton(false), 300);
-      return () => clearTimeout(timer);
+    if (loading) {
+      setShowSkeleton(true);
+      return;
     }
+
+    const timer = setTimeout(() => {
+      setShowSkeleton(false);
+    }, 300);
+
+    return () => clearTimeout(timer);
   }, [loading]);
 
   if (loading || showSkeleton) {
@@ -37,7 +44,7 @@ const DashboardCardSD = ({
 
   return (
     <div className="p-4 h-[80px] bg-black text-white rounded-2xl border border-gray-700 hover:shadow-xl transition duration-300 flex items-center">
-      <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100">
+      <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-gray-100">
         <Icon className={`text-xl ${color}`} />
       </div>
 
@@ -47,7 +54,21 @@ const DashboardCardSD = ({
         <p
           className={`${sizeMap[size]} font-bold text-amber-500 leading-tight`}
         >
-          {value ?? "—"}
+          {value ?? "-"}
+
+          {showScore && value != null && (
+            <span
+              className={`ml-1 text-[12px] ${
+                value <= 150
+                  ? "text-green-400"
+                  : value <= 250
+                    ? "text-yellow-400"
+                    : "text-red-500"
+              }`}
+            >
+              {value <= 150 ? " Good" : value <= 250 ? " Average" : " Bad"}
+            </span>
+          )}
         </p>
       </div>
     </div>

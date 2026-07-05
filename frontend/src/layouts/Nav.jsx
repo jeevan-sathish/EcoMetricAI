@@ -8,8 +8,6 @@ import AiToggleButton from "@/components/AiToggleButton";
 import { useLocation } from "react-router-dom";
 import CarDataSize from "@/components/CarDataSize";
 
-// import { Link } from "react-router-dom";
-
 const Nav = () => {
   const location = useLocation();
   const { name, profile_picture } = useGreetStore();
@@ -43,7 +41,7 @@ const Nav = () => {
           <FaLeaf className="text-green-500" />
 
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-zinc-400">Best Choice</span>
+            <span className="text-zinc-200 font-bold">Best Choice</span>
 
             <span className="font-semibold text-green-400">
               {minCo2.brand}-{minCo2?.model || "N/A"}
@@ -51,7 +49,7 @@ const Nav = () => {
 
             <span className="text-zinc-700">|</span>
 
-            <span className="text-zinc-400">
+            <span className="text-zinc-300 font-bold">
               CO₂:
               <span className="ml-1 font-bold text-white">
                 {minCo2?.co2emission || "0"}
@@ -60,7 +58,7 @@ const Nav = () => {
 
             <span className="text-zinc-700">|</span>
 
-            <span className="text-zinc-400">
+            <span className="text-zinc-300 font-bold">
               Engine:
               <span className="ml-1 font-bold text-white">
                 {minCo2?.enginesize || "0"}
@@ -71,25 +69,27 @@ const Nav = () => {
         </div>
       )}
 
-      {location.pathname === "/Analysis" && <AiToggleButton />}
+      <div className="flex lfex-row items-center gap-4">
+        {location.pathname === "/Analysis" && <AiToggleButton />}
 
-      <div
-        onClick={handleProfileToggle}
-        className="flex cursor-pointer items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950 px-2 py-1 transition-all hover:border-green-500"
-      >
-        {profile_picture ? (
-          <img
-            src={profile_picture}
-            alt={name}
-            className="h-10 w-10 rounded-full border border-green-500 object-cover"
-          />
-        ) : (
-          <CgProfile className="text-3xl text-zinc-400" />
-        )}
+        <div
+          onClick={handleProfileToggle}
+          className="flex cursor-pointer items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950 px-2 py-1 transition-all hover:bg-black"
+        >
+          {profile_picture ? (
+            <img
+              src={profile_picture}
+              alt={name}
+              className="h-10 w-10 rounded-full border border-green-500 object-cover"
+            />
+          ) : (
+            <CgProfile className="text-3xl text-zinc-400" />
+          )}
 
-        <div className="hidden flex-col md:flex">
-          <p className="font-medium text-white">{GreetName}</p>
-          <p className="text-xs text-zinc-500">User Account</p>
+          <div className="hidden flex-col md:flex">
+            <p className="font-medium text-white">{GreetName}</p>
+            <p className="text-xs text-zinc-500">User Account</p>
+          </div>
         </div>
       </div>
 

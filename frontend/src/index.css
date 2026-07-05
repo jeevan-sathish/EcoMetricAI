@@ -1,4 +1,22 @@
 @import "tailwindcss";
+.react-select__menu-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.react-select__menu-list::-webkit-scrollbar-thumb {
+  background: #22c55e;
+  border-radius: 10px;
+}
+
+.recharts-wrapper svg:focus,
+.recharts-surface:focus {
+  outline: none;
+}
+
+.recharts-brush-slide {
+  fill: #063015;
+  fill-opacity: 0.25 !important;
+}
 
 /* :root {
   --text: #6b6375;

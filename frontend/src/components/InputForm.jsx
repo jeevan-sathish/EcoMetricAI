@@ -90,10 +90,6 @@ export default function InputForm() {
       setCars(response.data.data1 || []);
       setBrandCo2(response.data.data2 || []);
       setMinCo2(response.data.data3?.[0] || {});
-      console.log(
-        "------this is overall eco friendly model with low co2:",
-        response.data.data3[0],
-      );
     } catch (error) {
       console.error("Filter error:", error?.response?.data ?? error.message);
     } finally {

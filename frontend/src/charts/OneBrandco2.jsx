@@ -6,7 +6,6 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   CartesianGrid,
 } from "recharts";
@@ -25,6 +24,13 @@ const OneBrandco2 = () => {
     setPrevData(brandCo2);
     if (startIndex !== 0) setStartIndex(0);
   }
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener("pointermove", handleWindowPointerMove);
+      window.removeEventListener("pointerup", handleWindowPointerUp);
+    };
+  }, []);
 
   if (!brandCo2 || brandCo2.length === 0) {
     return (
@@ -94,13 +100,6 @@ const OneBrandco2 = () => {
     const centered = clickedIndex - Math.floor(WINDOW_SIZE / 2);
     setStartIndex(Math.max(0, Math.min(maxStartIndex, centered)));
   }
-
-  useEffect(() => {
-    return () => {
-      window.removeEventListener("pointermove", handleWindowPointerMove);
-      window.removeEventListener("pointerup", handleWindowPointerUp);
-    };
-  }, []);
 
   return (
     <div className="w-full bg-black text-white rounded-2xl shadow-lg p-4 mt-3">

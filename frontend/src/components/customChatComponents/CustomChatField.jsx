@@ -1,6 +1,11 @@
 import { useEffect, useRef } from "react";
 import { FaBolt, FaCar, FaLeaf, FaGasPump, FaRoad } from "react-icons/fa";
 import { ThreeDots } from "react-loader-spinner";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeHighlight from "rehype-highlight";
+
+import "highlight.js/styles/github-dark.css";
 
 const quickstart = [
   { icon: <FaLeaf />, text: "Which cars have the lowest CO₂ emissions?" },
@@ -68,7 +73,12 @@ const CustomChatField = ({ handleSend, messages, loading }) => {
                 : "bg-zinc-800 text-gray-200 rounded-bl-sm"
             }`}
           >
-            {msg.text}
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight]}
+            >
+              {msg.text}
+            </ReactMarkdown>
           </div>
         </div>
       ))}

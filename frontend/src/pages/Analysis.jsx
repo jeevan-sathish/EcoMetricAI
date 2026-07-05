@@ -38,34 +38,36 @@ const Analysis = () => {
       </div>
 
       <div className="w-full min-h-screen lg:w-[45%] flex flex-col gap-4 p-3 ">
-        <div className="w-full h-10 bg-green-400 rounded-2xl text-white flex flex-row justify-center gap-3 items-center">
-          <div className="flex flex-row justify-center items-center gap-2">
-            <div
-              className={`w-[5px] h-[5px] rounded-full ${dashboardstate ? "bg-green-800 animate-ping" : "bg-red-500"}`}
-            ></div>
-            {/* <HeaderTitles title="Dashboard" /> */}
+        <div className="w-full flex justify-center mt-5">
+          <div className="flex items-center bg-zinc-900 border border-zinc-700 rounded-2xl p-1 shadow-lg">
             <button
-              className={`${dashboardstate ? "text-gray-500 hover:cursor-context-menu" : "text-black"}`}
               onClick={handleDashboard}
               disabled={dashboardstate}
+              className={`px-6 py-2 rounded-xl text-sm font-medium transition-all duration-300
+        ${
+          dashboardstate
+            ? "bg-green-600 text-white shadow-md"
+            : "text-gray-400 hover:bg-zinc-800 hover:text-white"
+        }`}
             >
-              DashBoard
+              Dashboard
             </button>
-          </div>
-          <div className="flex flex-row justify-center items-center gap-2">
-            <div
-              className={`w-[5px] h-[5px] rounded-full ${chatModeState ? "bg-green-800 animate-ping" : "bg-red-500"}`}
-            ></div>
+
             <button
               onClick={handleCustomChatBot}
-              className={`${chatModeState ? "text-gray-500" : "text-black"}`}
               disabled={chatModeState}
+              className={`px-6 py-2 rounded-xl text-sm font-medium transition-all duration-300
+        ${
+          chatModeState
+            ? "bg-green-600 text-white shadow-md"
+            : "text-gray-400 hover:bg-zinc-800 hover:text-white"
+        }`}
             >
-              Chat mode
+              Chat Mode
             </button>
           </div>
         </div>
-        <div className="w-full h-full bg-green-black rounded-2xl p-4 flex flex-col gap-5">
+        <div className="w-full h-full bg-green-black rounded-2xl p-0 flex flex-col gap-5">
           {currentmode === "chatMode" ? (
             <CustomChatBot />
           ) : (
@@ -74,8 +76,6 @@ const Analysis = () => {
               <OneBrandco2 />
             </div>
           )}
-
-          {/* chatrt */}
 
           <Note note="The above analysis is based on the EPA Records.for latest and aquarate prefer our AI suggestions in the right panel." />
         </div>

@@ -43,7 +43,7 @@ const AllProfileList = () => {
       <div className="w-full flex justify-center">
         <div className="flex items-center gap-4 bg-gradient-to-r from-green-600/20 to-emerald-500/10 border border-green-500/30 rounded-2xl px-6 py-2 shadow-lg backdrop-blur-sm hover:scale-[1.02] transition-all duration-300">
           <div className="w-14 h-14 rounded-xl bg-green-600 flex items-center justify-center">
-            <IoCarSport className="text-white text-3xl" />
+            <IoCarSport className="text-black text-3xl" />
           </div>
 
           <div>

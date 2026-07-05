@@ -69,25 +69,27 @@ const Nav = () => {
         </div>
       )}
 
-      {location.pathname === "/Analysis" && <AiToggleButton />}
+      <div className="flex lfex-row items-center gap-4">
+        {location.pathname === "/Analysis" && <AiToggleButton />}
 
-      <div
-        onClick={handleProfileToggle}
-        className="flex cursor-pointer items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950 px-2 py-1 transition-all hover:bg-black"
-      >
-        {profile_picture ? (
-          <img
-            src={profile_picture}
-            alt={name}
-            className="h-10 w-10 rounded-full border border-green-500 object-cover"
-          />
-        ) : (
-          <CgProfile className="text-3xl text-zinc-400" />
-        )}
+        <div
+          onClick={handleProfileToggle}
+          className="flex cursor-pointer items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950 px-2 py-1 transition-all hover:bg-black"
+        >
+          {profile_picture ? (
+            <img
+              src={profile_picture}
+              alt={name}
+              className="h-10 w-10 rounded-full border border-green-500 object-cover"
+            />
+          ) : (
+            <CgProfile className="text-3xl text-zinc-400" />
+          )}
 
-        <div className="hidden flex-col md:flex">
-          <p className="font-medium text-white">{GreetName}</p>
-          <p className="text-xs text-zinc-500">User Account</p>
+          <div className="hidden flex-col md:flex">
+            <p className="font-medium text-white">{GreetName}</p>
+            <p className="text-xs text-zinc-500">User Account</p>
+          </div>
         </div>
       </div>
 

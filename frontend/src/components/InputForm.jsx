@@ -193,10 +193,10 @@ export default function InputForm() {
       {!toggleAlert ? (
         <button
           type="submit"
-          disabled={modelLoading}
-          className={`w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 transition duration-300 ${modelLoading ? "hover:cursor-wait" : "hover:cursor-grab"}`}
+          disabled={modelLoading || !form.brand || !form.model}
+          className={`w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 transition duration-300 ${modelLoading || !form.brand || !form.model ? "hover:cursor-wait" : "hover:cursor-grab"}`}
         >
-          {modelLoading ? "loading..." : "Submit"}
+          {modelLoading || !form.brand || !form.model ? "loading..." : "Submit"}
         </button>
       ) : (
         <button

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState } from "react";
 import useGetBrandco2 from "@/store/useGetBrandco2";
 import {
   LineChart,
@@ -9,37 +9,20 @@ import {
   Legend,
   ResponsiveContainer,
   CartesianGrid,
-  Brush,
 } from "recharts";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-// how many points show in the window at once
 const WINDOW_SIZE = 5;
 
 const OneBrandco2 = () => {
   const { brandCo2, minCo2 } = useGetBrandco2();
+  const [page, setPage] = useState(0);
 
-  // unique signature of current dataset (changes on ANY brand or model switch)
-  const signature = useMemo(
-    () => (brandCo2 ? brandCo2.map((d) => d.model).join("|") : ""),
-    [brandCo2],
-  );
-
-  // controlled brush window state
-  const [range, setRange] = useState({ start: 0, end: WINDOW_SIZE - 1 });
-
-  // tracks whether the NEXT onChange call is Recharts auto-firing after a data swap
-  // (we want to ignore that one, not let it override our fixed window)
-  const ignoreNextChange = useRef(false);
-
-  useEffect(() => {
-    if (!brandCo2 || brandCo2.length === 0) return;
-    ignoreNextChange.current = true; // Brush will auto-fire onChange right after this — skip it
-    setRange({
-      start: 0,
-      end: Math.min(WINDOW_SIZE - 1, brandCo2.length - 1),
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [signature]);
+  const [prevData, setPrevData] = useState(brandCo2);
+  if (brandCo2 !== prevData) {
+    setPrevData(brandCo2);
+    if (page !== 0) setPage(0);
+  }
 
   if (!brandCo2 || brandCo2.length === 0) {
     return (
@@ -49,6 +32,13 @@ const OneBrandco2 = () => {
     );
   }
 
+  const totalPages = Math.ceil(brandCo2.length / WINDOW_SIZE);
+  const start = page * WINDOW_SIZE;
+  const windowedData = brandCo2.slice(start, start + WINDOW_SIZE);
+
+  const canGoPrev = page > 0;
+  const canGoNext = page < totalPages - 1;
+
   return (
     <div className="w-full bg-black text-white rounded-2xl shadow-lg p-4 mt-3">
       <h1 className="text-xl md:text-2xl font-bold text-center mb-1">
@@ -57,13 +47,18 @@ const OneBrandco2 = () => {
       </h1>
 
       <p className="text-center text-gray-400 text-sm mb-4">
-        Drag the slider below to browse models
+        {windowedData[0]?.model} –{" "}
+        {windowedData[windowedData.length - 1]?.model}
+        <span className="text-gray-600">
+          {" "}
+          (page {page + 1} of {totalPages})
+        </span>
       </p>
 
-      <div className="w-full h-[450px]">
+      <div className="w-full h-[400px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
-            data={brandCo2}
+            data={windowedData}
             margin={{ top: 20, right: 25, left: 0, bottom: 10 }}
           >
             <CartesianGrid strokeDasharray="3 3" stroke="#1f1f1f" />
@@ -105,38 +100,52 @@ const OneBrandco2 = () => {
               dataKey="co2emission"
               stroke="#22c55e"
               strokeWidth={3}
-              dot={{ r: 3 }}
-              activeDot={{ r: 6 }}
-            />
-
-            <Brush
-              dataKey="model"
-              height={30}
-              stroke="#22c55e"
-              fill="#111"
-              travellerWidth={10}
-              startIndex={range.start}
-              endIndex={range.end}
-              onChange={(newRange) => {
-                if (ignoreNextChange.current) {
-                  ignoreNextChange.current = false;
-                  return; // skip Recharts' auto full-width correction
-                }
-                if (
-                  newRange &&
-                  newRange.startIndex != null &&
-                  newRange.endIndex != null
-                ) {
-                  setRange({
-                    start: newRange.startIndex,
-                    end: newRange.endIndex,
-                  });
-                }
-              }}
-              tickFormatter={() => ""}
+              dot={{ r: 4 }}
+              activeDot={{ r: 7 }}
+              isAnimationActive={true}
             />
           </LineChart>
         </ResponsiveContainer>
+      </div>
+
+      <div className="flex items-center justify-center gap-4 mt-3">
+        <button
+          onClick={() => canGoPrev && setPage((p) => p - 1)}
+          disabled={!canGoPrev}
+          className={`flex items-center gap-1 px-3 py-1.5 rounded-lg border text-sm transition ${
+            canGoPrev
+              ? "border-green-500 text-green-400 hover:bg-green-500/10 cursor-pointer"
+              : "border-gray-800 text-gray-600 cursor-not-allowed"
+          }`}
+        >
+          <ChevronLeft size={16} /> Prev
+        </button>
+
+        <div className="flex gap-1.5">
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setPage(i)}
+              className={`w-2 h-2 rounded-full transition ${
+                i === page
+                  ? "bg-green-500 w-4"
+                  : "bg-gray-700 hover:bg-gray-500"
+              }`}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={() => canGoNext && setPage((p) => p + 1)}
+          disabled={!canGoNext}
+          className={`flex items-center gap-1 px-3 py-1.5 rounded-lg border text-sm transition ${
+            canGoNext
+              ? "border-green-500 text-green-400 hover:bg-green-500/10 cursor-pointer"
+              : "border-gray-800 text-gray-600 cursor-not-allowed"
+          }`}
+        >
+          Next <ChevronRight size={16} />
+        </button>
       </div>
     </div>
   );

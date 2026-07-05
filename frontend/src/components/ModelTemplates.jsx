@@ -34,7 +34,7 @@ const ModelTemplates = () => {
               cars.map((ele, i) => (
                 <div
                   key={i}
-                  className="w-[90%] p-3 bg-gray-800  text-white m-3 hover:shadow-2xl shadow-green-900  cursor-pointer transition duration-200 rounded-[10px]"
+                  className="w-[90%] p-3 bg-gray-900  text-white m-3 hover:shadow-2xl shadow-green-900  cursor-pointer transition duration-200 rounded-[10px]"
                   onClick={() => setSingleData(ele)}
                 >
                   <div className="w-full p-2 bg-black flex flex-row gap-2 items-center text-[12px] rounded-[10px]">

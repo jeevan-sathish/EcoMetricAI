@@ -13,8 +13,8 @@ from services.car_cronjob_service import load_latest_model_CJ
 load_dotenv()
 router =APIRouter(prefix="/dataset", tags=["Dataset"])
 
-CONNECTION_STRING=os.getenv("RENDER_CONNECTION_STRING")
-engine =create_engine(CONNECTION_STRING)
+CONNECTION_STRING=os.getenv("RENDER_CONNECTION_STRING_TWO")
+engine =create_engine(CONNECTION_STRING,connect_args={"sslmode": "require"})
 
 path="dataset/car_emission_canada7000.csv"
 
@@ -31,10 +31,12 @@ def upload_dataset(user=Depends(get_current_user)):
 
 
 @router.get("/datasize")
-def count_rows(db:Session=Depends(get_db)):
-    count =db.query(CarModel).count()
+def count_rows(db: Session = Depends(get_db)):
+    result = db.execute(text("SELECT COUNT(*) FROM cars"))
+    count = result.scalar()
+
     return {
-        "car_data_size":count
+        "car_data_size": count
     }
     
 

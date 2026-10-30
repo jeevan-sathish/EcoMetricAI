@@ -110,7 +110,7 @@ def get_AI_suggestions(brand, model):
             prompt = get_vehicle_analysis_prompt(result, user_preferred_brand)
 
             response = client.chat.completions.create(
-                model="llama-3.1-8b-instant",
+                model="openai/gpt-oss-120b",
                 messages=[
                     {
                         "role": "user",
@@ -118,7 +118,7 @@ def get_AI_suggestions(brand, model):
                     }
                 ],
                 temperature=0.5,
-                max_tokens=600
+                max_tokens=900
             )
 
             return response.choices[0].message.content

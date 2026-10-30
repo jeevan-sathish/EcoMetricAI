@@ -6,7 +6,7 @@ import os
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("RENDER_CONNECTION_STRING_TWO")
+DATABASE_URL = os.getenv("NEON_CONNECTION_STRING")
 
 
 

@@ -4,7 +4,7 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 load_dotenv()
-DATABASE_STRING =os.getenv("RENDER_CONNECTION_STRING_TWO")
+DATABASE_STRING =os.getenv("NEON_CONNECTION_STRING")
 path="./dataset/car_emission_canada7000.csv"
 
 engine=create_engine(DATABASE_STRING,connect_args={"sslmode": "require"})

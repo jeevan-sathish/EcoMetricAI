@@ -19,7 +19,7 @@ client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
 def _ask_groq(prompt, max_tokens=200, temperature=0.5):
     response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model="openai/gpt-oss-120b",
         messages=[{"role": "user", "content": prompt}],
         temperature=temperature,
         max_tokens=max_tokens,

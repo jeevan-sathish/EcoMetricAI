@@ -13,7 +13,7 @@ from services.car_cronjob_service import load_latest_model_CJ
 load_dotenv()
 router =APIRouter(prefix="/dataset", tags=["Dataset"])
 
-CONNECTION_STRING=os.getenv("RENDER_CONNECTION_STRING_TWO")
+CONNECTION_STRING=os.getenv("NEON_CONNECTION_STRING")
 engine =create_engine(CONNECTION_STRING,connect_args={"sslmode": "require"})
 
 path="dataset/car_emission_canada7000.csv"
